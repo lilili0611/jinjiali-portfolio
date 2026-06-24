@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>晋佳莉 · AI 产品经理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Space+Mono:wght@400;700&family=Sacramento&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#E8E7EF;
+    --ink:#0B0B0F;
+    --ink-soft:#46454F;
+    --muted:#8B8A95;
+    --line:rgba(11,11,15,.14);
+    --card:#F3F2F8;
+    --iris-p:#C6B4EE;
+    --iris-k:#EFB4D6;
+    --iris-b:#AEC6F2;
+    --disp:"Archivo","Noto Sans SC",sans-serif;
+    --mono:"Space Mono",monospace;
+    --script:"Sacramento",cursive;
+    --cn:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--cn);color:var(--ink);background:var(--bg);
+    -webkit-font-smoothing:antialiased;line-height:1.6;position:relative;overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(rgba(18,16,38,.08) 0.9px,transparent 1.1px);
+    background-size:6px 6px;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(38% 30% at 82% 8%,rgba(198,180,238,.45),transparent 70%),
+      radial-gradient(34% 26% at 10% 32%,rgba(239,180,214,.32),transparent 70%),
+      radial-gradient(40% 30% at 90% 78%,rgba(174,198,242,.38),transparent 70%);
+  }
+  .wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 clamp(18px,4vw,46px)}
+  .mono{font-family:var(--mono);letter-spacing:.04em}
+  .eyebrow{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+  .eyebrow .b{color:var(--muted)}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:30;background:rgba(232,231,239,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav{max-width:1240px;margin:0 auto;padding:14px clamp(18px,4vw,46px);display:flex;align-items:center;justify-content:space-between}
+  .logo{font-family:var(--disp);font-weight:900;font-size:20px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:7px}
+  .logo .s{font-family:var(--script);font-weight:400;font-size:24px;color:var(--ink-soft)}
+  .navlinks{display:flex;gap:7px;font-family:var(--mono);font-size:12.5px;font-weight:700;text-transform:uppercase}
+  .navlinks a{color:var(--ink);text-decoration:none;padding:6px 8px;transition:.2s}
+  .navlinks a:hover{opacity:.5}
+
+  /* hero */
+  .hero{position:relative;padding:64px 0 40px;text-align:center}
+  .ruler{position:absolute;left:max(8px,calc((100vw - 1240px)/2 + 6px));top:120px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink);display:flex;flex-direction:column;gap:11px;align-items:flex-start}
+  .ruler .t{font-weight:700}
+  .ruler .d{color:var(--muted)}
+  .orb{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:min(360px,60vw);height:min(360px,60vw);border-radius:50%;
+    background:conic-gradient(from 200deg,var(--iris-p),var(--iris-k),var(--iris-b),var(--iris-p));filter:blur(36px);opacity:.85;z-index:0}
+  .hero .inner{position:relative;z-index:2}
+  .hero .role{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ink)}
+  .hero h1{font-family:var(--disp);font-weight:900;font-size:clamp(72px,17vw,200px);line-height:.86;letter-spacing:-.02em;margin:14px 0 6px;text-transform:uppercase}
+  .hero .cn{font-family:var(--disp);font-weight:900;font-size:clamp(40px,7vw,76px);line-height:1;letter-spacing:.04em;margin-bottom:18px}
+  .intent{display:inline-block;font-family:var(--mono);font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+    border:1px solid var(--ink);border-radius:999px;padding:10px 20px;background:rgba(255,255,255,.4)}
+  .herometa{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-top:20px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .herometa span{display:inline-flex;align-items:center;gap:6px}
+  .scrollcue{margin:38px auto 0;width:96px;height:96px;border-radius:50%;border:1px solid var(--ink);display:grid;place-items:center;
+    font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center;position:relative;background:rgba(255,255,255,.35)}
+  .scrollcue::before,.scrollcue::after{content:"[";position:absolute;font-family:var(--mono);color:var(--ink);font-size:18px;top:50%;transform:translateY(-50%)}
+  .scrollcue::before{left:-14px}.scrollcue::after{content:"]";right:-14px}
+
+  /* section frame */
+  section{padding:64px 0;position:relative}
+  .sechead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px;margin-bottom:34px}
+  .sechead h2{font-family:var(--disp);font-weight:900;font-size:clamp(34px,6vw,68px);line-height:.92;letter-spacing:-.01em;text-transform:uppercase}
+  .sechead .idx{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.1em}
+
+  /* about */
+  .about p{font-family:var(--disp);font-weight:500;font-size:clamp(20px,2.6vw,32px);line-height:1.5;letter-spacing:-.005em;max-width:18em}
+  .about p b{font-weight:900}
+  .about .hl{background:linear-gradient(transparent 60%,var(--iris-p) 60%);padding:0 2px}
+
+  /* capabilities */
+  .caps{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .cap{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 24px 26px;position:relative;overflow:hidden}
+  .cap .n{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--muted)}
+  .cap h3{font-family:var(--disp);font-weight:900;font-size:22px;margin:10px 0 8px;letter-spacing:-.01em}
+  .cap p{font-size:13.5px;color:var(--ink-soft);line-height:1.65}
+  .cap .glow{position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:conic-gradient(from 180deg,var(--iris-p),var(--iris-k),var(--iris-b),var(--iris-p));filter:blur(26px);opacity:.5}
+
+  /* projects */
+  .proj{border:1px solid var(--line);border-radius:24px;overflow:hidden;margin-bottom:20px;background:var(--card)}
+  .pbanner{position:relative;padding:30px 28px;color:#0b0b0f;overflow:hidden}
+  .pbanner .iris{position:absolute;inset:0;z-index:0}
+  .p1 .iris{background:linear-gradient(120deg,#d9c4f4,#f3c2dd 60%,#c7d6f6)}
+  .p2 .iris{background:linear-gradient(120deg,#f6cfe0,#f3dcc2 55%,#d6c8f3)}
+  .p3 .iris{background:linear-gradient(120deg,#c2dbf4,#cfeae0 55%,#d9c4f4)}
+  .pbanner .row{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .pbanner .tags{font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .pbanner h3{font-family:var(--disp);font-weight:900;font-size:clamp(24px,3.4vw,40px);line-height:1;letter-spacing:-.01em;margin-top:14px;position:relative;z-index:1}
+  .pbanner .arrow{position:relative;z-index:1;flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--ink);display:grid;place-items:center;font-size:18px;background:rgba(255,255,255,.4)}
+  .pbody{padding:22px 28px 26px}
+  .pmeta{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px;display:flex;gap:8px 14px;flex-wrap:wrap}
+  .pmeta .role{color:var(--ink)}.pmeta .date{color:var(--muted)}
+  .pprob{font-size:14.5px;font-style:italic;color:var(--ink-soft);border-left:2px solid var(--ink);padding-left:14px;margin-bottom:16px;line-height:1.6}
+  .pul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+  .pul li{font-size:13.5px;line-height:1.65;padding-left:20px;position:relative;color:var(--ink)}
+  .pul li::before{content:"→";position:absolute;left:0;font-family:var(--mono);color:var(--ink-soft)}
+  .result{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .result .rl{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+  .result p{font-size:13.5px;font-weight:700;line-height:1.6}
+
+  /* experience */
+  .xp{border:1px solid var(--line);border-radius:22px;background:var(--card);padding:28px}
+  .xphd{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .xphd h3{font-family:var(--disp);font-weight:900;font-size:clamp(22px,3vw,30px);letter-spacing:-.01em}
+  .xphd .date{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--muted)}
+  .xpsub{font-size:14px;font-style:italic;color:var(--ink-soft);margin-bottom:22px;max-width:62ch}
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .metric .big{font-family:var(--disp);font-weight:900;font-size:clamp(30px,4vw,46px);line-height:1;letter-spacing:-.02em}
+  .metric .lbl{font-size:12.5px;color:var(--ink-soft);margin-top:9px;line-height:1.5}
+  .intern{border:1px solid var(--line);border-radius:22px;background:var(--card);padding:28px;margin-top:20px}
+  .intern .pul{margin-bottom:0;margin-top:14px}
+
+  /* education */
+  .edu{display:flex;flex-direction:column;gap:12px}
+  .edurow{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:18px;background:var(--card);padding:20px 24px}
+  .edurow .eo{font-family:var(--disp);font-weight:900;font-size:20px}
+  .edurow .em{font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .edurow .date{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+
+  /* footer */
+  footer{position:relative;z-index:1;margin-top:30px;border-top:1px solid var(--line);padding:70px 0 40px;text-align:center}
+  footer .sayhi{font-family:var(--script);font-size:40px;color:var(--ink-soft);line-height:1}
+  footer h2{font-family:var(--disp);font-weight:900;font-size:clamp(36px,6.5vw,80px);line-height:.92;letter-spacing:-.01em;text-transform:uppercase;margin:6px 0 30px}
+  .sendbtn{margin:0 auto 44px;width:130px;height:130px;border-radius:50%;border:1px solid var(--ink);display:grid;place-items:center;
+    font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;position:relative;background:rgba(255,255,255,.4)}
+  .sendbtn::before{content:"[";position:absolute;left:-16px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:22px}
+  .sendbtn::after{content:"]";position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:22px}
+  .flinks{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px 40px}
+  .flinks a{font-family:var(--disp);font-weight:900;font-size:clamp(22px,4.4vw,52px);letter-spacing:-.01em;text-transform:uppercase;color:var(--ink);text-decoration:none;transition:.2s}
+  .flinks a:hover{opacity:.45}
+  .copyright{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;margin-top:36px;text-transform:uppercase}
+
+  @media(max-width:760px){
+    .ruler{display:none}
+    .caps{grid-template-columns:1fr}
+    .metrics{grid-template-columns:repeat(2,1fr)}
+    .navlinks a{padding:6px 4px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <span class="logo">晋佳莉<span class="s">/ Labs</span></span>
+    <span class="navlinks">
+      <a href="#about">[ 关于 ]</a>
+      <a href="#work">[ 项目 ]</a>
+      <a href="#contact">[ 联系 ]</a>
+    </span>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="ruler">
+      <span class="t">AI</span><span class="d">·</span>
+      <span class="t">RAG</span><span class="d">·</span>
+      <span class="t">AGENT</span><span class="d">·</span>
+      <span class="t">DATA</span><span class="d">·</span>
+      <span class="t">0→1</span>
+    </div>
+    <div class="orb"></div>
+    <div class="inner">
+      <div class="role">AI Product Manager · 在读 MBA</div>
+      <h1>JIN JIALI</h1>
+      <div class="cn">晋佳莉</div>
+      <span class="intent">★ 求职意向：AI 产品经理实习 · 可实习 6 个月以上</span>
+      <div class="herometa">
+        <span>15240034478</span><span>1014223067@qq.com</span><span>女 · 26岁</span><span>硕士在读</span>
+      </div>
+      <div class="scrollcue">SCROLL<br>项目作品</div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="sechead"><h2>个人简介<br><span style="font-size:.45em">About</span></h2><span class="idx">[ 01 / ABOUT ]</span></div>
+    <p>数字经济领域 <b>4 年 AI 产品经验</b>，现就读中国科学技术大学 MBA。具备从 0 到 1 独立落地多款 AI 原生产品的能力，方向覆盖 <span class="hl"><b>RAG 智能问答、多 Agent 协作、Agent 工具调用</b></span>。熟悉 AI 产品全流程（调研→需求→PRD→MVP→埋点→效果评估），能在设计阶段拆解 Agent 角色、任务链路与评测指标。希望在商业化 / C 端 AI 产品方向进一步深耕。</p>
+  </section>
+
+  <section id="caps">
+    <div class="sechead"><h2>核心能力</h2><span class="idx">[ 02 / CAPABILITIES ]</span></div>
+    <div class="caps">
+      <div class="cap"><div class="glow"></div><div class="n">01</div><h3>AI 产品 0→1 全流程</h3><p>市场调研、用户访谈、需求拆解、PRD 撰写、MVP 验证、数据埋点与效果评估，可形成可复制的交付方法论。</p></div>
+      <div class="cap"><div class="glow"></div><div class="n">02</div><h3>AI 原生技术理解</h3><p>RAG（分块、Embedding 选型、Reranker 重排）、多 Agent 架构与护栏设计、Prompt 工程、意图路由、Tool Use，并能定义质量评分与评测指标。</p></div>
+      <div class="cap"><div class="glow"></div><div class="n">03</div><h3>"一人 + AI" 独立交付</h3><p>借助 AI 编程（vibe coding）工具，独立完成软件产品从规划、研发协同到上线交付。</p></div>
+      <div class="cap"><div class="glow"></div><div class="n">04</div><h3>数据驱动迭代</h3><p>数据爬取、清洗与分析；围绕 AARRR 漏斗、留存与埋点数据搭建评估体系，驱动产品迭代与商业化判断。</p></div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="sechead"><h2>项目经历</h2><span class="idx">[ 03 / SELECTED WORK ]</span></div>
+
+    <article class="proj p1">
+      <div class="pbanner"><div class="iris"></div>
+        <div class="row"><span class="tags">RAG · 多 AGENT · 人机协作 · 质量评分</span><span class="arrow">→</span></div>
+        <h3>EditAI 智能写作助手</h3>
+      </div>
+      <div class="pbody">
+        <div class="pmeta"><span class="role">产品负责人 · 4 人小组</span><span class="date">2025.10 — 至今 · 在校项目</span></div>
+        <div class="pprob">面向深度写作者"精修难、风格易丢失"的痛点，打造本地优先、人机协作的全链路多智能体写作工作台。</div>
+        <ul class="pul">
+          <li>规划主编/写作/编辑/核查等九大模式，确立阶段不可回退、报告驱动 + 对话驱动双模式核心规则，主导核心 PRD 产出。</li>
+          <li>设计 Chief→Deputy→Editor 三层协作链路与能力边界，定义 Polish/Logic/Consistency 三维质量评分（通过线 ≥0.70），实现按分自动路由。</li>
+          <li>设计写作风格指纹机制与 analyze/edit 双模式，防止 AI 改稿覆盖作者原有风格；制定全链路埋点方案。</li>
+        </ul>
+        <div class="result"><span class="rl">Results</span><p>已部署上线，跑通完整人机协作流水线，兼容任意 OpenAI-compatible 模型；内测用户改稿效率提升 60%。</p></div>
+      </div>
+    </article>
+
+    <article class="proj p2">
+      <div class="pbanner"><div class="iris"></div>
+        <div class="row"><span class="tags">RAG 客服 · 意图路由 · TOOL USE</span><span class="arrow">→</span></div>
+        <h3>AI 相机租赁客服助手</h3>
+      </div>
+      <div class="pbody">
+        <div class="pmeta"><span class="role">产品负责人 · 独立研发</span><span class="date">2025.04 — 至今 · 个人创业项目</span></div>
+        <div class="pprob">针对相机租赁人工客服响应慢、订单管理成本高的痛点，独立研发覆盖 C 端服务与 B 端管理的智能客服系统。</div>
+        <ul class="pul">
+          <li>梳理设备/档期查询、下单改单、邮寄跟踪全链路场景，区分 C 端客户与 B 端管理两类视角，设计差异化对话路径与权限策略。</li>
+          <li>构建设备与租赁规则知识库 + RAG 精准问答；意图路由区分"设备咨询/租赁问答/订单操作"三类链路。</li>
+          <li>设计 AI 助手对订单数据的读写能力，用结构化指令与 Tool Use 实现排期查询、邮寄状态更新与订单确认自动化。</li>
+        </ul>
+        <div class="result"><span class="rl">Results</span><p>客户咨询响应从人工平均 30 分钟压缩至秒级，常见问题自动解答率 85%+，每周人工介入订单管理时长减少约 60%。</p></div>
+      </div>
+    </article>
+
+    <article class="proj p3">
+      <div class="pbanner"><div class="iris"></div>
+        <div class="row"><span class="tags">政策 RAG · EMBEDDING · RERANKER</span><span class="arrow">→</span></div>
+        <h3>江西数字经济政策智能问答助手</h3>
+      </div>
+      <div class="pbody">
+        <div class="pmeta"><span class="role">AI 产品负责人</span><span class="date">2023.12 — 2025.05 · 信通院 RAG 项目</span></div>
+        <div class="pprob">针对政策文件分散、查询效率低的痛点，主导打造覆盖企业、政府两类用户的 RAG 智能政策问答系统。</div>
+        <ul class="pul">
+          <li>主导知识库数据治理与分块调优，以中文召回率为核心完成 Embedding 选型对比（bge-large-zh vs. text2vec），引入 bge-reranker-large 精排。</li>
+          <li>为企业用户（政策申报、补贴匹配）与政府用户（政策解读、合规建议）设计差异化问答链路与 System Prompt，Router 模块实现意图识别与分发。</li>
+          <li>负责 PRD 与功能优先级梳理，协调研发/数据/运营推动系统 0→1 落地，制定验收标准与知识库更新机制。</li>
+        </ul>
+        <div class="result"><span class="rl">Results</span><p>收录政策文件 500+ 篇，Embedding 召回准确率 82%，重排后答案相关性提升约 18%；累计服务查询 10,000+ 次，政策申报辅助效率提升约 40%。</p></div>
+      </div>
+    </article>
+  </section>
+
+  <section id="exp">
+    <div class="sechead"><h2>工作经历</h2><span class="idx">[ 04 / EXPERIENCE ]</span></div>
+    <div class="xp">
+      <div class="xphd"><h3>中国信通院江西分院 · 产品经理</h3><span class="date">2021.07 — 2025.08</span></div>
+      <p class="xpsub">主导数字经济领域 AI 产品全生命周期管理，覆盖需求挖掘、产品设计、落地交付与商业化闭环，支撑省市级数字化转型项目。</p>
+      <div class="metrics">
+        <div class="metric"><div class="big">300+</div><div class="lbl">家企业深度调研 / 数字化诊断报告，沉淀结构化需求池</div></div>
+        <div class="metric"><div class="big">100+</div><div class="lbl">行业场景化解决方案，交付效率提升 35%</div></div>
+        <div class="metric"><div class="big">3000+</div><div class="lbl">家企业业务数据采集治理，构建指标与标签体系</div></div>
+        <div class="metric"><div class="big">2000万+</div><div class="lbl">10+ 省市级项目，100% 按期交付，带动合同额</div></div>
+      </div>
+    </div>
+
+    <div class="intern">
+      <div class="xphd"><h3>美的集团 · 产品经理（实习）</h3><span class="date">2020.09 — 2021.05</span></div>
+      <div style="font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase">[ Internship ]</div>
+      <ul class="pul">
+        <li>主导产品需求重构拆解（WBS），协同研发测试完成工作量评估，制定版本迭代计划与交付节点。</li>
+        <li>通过每日站会、周例会等敏捷机制追踪进展，识别并协调跨团队问题，对不合理延期做根因分析。</li>
+        <li>主导制定多项版本管理制度；开展新品项目 58 个、协调月度需求 134 个，<b>版本交付率从 78% 提升至 95%</b>。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="edu">
+    <div class="sechead"><h2>教育经历</h2><span class="idx">[ 05 / EDUCATION ]</span></div>
+    <div class="edu">
+      <div class="edurow"><div><div class="eo">中国科学技术大学</div><div class="em">工商管理（硕士）· MBA</div></div><span class="date">2025.09 — 2028.06</span></div>
+      <div class="edurow"><div><div class="eo">长江大学</div><div class="em">国际经济与贸易（本科）</div></div><span class="date">2017.09 — 2021.06</span></div>
+    </div>
+  </section>
+
+</div>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="sayhi">let's build together ~</div>
+    <h2>如果项目刚好<br>和你的岗位有关</h2>
+    <div class="sendbtn">SEND<br>联系我</div>
+    <div class="flinks">
+      <a href="mailto:1014223067@qq.com">EMAIL</a>
+      <a href="tel:15240034478">15240034478</a>
+      <a href="#">LINKEDIN</a>
+    </div>
+    <div class="copyright">© 2026 晋佳莉 · AI Product Manager · All Rights Reserved</div>
+  </div>
+</footer>
+
+</body>
+</html>
