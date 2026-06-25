@@ -192,8 +192,8 @@
     transform-origin:2% 43%;
     animation:rightWingBeat var(--flap-duration) ease-in-out infinite;
   }
-  .butterfly-cover:not(.is-gesture-on) .flap-wing-shell{animation-play-state:paused}
-  .butterfly-cover.is-gesture-on .flap-wing-shell{animation-play-state:running}
+  .butterfly-cover .flap-wing-shell{animation-play-state:paused}
+  .butterfly-cover.is-flapping .flap-wing-shell{animation-play-state:running}
   .flap-wing-image{
     width:200%;
   }
@@ -706,6 +706,9 @@
     let gestureReady = false;
     let handVisible = false;
     let gestureLoading = false;
+    let gestureRunId = 0;
+    let lastHandSample = null;
+    let stillFrameCount = 0;
 
     const clamp = (value, min, max, fallback = min) => {
       const next = Number.isFinite(value) ? value : fallback;
@@ -723,6 +726,29 @@
 
     const setState = (text) => {
       if (gestureState) gestureState.textContent = text;
+    };
+    const setFlapping = (isFlapping) => {
+      cover.classList.toggle("is-flapping", Boolean(isFlapping));
+    };
+    const isHandMoving = ({ x, y, open }) => {
+      if (!lastHandSample) {
+        lastHandSample = { x, y, open };
+        stillFrameCount = 6;
+        return true;
+      }
+
+      const movement =
+        Math.hypot(x - lastHandSample.x, y - lastHandSample.y) +
+        Math.abs(open - lastHandSample.open) * 0.65;
+      lastHandSample = { x, y, open };
+
+      if (movement > 0.022) {
+        stillFrameCount = 0;
+      } else {
+        stillFrameCount += 1;
+      }
+
+      return stillFrameCount < 8;
     };
     const friendlyError = (error) => {
       const message = error instanceof Error ? error.message : String(error || "");
@@ -762,7 +788,7 @@
     };
 
     const updateFromPointer = (event) => {
-      if (!gestureReady) return;
+      if (!gestureReady || stream) return;
       const rect = cover.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
 
@@ -782,6 +808,7 @@
         x: relativeX * 100,
         y: relativeY * 100
       });
+      setFlapping(nextOpen > 0.58);
     };
 
     const soften = () => {
@@ -790,6 +817,7 @@
       if (gestureReady && handVisible) return;
       resetTimer = window.setTimeout(() => {
         cover.classList.remove("is-active");
+        setFlapping(false);
         setMotion({ open: 0.74, swipe: 0, x: 50, y: 48 });
       }, 360);
     };
@@ -817,16 +845,31 @@
           const rawOpen = clamp((averageTipDistance - 1.45) / 1.05, 0, 1, 0.74);
           const smoothedOpen = openRatio * 0.75 + rawOpen * 0.25;
           const palmCenter = averagePoint([hand[0], hand[5], hand[9], hand[13], hand[17]]);
-
-          setMotion({
-            open: smoothedOpen,
-            swipe: 0,
-            x: (1 - palmCenter.x) * 100,
-            y: palmCenter.y * 100
+          const handMoving = isHandMoving({
+            x: palmCenter.x,
+            y: palmCenter.y,
+            open: rawOpen
           });
-          setState(smoothedOpen > 0.58 ? "手掌张开" : "握拳闭拢");
+
+          if (handMoving) {
+            setMotion({
+              open: smoothedOpen,
+              swipe: 0,
+              x: (1 - palmCenter.x) * 100,
+              y: palmCenter.y * 100
+            });
+          }
+          setFlapping(handMoving && smoothedOpen > 0.58);
+          setState(
+            smoothedOpen > 0.58
+              ? handMoving ? "手掌张开" : "手掌静止"
+              : "握拳闭拢"
+          );
         } else {
           handVisible = false;
+          lastHandSample = null;
+          stillFrameCount = 0;
+          setFlapping(false);
           setMotion({ open: openRatio * 0.82 + 0.74 * 0.18, swipe: 0, x: 50, y: 48 });
           setState("等待手掌");
         }
@@ -836,8 +879,13 @@
     };
 
     const stopGesture = () => {
+      gestureRunId += 1;
+      gestureLoading = false;
       gestureReady = false;
       handVisible = false;
+      lastHandSample = null;
+      stillFrameCount = 0;
+      setFlapping(false);
       if (rafId) window.cancelAnimationFrame(rafId);
       rafId = 0;
       if (handLandmarker?.close) handLandmarker.close();
@@ -845,7 +893,7 @@
       stream?.getTracks().forEach((track) => track.stop());
       stream = null;
       if (video) video.srcObject = null;
-      cover.classList.remove("is-camera-on", "is-gesture-on", "is-active", "is-pressing");
+      cover.classList.remove("is-camera-on", "is-gesture-on", "is-active", "is-pressing", "is-flapping");
       setMotion({ open: 0.74, swipe: 0, x: 50, y: 48 });
       if (gestureButton) {
         gestureButton.disabled = false;
@@ -855,17 +903,19 @@
     };
 
     const startGesture = async () => {
-      if (gestureLoading) return;
-      if (gestureReady) {
+      if (gestureLoading || gestureReady) {
         stopGesture();
         return;
       }
 
+      const runId = gestureRunId + 1;
+      gestureRunId = runId;
+
       try {
         gestureLoading = true;
         if (gestureButton) {
-          gestureButton.disabled = true;
-          gestureButton.textContent = "开启中";
+          gestureButton.disabled = false;
+          gestureButton.textContent = "关闭手势";
         }
         setState("请求摄像头");
 
@@ -880,7 +930,7 @@
           throw new Error("浏览器不支持摄像头");
         }
 
-        stream = await navigator.mediaDevices.getUserMedia({
+        const mediaStream = await navigator.mediaDevices.getUserMedia({
           video: {
             width: { ideal: 640 },
             height: { ideal: 480 },
@@ -888,13 +938,21 @@
           },
           audio: false
         });
+        if (runId !== gestureRunId) {
+          mediaStream.getTracks().forEach((track) => track.stop());
+          return;
+        }
 
+        stream = mediaStream;
         video.srcObject = stream;
         await video.play();
+        if (runId !== gestureRunId) return;
 
         setState("加载识别模型");
         const { FilesetResolver, HandLandmarker } = await import(visionBundle);
+        if (runId !== gestureRunId) return;
         const vision = await FilesetResolver.forVisionTasks(visionWasm);
+        if (runId !== gestureRunId) return;
         const baseOptions = { modelAssetPath: handModel };
         const options = {
           baseOptions,
@@ -910,6 +968,11 @@
         } catch {
           handLandmarker = await HandLandmarker.createFromOptions(vision, options);
         }
+        if (runId !== gestureRunId) {
+          handLandmarker?.close?.();
+          handLandmarker = null;
+          return;
+        }
 
         gestureReady = true;
         cover.classList.add("is-camera-on", "is-active", "is-gesture-on");
@@ -920,10 +983,12 @@
         setState("等待手掌");
         rafId = window.requestAnimationFrame(analyzeFrame);
       } catch (error) {
-        stopGesture();
-        setState(friendlyError(error));
+        if (runId === gestureRunId) {
+          stopGesture();
+          setState(friendlyError(error));
+        }
       } finally {
-        gestureLoading = false;
+        if (runId === gestureRunId) gestureLoading = false;
       }
     };
 
