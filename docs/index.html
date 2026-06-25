@@ -234,6 +234,70 @@
     opacity:.64;
     transform:translateX(-50%) translateY(-2px);
   }
+  .gesture-video{
+    position:absolute;
+    right:18px;
+    bottom:18px;
+    z-index:4;
+    width:128px;
+    height:96px;
+    border:1px solid rgba(11,11,15,.14);
+    border-radius:14px;
+    object-fit:cover;
+    opacity:0;
+    transform:scaleX(-1);
+    pointer-events:none;
+    transition:opacity .2s ease;
+  }
+  .butterfly-cover.is-camera-on .gesture-video{opacity:.18}
+  .gesture-console{
+    position:absolute;
+    left:18px;
+    bottom:22px;
+    z-index:5;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .gesture-button{
+    min-height:42px;
+    border:1px solid var(--ink);
+    border-radius:999px;
+    padding:0 18px;
+    color:var(--ink);
+    background:rgba(255,255,255,.52);
+    box-shadow:0 10px 24px rgba(42,43,88,.1);
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:opacity .2s ease,transform .2s ease,background .2s ease;
+  }
+  .gesture-button:hover{
+    opacity:.72;
+    transform:translateY(-2px);
+  }
+  .gesture-button:disabled{
+    cursor:wait;
+    opacity:.64;
+    transform:none;
+  }
+  .gesture-state{
+    min-width:118px;
+    border:1px solid rgba(11,11,15,.12);
+    border-radius:999px;
+    padding:9px 12px;
+    color:var(--ink-soft);
+    background:rgba(255,255,255,.4);
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    text-align:center;
+  }
 
   /* hero */
   .hero{position:relative;padding:64px 0 40px;text-align:center}
@@ -387,9 +451,29 @@
     .flap-scroll-cue{
       width:78px;
       height:78px;
-      bottom:10px;
+      bottom:72px;
       font-size:9px;
     }
+    .gesture-console{
+      left:50%;
+      bottom:12px;
+      width:calc(100% - 36px);
+      justify-content:center;
+      transform:translateX(-50%);
+    }
+    .gesture-button{
+      flex:0 0 auto;
+      min-height:38px;
+      padding:0 13px;
+      font-size:10px;
+    }
+    .gesture-state{
+      min-width:0;
+      flex:1 1 auto;
+      padding:8px 9px;
+      font-size:9px;
+    }
+    .gesture-video{display:none}
     .ruler{display:none}
     .caps{grid-template-columns:1fr}
     .metrics{grid-template-columns:repeat(2,1fr)}
@@ -424,8 +508,13 @@
           <img class="flap-wing-image flap-wing-image-right" src="assets/images/butterfly-cutout.png" alt="" draggable="false">
         </div>
       </div>
+      <video class="gesture-video" muted playsinline aria-hidden="true"></video>
     </div>
     <a class="flap-scroll-cue" href="#hero">PORT<br>FOLIO</a>
+    <div class="gesture-console" aria-live="polite">
+      <button class="gesture-button" type="button">开启手势</button>
+      <span class="gesture-state">手势未开启</span>
+    </div>
   </section>
 
   <section id="hero" class="hero">
@@ -572,11 +661,38 @@
     const cover = document.querySelector(".butterfly-cover");
     if (!cover) return;
 
+    const video = cover.querySelector(".gesture-video");
+    const gestureButton = cover.querySelector(".gesture-button");
+    const gestureState = cover.querySelector(".gesture-state");
+    const visionVersion = "0.10.22-rc.20250304";
+    const visionBundle = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${visionVersion}/vision_bundle.mjs`;
+    const visionWasm = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${visionVersion}/wasm`;
+    const handModel = "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task";
+
     let openRatio = 0.74;
     let pointerStart = null;
     let resetTimer = 0;
+    let stream = null;
+    let handLandmarker = null;
+    let rafId = 0;
+    let gestureReady = false;
+    let handVisible = false;
+    let gestureLoading = false;
 
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const distance = (a, b) =>
+      Math.hypot(a.x - b.x, a.y - b.y, (a.z || 0) - (b.z || 0));
+    const averagePoint = (points) => {
+      const total = points.reduce(
+        (sum, point) => ({ x: sum.x + point.x, y: sum.y + point.y }),
+        { x: 0, y: 0 }
+      );
+      return { x: total.x / points.length, y: total.y / points.length };
+    };
+
+    const setState = (text) => {
+      if (gestureState) gestureState.textContent = text;
+    };
 
     const setMotion = ({ open = openRatio, swipe = 0, x = 50, y = 48 } = {}) => {
       openRatio = clamp(open, 0.12, 1);
@@ -629,10 +745,138 @@
     const soften = () => {
       cover.classList.remove("is-pressing");
       pointerStart = null;
+      if (gestureReady && handVisible) return;
       resetTimer = window.setTimeout(() => {
         cover.classList.remove("is-active");
         setMotion({ open: 0.74, swipe: 0, x: 50, y: 48 });
       }, 360);
+    };
+
+    const analyzeFrame = () => {
+      if (!gestureReady || !video || !handLandmarker) return;
+
+      if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        const results = handLandmarker.detectForVideo(video, performance.now());
+        const hand = results.landmarks?.[0];
+
+        if (hand?.length) {
+          handVisible = true;
+          cover.classList.add("is-active");
+          window.clearTimeout(resetTimer);
+
+          const wrist = hand[0];
+          const palmAnchor = hand[9];
+          const palmSize = Math.max(distance(wrist, palmAnchor), 0.001);
+          const tips = [hand[4], hand[8], hand[12], hand[16], hand[20]];
+          const averageTipDistance =
+            tips.reduce((sum, tip) => sum + distance(wrist, tip), 0) /
+            tips.length /
+            palmSize;
+          const rawOpen = clamp((averageTipDistance - 1.45) / 1.05);
+          const smoothedOpen = openRatio * 0.75 + rawOpen * 0.25;
+          const palmCenter = averagePoint([hand[0], hand[5], hand[9], hand[13], hand[17]]);
+
+          setMotion({
+            open: smoothedOpen,
+            swipe: 0,
+            x: (1 - palmCenter.x) * 100,
+            y: palmCenter.y * 100
+          });
+          setState(smoothedOpen > 0.58 ? "手掌张开" : "握拳闭拢");
+        } else {
+          handVisible = false;
+          setState("等待手掌");
+        }
+      }
+
+      rafId = window.requestAnimationFrame(analyzeFrame);
+    };
+
+    const stopGesture = () => {
+      gestureReady = false;
+      handVisible = false;
+      if (rafId) window.cancelAnimationFrame(rafId);
+      rafId = 0;
+      if (handLandmarker?.close) handLandmarker.close();
+      handLandmarker = null;
+      stream?.getTracks().forEach((track) => track.stop());
+      stream = null;
+      if (video) video.srcObject = null;
+      cover.classList.remove("is-camera-on");
+      if (gestureButton) {
+        gestureButton.disabled = false;
+        gestureButton.textContent = "开启手势";
+      }
+      setState("手势未开启");
+    };
+
+    const startGesture = async () => {
+      if (gestureLoading) return;
+      if (gestureReady) {
+        stopGesture();
+        return;
+      }
+
+      try {
+        gestureLoading = true;
+        if (gestureButton) {
+          gestureButton.disabled = true;
+          gestureButton.textContent = "开启中";
+        }
+        setState("请求摄像头");
+
+        if (!window.isSecureContext && location.hostname !== "localhost") {
+          throw new Error("需要 HTTPS");
+        }
+        if (!navigator.mediaDevices?.getUserMedia) {
+          throw new Error("浏览器不支持摄像头");
+        }
+
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 640 },
+            height: { ideal: 480 },
+            facingMode: "user"
+          },
+          audio: false
+        });
+
+        video.srcObject = stream;
+        await video.play();
+
+        setState("加载识别模型");
+        const { FilesetResolver, HandLandmarker } = await import(visionBundle);
+        const vision = await FilesetResolver.forVisionTasks(visionWasm);
+        const baseOptions = { modelAssetPath: handModel };
+        const options = {
+          baseOptions,
+          runningMode: "VIDEO",
+          numHands: 1
+        };
+
+        try {
+          handLandmarker = await HandLandmarker.createFromOptions(vision, {
+            ...options,
+            baseOptions: { ...baseOptions, delegate: "GPU" }
+          });
+        } catch {
+          handLandmarker = await HandLandmarker.createFromOptions(vision, options);
+        }
+
+        gestureReady = true;
+        cover.classList.add("is-camera-on", "is-active");
+        if (gestureButton) {
+          gestureButton.disabled = false;
+          gestureButton.textContent = "关闭手势";
+        }
+        setState("等待手掌");
+        rafId = window.requestAnimationFrame(analyzeFrame);
+      } catch (error) {
+        stopGesture();
+        setState(error instanceof Error ? error.message : "手势不可用");
+      } finally {
+        gestureLoading = false;
+      }
     };
 
     cover.addEventListener("pointerenter", () => cover.classList.add("is-active"));
@@ -651,6 +895,7 @@
       setMotion({ open: 1, swipe: 0.22, x: 50, y: 38 });
     });
     cover.addEventListener("blur", soften);
+    gestureButton?.addEventListener("click", startGesture);
 
     setMotion();
   })();
