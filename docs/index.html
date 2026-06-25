@@ -158,6 +158,13 @@
   }
   .flap-rig::before{
     background:
+      linear-gradient(
+        180deg,
+        transparent 0 10%,
+        rgba(255,255,255,.78) 30%,
+        rgba(174,198,242,.48) 44%,
+        transparent 68%
+      ),
       repeating-linear-gradient(
         90deg,
         transparent 0 13px,
@@ -165,6 +172,8 @@
         rgba(255,255,255,.82) 16px 17px,
         transparent 18px 28px
       );
+    background-size:100% 96px,auto;
+    background-position:0 -96px,0 0;
     filter:drop-shadow(0 0 12px rgba(174,198,242,.64));
     mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 78%,transparent 100%);
     -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 78%,transparent 100%);
@@ -480,7 +489,7 @@
   }
   @keyframes fallingThreads{
     0%{
-      background-position:0 -48px;
+      background-position:0 -112px,0 0;
       opacity:.42;
       transform:translateX(-50%) translateY(-7px);
     }
@@ -488,7 +497,7 @@
       opacity:.68;
     }
     100%{
-      background-position:0 48px;
+      background-position:0 112px,0 0;
       opacity:.42;
       transform:translateX(-50%) translateY(9px);
     }
@@ -766,6 +775,7 @@
     let pointerStart = null;
     let resetTimer = 0;
     let stream = null;
+    const activeStreams = new Set();
     let handLandmarker = null;
     let rafId = 0;
     let gestureReady = false;
@@ -794,6 +804,24 @@
     };
     const setFlapping = (isFlapping) => {
       cover.classList.toggle("is-flapping", Boolean(isFlapping));
+    };
+    const isControlTarget = (event) =>
+      Boolean(event.target?.closest?.(".gesture-console"));
+    const stopStream = (targetStream) => {
+      if (!targetStream) return;
+      targetStream.getTracks().forEach((track) => track.stop());
+      activeStreams.delete(targetStream);
+    };
+    const stopAllStreams = () => {
+      Array.from(activeStreams).forEach((targetStream) => stopStream(targetStream));
+      stopStream(stream);
+      stream = null;
+      if (video) {
+        video.pause();
+        video.srcObject = null;
+        video.removeAttribute("src");
+        video.load();
+      }
     };
     const isHandMoving = ({ x, y, open }) => {
       if (!lastHandSample) {
@@ -853,7 +881,7 @@
     };
 
     const updateFromPointer = (event) => {
-      if (!gestureReady || stream) return;
+      if (!gestureReady || stream || isControlTarget(event)) return;
       const rect = cover.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
 
@@ -955,9 +983,7 @@
       rafId = 0;
       if (handLandmarker?.close) handLandmarker.close();
       handLandmarker = null;
-      stream?.getTracks().forEach((track) => track.stop());
-      stream = null;
-      if (video) video.srcObject = null;
+      stopAllStreams();
       cover.classList.remove("is-camera-on", "is-gesture-on", "is-active", "is-pressing", "is-flapping");
       setMotion({ open: 0.74, swipe: 0, x: 50, y: 48 });
       if (gestureButton) {
@@ -1003,8 +1029,9 @@
           },
           audio: false
         });
+        activeStreams.add(mediaStream);
         if (runId !== gestureRunId) {
-          mediaStream.getTracks().forEach((track) => track.stop());
+          stopStream(mediaStream);
           return;
         }
 
@@ -1062,7 +1089,7 @@
     });
     cover.addEventListener("pointermove", updateFromPointer);
     cover.addEventListener("pointerdown", (event) => {
-      if (!gestureReady) return;
+      if (!gestureReady || isControlTarget(event)) return;
       pointerStart = event.clientX;
       cover.classList.add("is-active", "is-pressing");
       cover.setPointerCapture?.(event.pointerId);
