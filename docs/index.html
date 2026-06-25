@@ -162,7 +162,7 @@
   .flap-butterfly-base{
     inset:0;
     width:100%;
-    opacity:calc(.46 + var(--open-ratio) * .14);
+    opacity:calc(.58 + var(--open-ratio) * .16);
   }
   .flap-wing-shell{
     position:absolute;
@@ -171,7 +171,7 @@
     z-index:2;
     width:50%;
     overflow:hidden;
-    opacity:calc(.58 + var(--open-ratio) * .34);
+    opacity:calc(.72 + var(--open-ratio) * .24);
     transform-style:preserve-3d;
     backface-visibility:hidden;
     will-change:transform;
@@ -707,7 +707,10 @@
     let handVisible = false;
     let gestureLoading = false;
 
-    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const clamp = (value, min, max, fallback = min) => {
+      const next = Number.isFinite(value) ? value : fallback;
+      return Math.min(max, Math.max(min, next));
+    };
     const distance = (a, b) =>
       Math.hypot(a.x - b.x, a.y - b.y, (a.z || 0) - (b.z || 0));
     const averagePoint = (points) => {
@@ -733,17 +736,17 @@
     };
 
     const setMotion = ({ open = openRatio, swipe = 0, x = 50, y = 48 } = {}) => {
-      openRatio = clamp(open, 0.12, 1);
-      const wingFold = (1 - openRatio) * 66;
-      const wingFlap = 8 + openRatio * 24;
+      openRatio = clamp(open, 0.22, 1, 0.74);
+      const wingFold = (1 - openRatio) * 46;
+      const wingFlap = 6 + openRatio * 22;
       const wingFlapSoft = wingFlap * 0.62;
-      const closedTilt = (1 - openRatio) * 5;
+      const closedTilt = (1 - openRatio) * 3.5;
       const openTilt = openRatio * 2;
       const duration = 1.12 - openRatio * 0.52;
       const scale = 0.92 + openRatio * 0.12 + swipe * 0.04;
 
       cover.style.setProperty("--open-ratio", openRatio.toFixed(3));
-      cover.style.setProperty("--swipe-progress", clamp(swipe, 0, 1).toFixed(3));
+      cover.style.setProperty("--swipe-progress", clamp(swipe, 0, 1, 0).toFixed(3));
       cover.style.setProperty("--wing-left-rest", `${wingFold.toFixed(2)}deg`);
       cover.style.setProperty("--wing-right-rest", `${(-wingFold).toFixed(2)}deg`);
       cover.style.setProperty("--wing-flap", `${wingFlap.toFixed(2)}deg`);
@@ -754,8 +757,8 @@
       cover.style.setProperty("--wing-right-open-tilt", `${(-openTilt).toFixed(2)}deg`);
       cover.style.setProperty("--flap-duration", `${duration.toFixed(2)}s`);
       cover.style.setProperty("--butterfly-scale", scale.toFixed(3));
-      cover.style.setProperty("--pointer-x", `${clamp(x, 6, 94).toFixed(2)}%`);
-      cover.style.setProperty("--pointer-y", `${clamp(y, 8, 90).toFixed(2)}%`);
+      cover.style.setProperty("--pointer-x", `${clamp(x, 6, 94, 50).toFixed(2)}%`);
+      cover.style.setProperty("--pointer-y", `${clamp(y, 8, 90, 48).toFixed(2)}%`);
     };
 
     const updateFromPointer = (event) => {
@@ -811,7 +814,7 @@
             tips.reduce((sum, tip) => sum + distance(wrist, tip), 0) /
             tips.length /
             palmSize;
-          const rawOpen = clamp((averageTipDistance - 1.45) / 1.05);
+          const rawOpen = clamp((averageTipDistance - 1.45) / 1.05, 0, 1, 0.74);
           const smoothedOpen = openRatio * 0.75 + rawOpen * 0.25;
           const palmCenter = averagePoint([hand[0], hand[5], hand[9], hand[13], hand[17]]);
 
@@ -824,6 +827,7 @@
           setState(smoothedOpen > 0.58 ? "手掌张开" : "握拳闭拢");
         } else {
           handVisible = false;
+          setMotion({ open: openRatio * 0.82 + 0.74 * 0.18, swipe: 0, x: 50, y: 48 });
           setState("等待手掌");
         }
       }
