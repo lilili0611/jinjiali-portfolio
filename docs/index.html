@@ -144,6 +144,46 @@
     transform-style:preserve-3d;
     transition:transform .22s ease;
   }
+  .flap-rig::before,
+  .flap-rig::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:54%;
+    z-index:3;
+    width:min(13rem,24%);
+    height:39%;
+    transform:translateX(-50%);
+    pointer-events:none;
+  }
+  .flap-rig::before{
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent 0 13px,
+        rgba(173,197,239,.42) 14px 15px,
+        rgba(255,255,255,.82) 16px 17px,
+        transparent 18px 28px
+      );
+    filter:drop-shadow(0 0 12px rgba(174,198,242,.64));
+    mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 78%,transparent 100%);
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 13%,#000 78%,transparent 100%);
+    opacity:.58;
+    animation:fallingThreads 2.8s linear infinite;
+  }
+  .flap-rig::after{
+    top:80%;
+    width:min(18rem,32%);
+    height:13%;
+    border-radius:50%;
+    background:
+      radial-gradient(ellipse at 50% 72%,rgba(255,255,255,.76) 0 8%,rgba(174,198,242,.42) 12% 34%,transparent 68%),
+      radial-gradient(circle at 31% 54%,rgba(255,255,255,.32) 0 1px,transparent 3px),
+      radial-gradient(circle at 68% 58%,rgba(151,183,235,.28) 0 1px,transparent 4px);
+    filter:blur(.2px) drop-shadow(0 0 18px rgba(174,198,242,.72));
+    opacity:.52;
+    animation:fallingGlow 2.2s ease-in-out infinite;
+  }
   .flap-butterfly-base,
   .flap-wing-image{
     position:absolute;
@@ -436,6 +476,31 @@
         perspective(1100px)
         rotateY(calc(var(--wing-right-rest) + var(--wing-flap)))
         rotateZ(var(--wing-right-open-tilt));
+    }
+  }
+  @keyframes fallingThreads{
+    0%{
+      background-position:0 -48px;
+      opacity:.42;
+      transform:translateX(-50%) translateY(-7px);
+    }
+    50%{
+      opacity:.68;
+    }
+    100%{
+      background-position:0 48px;
+      opacity:.42;
+      transform:translateX(-50%) translateY(9px);
+    }
+  }
+  @keyframes fallingGlow{
+    0%,100%{
+      opacity:.48;
+      transform:translateX(-50%) scale(.94);
+    }
+    50%{
+      opacity:.78;
+      transform:translateX(-50%) scale(1.05);
     }
   }
 
