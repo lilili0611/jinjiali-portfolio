@@ -192,6 +192,8 @@
     transform-origin:2% 43%;
     animation:rightWingBeat var(--flap-duration) ease-in-out infinite;
   }
+  .butterfly-cover:not(.is-gesture-on) .flap-wing-shell{animation-play-state:paused}
+  .butterfly-cover.is-gesture-on .flap-wing-shell{animation-play-state:running}
   .flap-wing-image{
     width:200%;
   }
@@ -255,6 +257,11 @@
     left:18px;
     bottom:22px;
     z-index:5;
+    display:grid;
+    gap:7px;
+    justify-items:start;
+  }
+  .gesture-controls-row{
     display:flex;
     align-items:center;
     gap:10px;
@@ -297,6 +304,17 @@
     letter-spacing:.08em;
     text-transform:uppercase;
     text-align:center;
+  }
+  .gesture-hint{
+    max-width:min(30rem,calc(100vw - 36px));
+    margin:0;
+    border:1px solid rgba(11,11,15,.1);
+    border-radius:999px;
+    padding:7px 12px;
+    color:var(--ink-soft);
+    background:rgba(255,255,255,.34);
+    font-size:12px;
+    line-height:1.35;
   }
 
   /* hero */
@@ -451,16 +469,17 @@
     .flap-scroll-cue{
       width:78px;
       height:78px;
-      bottom:72px;
+      bottom:126px;
       font-size:9px;
     }
     .gesture-console{
       left:50%;
       bottom:12px;
       width:calc(100% - 36px);
-      justify-content:center;
+      justify-items:center;
       transform:translateX(-50%);
     }
+    .gesture-controls-row{width:100%}
     .gesture-button{
       flex:0 0 auto;
       min-height:38px;
@@ -472,6 +491,12 @@
       flex:1 1 auto;
       padding:8px 9px;
       font-size:9px;
+    }
+    .gesture-hint{
+      width:100%;
+      padding:7px 10px;
+      font-size:11px;
+      text-align:center;
     }
     .gesture-video{display:none}
     .ruler{display:none}
@@ -512,8 +537,11 @@
     </div>
     <a class="flap-scroll-cue" href="#hero">PORT<br>FOLIO</a>
     <div class="gesture-console" aria-live="polite">
-      <button class="gesture-button" type="button">开启手势</button>
-      <span class="gesture-state">手势未开启</span>
+      <div class="gesture-controls-row">
+        <button class="gesture-button" type="button">开启手势</button>
+        <span class="gesture-state">手势未开启</span>
+      </div>
+      <p class="gesture-hint">手掌张开，蝴蝶扇动翅膀；手掌握拳，蝴蝶闭拢翅膀。</p>
     </div>
   </section>
 
@@ -693,6 +721,16 @@
     const setState = (text) => {
       if (gestureState) gestureState.textContent = text;
     };
+    const friendlyError = (error) => {
+      const message = error instanceof Error ? error.message : String(error || "");
+      if (/permission|notallowed/i.test(message)) {
+        return "摄像头权限被拒绝";
+      }
+      if (/notfound|device/i.test(message)) {
+        return "未找到摄像头";
+      }
+      return message || "手势不可用";
+    };
 
     const setMotion = ({ open = openRatio, swipe = 0, x = 50, y = 48 } = {}) => {
       openRatio = clamp(open, 0.12, 1);
@@ -721,6 +759,7 @@
     };
 
     const updateFromPointer = (event) => {
+      if (!gestureReady) return;
       const rect = cover.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
 
@@ -802,7 +841,8 @@
       stream?.getTracks().forEach((track) => track.stop());
       stream = null;
       if (video) video.srcObject = null;
-      cover.classList.remove("is-camera-on");
+      cover.classList.remove("is-camera-on", "is-gesture-on", "is-active", "is-pressing");
+      setMotion({ open: 0.74, swipe: 0, x: 50, y: 48 });
       if (gestureButton) {
         gestureButton.disabled = false;
         gestureButton.textContent = "开启手势";
@@ -825,7 +865,11 @@
         }
         setState("请求摄像头");
 
-        if (!window.isSecureContext && location.hostname !== "localhost") {
+        if (location.protocol === "file:") {
+          throw new Error("请用 HTTPS 或本地服务打开");
+        }
+        const localHostnames = ["localhost", "127.0.0.1", "::1"];
+        if (!window.isSecureContext && !localHostnames.includes(location.hostname)) {
           throw new Error("需要 HTTPS");
         }
         if (!navigator.mediaDevices?.getUserMedia) {
@@ -864,7 +908,7 @@
         }
 
         gestureReady = true;
-        cover.classList.add("is-camera-on", "is-active");
+        cover.classList.add("is-camera-on", "is-active", "is-gesture-on");
         if (gestureButton) {
           gestureButton.disabled = false;
           gestureButton.textContent = "关闭手势";
@@ -873,15 +917,18 @@
         rafId = window.requestAnimationFrame(analyzeFrame);
       } catch (error) {
         stopGesture();
-        setState(error instanceof Error ? error.message : "手势不可用");
+        setState(friendlyError(error));
       } finally {
         gestureLoading = false;
       }
     };
 
-    cover.addEventListener("pointerenter", () => cover.classList.add("is-active"));
+    cover.addEventListener("pointerenter", () => {
+      if (gestureReady) cover.classList.add("is-active");
+    });
     cover.addEventListener("pointermove", updateFromPointer);
     cover.addEventListener("pointerdown", (event) => {
+      if (!gestureReady) return;
       pointerStart = event.clientX;
       cover.classList.add("is-active", "is-pressing");
       cover.setPointerCapture?.(event.pointerId);
@@ -891,6 +938,7 @@
     cover.addEventListener("pointercancel", soften);
     cover.addEventListener("pointerleave", soften);
     cover.addEventListener("focus", () => {
+      if (!gestureReady) return;
       cover.classList.add("is-active");
       setMotion({ open: 1, swipe: 0.22, x: 50, y: 38 });
     });
