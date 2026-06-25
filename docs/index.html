@@ -55,6 +55,186 @@
   .navlinks a{color:var(--ink);text-decoration:none;padding:6px 8px;transition:.2s}
   .navlinks a:hover{opacity:.5}
 
+  /* butterfly interaction */
+  .butterfly-cover{
+    --open-ratio:.74;
+    --swipe-progress:0;
+    --wing-left-rest:17deg;
+    --wing-right-rest:-17deg;
+    --wing-flap:26deg;
+    --wing-flap-soft:16deg;
+    --wing-left-closed-tilt:-1.3deg;
+    --wing-right-closed-tilt:1.3deg;
+    --wing-left-open-tilt:1.5deg;
+    --wing-right-open-tilt:-1.5deg;
+    --flap-duration:.74s;
+    --butterfly-scale:1;
+    --pointer-x:50%;
+    --pointer-y:48%;
+    display:grid;
+    min-height:calc(100svh - 62px);
+    place-items:center;
+    padding:clamp(28px,5vw,64px) 0 clamp(34px,6vw,74px);
+    overflow:hidden;
+    isolation:isolate;
+    touch-action:pan-y;
+  }
+  .flap-stage{
+    position:relative;
+    display:grid;
+    width:min(980px,100%);
+    height:min(72svh,720px);
+    min-height:460px;
+    place-items:center;
+    cursor:grab;
+    user-select:none;
+  }
+  .butterfly-cover.is-pressing .flap-stage{cursor:grabbing}
+  .flap-stage::before,
+  .flap-stage::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+  }
+  .flap-stage::before{
+    width:min(520px,62vw);
+    height:min(520px,62vw);
+    background:conic-gradient(from 210deg,var(--iris-p),var(--iris-k),var(--iris-b),var(--iris-p));
+    filter:blur(42px);
+    opacity:.62;
+    transform:translate(
+      calc((var(--swipe-progress) - .2) * 42px),
+      2%
+    );
+  }
+  .flap-stage::after{
+    width:min(660px,80vw);
+    height:min(660px,80vw);
+    border:1px solid rgba(11,11,15,.12);
+    opacity:.35;
+    transform:rotate(-12deg) scale(calc(.94 + var(--open-ratio) * .08));
+  }
+  .flap-orbit{
+    position:absolute;
+    left:var(--pointer-x);
+    top:var(--pointer-y);
+    z-index:3;
+    width:clamp(54px,calc(44px + var(--open-ratio) * 88px),140px);
+    height:clamp(54px,calc(44px + var(--open-ratio) * 88px),140px);
+    border:1px solid rgba(11,11,15,.24);
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.36),transparent 68%);
+    box-shadow:0 0 26px rgba(174,198,242,.45);
+    opacity:0;
+    transform:translate(-50%,-50%);
+    transition:opacity .18s ease,width .2s ease,height .2s ease,left .16s ease,top .16s ease;
+    pointer-events:none;
+  }
+  .butterfly-cover.is-active .flap-orbit{opacity:.74}
+  .flap-rig{
+    position:relative;
+    z-index:2;
+    width:min(58rem,96vw);
+    height:min(72svh,45rem);
+    min-height:420px;
+    transform:
+      translateX(calc(var(--swipe-progress) * 38px))
+      scale(var(--butterfly-scale));
+    transform-style:preserve-3d;
+    transition:transform .22s ease;
+  }
+  .flap-butterfly-base,
+  .flap-wing-image{
+    position:absolute;
+    top:0;
+    height:100%;
+    max-width:none;
+    object-fit:contain;
+    user-select:none;
+    -webkit-user-drag:none;
+    filter:
+      drop-shadow(0 28px 38px rgba(42,43,88,.18))
+      drop-shadow(0 0 28px rgba(174,198,242,.58))
+      saturate(calc(1.05 + var(--open-ratio) * .28))
+      brightness(calc(.98 + var(--open-ratio) * .08));
+  }
+  .flap-butterfly-base{
+    inset:0;
+    width:100%;
+    opacity:calc(.46 + var(--open-ratio) * .14);
+  }
+  .flap-wing-shell{
+    position:absolute;
+    top:0;
+    bottom:0;
+    z-index:2;
+    width:50%;
+    overflow:hidden;
+    opacity:calc(.58 + var(--open-ratio) * .34);
+    transform-style:preserve-3d;
+    backface-visibility:hidden;
+    will-change:transform;
+  }
+  .flap-wing-shell-left{
+    left:0;
+    clip-path:polygon(1% 6%,100% 12%,100% 62%,75% 68%,44% 70%,10% 86%,0 82%,0 12%);
+    -webkit-mask-image:linear-gradient(90deg,#000 0 84%,rgba(0,0,0,.72) 94%,transparent 100%);
+    mask-image:linear-gradient(90deg,#000 0 84%,rgba(0,0,0,.72) 94%,transparent 100%);
+    transform-origin:98% 43%;
+    animation:leftWingBeat var(--flap-duration) ease-in-out infinite;
+  }
+  .flap-wing-shell-right{
+    right:0;
+    clip-path:polygon(0 12%,99% 6%,100% 12%,100% 82%,90% 86%,56% 70%,25% 68%,0 62%);
+    -webkit-mask-image:linear-gradient(270deg,#000 0 84%,rgba(0,0,0,.72) 94%,transparent 100%);
+    mask-image:linear-gradient(270deg,#000 0 84%,rgba(0,0,0,.72) 94%,transparent 100%);
+    transform-origin:2% 43%;
+    animation:rightWingBeat var(--flap-duration) ease-in-out infinite;
+  }
+  .flap-wing-image{
+    width:200%;
+  }
+  .flap-wing-image-left{left:0}
+  .flap-wing-image-right{right:0}
+  .flap-scroll-cue{
+    position:absolute;
+    left:50%;
+    bottom:18px;
+    z-index:4;
+    display:grid;
+    width:96px;
+    height:96px;
+    place-items:center;
+    border:1px solid var(--ink);
+    border-radius:50%;
+    color:var(--ink);
+    background:rgba(255,255,255,.34);
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-align:center;
+    text-decoration:none;
+    transform:translateX(-50%);
+    transition:opacity .2s ease,transform .2s ease;
+  }
+  .flap-scroll-cue::before,
+  .flap-scroll-cue::after{
+    content:"[";
+    position:absolute;
+    top:50%;
+    font-family:var(--mono);
+    font-size:18px;
+    transform:translateY(-50%);
+  }
+  .flap-scroll-cue::before{left:-14px}
+  .flap-scroll-cue::after{content:"]";right:-14px}
+  .flap-scroll-cue:hover{
+    opacity:.64;
+    transform:translateX(-50%) translateY(-2px);
+  }
+
   /* hero */
   .hero{position:relative;padding:64px 0 40px;text-align:center}
   .ruler{position:absolute;left:max(8px,calc((100vw - 1240px)/2 + 6px));top:120px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink);display:flex;flex-direction:column;gap:11px;align-items:flex-start}
@@ -148,7 +328,68 @@
   .flinks a:hover{opacity:.45}
   .copyright{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;margin-top:36px;text-transform:uppercase}
 
+  @keyframes leftWingBeat{
+    0%,100%{
+      transform:
+        perspective(1100px)
+        rotateY(calc(var(--wing-left-rest) + var(--wing-flap-soft)))
+        rotateZ(var(--wing-left-closed-tilt));
+    }
+    50%{
+      transform:
+        perspective(1100px)
+        rotateY(calc(var(--wing-left-rest) - var(--wing-flap)))
+        rotateZ(var(--wing-left-open-tilt));
+    }
+  }
+  @keyframes rightWingBeat{
+    0%,100%{
+      transform:
+        perspective(1100px)
+        rotateY(calc(var(--wing-right-rest) - var(--wing-flap-soft)))
+        rotateZ(var(--wing-right-closed-tilt));
+    }
+    50%{
+      transform:
+        perspective(1100px)
+        rotateY(calc(var(--wing-right-rest) + var(--wing-flap)))
+        rotateZ(var(--wing-right-open-tilt));
+    }
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *,
+    *::before,
+    *::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  }
+
   @media(max-width:760px){
+    .butterfly-cover{
+      min-height:calc(100svh - 58px);
+      padding:18px 0 34px;
+    }
+    .flap-stage{
+      height:min(70svh,620px);
+      min-height:420px;
+    }
+    .flap-rig{
+      width:min(34rem,100vw);
+      height:min(60svh,34rem);
+      min-height:340px;
+      transform:
+        translateX(calc(var(--swipe-progress) * 20px))
+        scale(var(--butterfly-scale));
+    }
+    .flap-stage::before{
+      width:78vw;
+      height:78vw;
+    }
+    .flap-scroll-cue{
+      width:78px;
+      height:78px;
+      bottom:10px;
+      font-size:9px;
+    }
     .ruler{display:none}
     .caps{grid-template-columns:1fr}
     .metrics{grid-template-columns:repeat(2,1fr)}
@@ -171,7 +412,23 @@
 
 <div class="wrap">
 
-  <section class="hero">
+  <section id="butterfly" class="butterfly-cover" aria-label="蝴蝶扇动交互" tabindex="0">
+    <div class="flap-stage">
+      <div class="flap-orbit" aria-hidden="true"></div>
+      <div class="flap-rig" aria-hidden="true">
+        <img class="flap-butterfly-base" src="assets/images/butterfly-cutout.png" alt="" draggable="false">
+        <div class="flap-wing-shell flap-wing-shell-left">
+          <img class="flap-wing-image flap-wing-image-left" src="assets/images/butterfly-cutout.png" alt="" draggable="false">
+        </div>
+        <div class="flap-wing-shell flap-wing-shell-right">
+          <img class="flap-wing-image flap-wing-image-right" src="assets/images/butterfly-cutout.png" alt="" draggable="false">
+        </div>
+      </div>
+    </div>
+    <a class="flap-scroll-cue" href="#hero">PORT<br>FOLIO</a>
+  </section>
+
+  <section id="hero" class="hero">
     <div class="ruler">
       <span class="t">AI</span><span class="d">·</span>
       <span class="t">RAG</span><span class="d">·</span>
@@ -309,6 +566,95 @@
     <div class="copyright">© 2026 晋佳莉 · AI Product Manager · All Rights Reserved</div>
   </div>
 </footer>
+
+<script>
+  (() => {
+    const cover = document.querySelector(".butterfly-cover");
+    if (!cover) return;
+
+    let openRatio = 0.74;
+    let pointerStart = null;
+    let resetTimer = 0;
+
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+    const setMotion = ({ open = openRatio, swipe = 0, x = 50, y = 48 } = {}) => {
+      openRatio = clamp(open, 0.12, 1);
+      const wingFold = (1 - openRatio) * 66;
+      const wingFlap = 8 + openRatio * 24;
+      const wingFlapSoft = wingFlap * 0.62;
+      const closedTilt = (1 - openRatio) * 5;
+      const openTilt = openRatio * 2;
+      const duration = 1.12 - openRatio * 0.52;
+      const scale = 0.92 + openRatio * 0.12 + swipe * 0.04;
+
+      cover.style.setProperty("--open-ratio", openRatio.toFixed(3));
+      cover.style.setProperty("--swipe-progress", clamp(swipe, 0, 1).toFixed(3));
+      cover.style.setProperty("--wing-left-rest", `${wingFold.toFixed(2)}deg`);
+      cover.style.setProperty("--wing-right-rest", `${(-wingFold).toFixed(2)}deg`);
+      cover.style.setProperty("--wing-flap", `${wingFlap.toFixed(2)}deg`);
+      cover.style.setProperty("--wing-flap-soft", `${wingFlapSoft.toFixed(2)}deg`);
+      cover.style.setProperty("--wing-left-closed-tilt", `${(-closedTilt).toFixed(2)}deg`);
+      cover.style.setProperty("--wing-right-closed-tilt", `${closedTilt.toFixed(2)}deg`);
+      cover.style.setProperty("--wing-left-open-tilt", `${openTilt.toFixed(2)}deg`);
+      cover.style.setProperty("--wing-right-open-tilt", `${(-openTilt).toFixed(2)}deg`);
+      cover.style.setProperty("--flap-duration", `${duration.toFixed(2)}s`);
+      cover.style.setProperty("--butterfly-scale", scale.toFixed(3));
+      cover.style.setProperty("--pointer-x", `${clamp(x, 6, 94).toFixed(2)}%`);
+      cover.style.setProperty("--pointer-y", `${clamp(y, 8, 90).toFixed(2)}%`);
+    };
+
+    const updateFromPointer = (event) => {
+      const rect = cover.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+
+      window.clearTimeout(resetTimer);
+      cover.classList.add("is-active");
+
+      const relativeX = (event.clientX - rect.left) / rect.width;
+      const relativeY = (event.clientY - rect.top) / rect.height;
+      const nextOpen = clamp(1.04 - relativeY, 0.12, 1);
+      const swipe = pointerStart === null
+        ? clamp((relativeX - 0.5) * 0.72 + 0.22, 0, 0.5)
+        : clamp((event.clientX - pointerStart) / 280, 0, 1);
+
+      setMotion({
+        open: openRatio * 0.72 + nextOpen * 0.28,
+        swipe,
+        x: relativeX * 100,
+        y: relativeY * 100
+      });
+    };
+
+    const soften = () => {
+      cover.classList.remove("is-pressing");
+      pointerStart = null;
+      resetTimer = window.setTimeout(() => {
+        cover.classList.remove("is-active");
+        setMotion({ open: 0.74, swipe: 0, x: 50, y: 48 });
+      }, 360);
+    };
+
+    cover.addEventListener("pointerenter", () => cover.classList.add("is-active"));
+    cover.addEventListener("pointermove", updateFromPointer);
+    cover.addEventListener("pointerdown", (event) => {
+      pointerStart = event.clientX;
+      cover.classList.add("is-active", "is-pressing");
+      cover.setPointerCapture?.(event.pointerId);
+      updateFromPointer(event);
+    });
+    cover.addEventListener("pointerup", soften);
+    cover.addEventListener("pointercancel", soften);
+    cover.addEventListener("pointerleave", soften);
+    cover.addEventListener("focus", () => {
+      cover.classList.add("is-active");
+      setMotion({ open: 1, swipe: 0.22, x: 50, y: 38 });
+    });
+    cover.addEventListener("blur", soften);
+
+    setMotion();
+  })();
+</script>
 
 </body>
 </html>
