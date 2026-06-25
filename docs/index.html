@@ -99,7 +99,8 @@
     z-index:1;
     overflow:hidden;
     pointer-events:none;
-    mix-blend-mode:screen;
+    mix-blend-mode:normal;
+    filter:brightness(1.18) drop-shadow(0 0 10px rgba(174,198,242,.32));
     mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 92%,transparent 100%);
     -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 8%,#000 92%,transparent 100%);
   }
@@ -110,32 +111,34 @@
     pointer-events:none;
   }
   .flap-lightfall::before{
-    right:10%;
-    bottom:4%;
-    left:10%;
-    height:18%;
+    right:8%;
+    bottom:3%;
+    left:8%;
+    height:20%;
     border-radius:50%;
     background:
-      radial-gradient(ellipse at 50% 86%,rgba(255,255,255,.84) 0 7%,rgba(174,198,242,.44) 18%,transparent 60%),
-      radial-gradient(ellipse at 50% 94%,rgba(255,255,255,.46) 0 14%,rgba(198,180,238,.22) 34%,transparent 68%);
-    filter:blur(8px) drop-shadow(0 0 24px rgba(174,198,242,.34));
-    opacity:.42;
+      radial-gradient(ellipse at 50% 84%,rgba(255,255,255,.94) 0 8%,rgba(174,198,242,.58) 20%,transparent 62%),
+      radial-gradient(ellipse at 50% 94%,rgba(255,255,255,.58) 0 15%,rgba(198,180,238,.34) 36%,transparent 70%);
+    filter:blur(7px) drop-shadow(0 0 30px rgba(174,198,242,.46));
+    opacity:.72;
     transform-origin:center bottom;
     animation:lightPoolBreathe 3.8s ease-in-out infinite;
   }
   .flap-lightfall::after{
-    inset:18% 4% 12%;
+    inset:13% 1% 10%;
     background-image:
-      radial-gradient(circle,rgba(255,255,255,.72) 0 1px,transparent 1.8px),
-      radial-gradient(circle,rgba(174,198,242,.56) 0 1px,transparent 1.7px),
-      radial-gradient(circle,rgba(198,180,238,.5) 0 .9px,transparent 1.8px);
-    background-position:0 0,38px 66px,82px 24px;
-    background-size:118px 118px,156px 156px,94px 94px;
-    opacity:.24;
+      radial-gradient(circle,rgba(255,255,255,.9) 0 1.1px,transparent 2.1px),
+      radial-gradient(circle,rgba(174,198,242,.72) 0 1.1px,transparent 2px),
+      radial-gradient(circle,rgba(198,180,238,.62) 0 1px,transparent 2px),
+      radial-gradient(circle,rgba(255,255,255,.76) 0 .8px,transparent 1.8px);
+    background-position:0 0,38px 66px,82px 24px,18px 42px;
+    background-size:68px 78px,98px 108px,58px 68px,116px 128px;
+    opacity:.58;
     animation:lightDustSheet 12s linear infinite;
   }
   .lightfall-line,
-  .lightfall-dust{
+  .lightfall-dust,
+  .lightfall-star{
     position:absolute;
     display:block;
     pointer-events:none;
@@ -147,15 +150,16 @@
     height:var(--h);
     border-radius:999px;
     background:
-      linear-gradient(180deg,transparent 0,rgba(255,255,255,.58) 18%,rgba(174,198,242,.34) 52%,transparent 100%);
+      linear-gradient(180deg,transparent 0,rgba(255,255,255,.82) 18%,rgba(174,198,242,.54) 54%,transparent 100%);
     box-shadow:
-      0 0 6px rgba(255,255,255,.5),
-      0 0 12px rgba(174,198,242,.28);
+      0 0 10px rgba(255,255,255,.9),
+      0 0 24px rgba(174,198,242,.58);
     opacity:var(--alpha);
     transform:translate3d(0,-10vh,0) scaleY(.28);
     transform-origin:center top;
     animation:lightfallStream var(--dur) ease-in-out infinite;
     animation-delay:var(--delay);
+    will-change:transform,opacity;
   }
   .lightfall-line::before,
   .lightfall-line::after{
@@ -166,8 +170,8 @@
     background:rgba(255,255,255,.86);
     transform:translateX(-50%);
     box-shadow:
-      0 0 8px rgba(255,255,255,.72),
-      0 0 14px rgba(174,198,242,.52);
+      0 0 12px rgba(255,255,255,.96),
+      0 0 26px rgba(174,198,242,.78);
   }
   .lightfall-line::before{
     top:var(--spark);
@@ -175,7 +179,15 @@
     height:var(--dot);
   }
   .lightfall-line::after{
-    display:none;
+    top:var(--star);
+    width:var(--star-size);
+    height:var(--star-size);
+    border-radius:50%;
+    background:
+      linear-gradient(90deg,transparent 0 42%,rgba(255,255,255,.9) 46% 54%,transparent 58% 100%),
+      linear-gradient(0deg,transparent 0 42%,rgba(255,255,255,.9) 46% 54%,transparent 58% 100%),
+      radial-gradient(circle,rgba(255,255,255,.98) 0 18%,rgba(210,228,255,.7) 36%,transparent 68%);
+    opacity:.88;
   }
   .lightfall-dust{
     top:var(--top);
@@ -183,13 +195,33 @@
     width:var(--size);
     height:var(--size);
     border-radius:50%;
-    background:rgba(255,255,255,.92);
+    background:radial-gradient(circle,rgba(255,255,255,.98) 0 36%,rgba(210,228,255,.74) 52%,transparent 78%);
     box-shadow:
-      0 0 6px rgba(255,255,255,.72),
-      0 0 12px rgba(174,198,242,.42);
+      0 0 8px rgba(255,255,255,.82),
+      0 0 20px rgba(174,198,242,.68);
     opacity:0;
     animation:lightDustFall var(--dur) ease-in infinite;
     animation-delay:var(--delay);
+    will-change:transform,opacity;
+  }
+  .lightfall-star{
+    top:var(--top);
+    left:var(--x);
+    width:var(--size);
+    height:var(--size);
+    border-radius:50%;
+    background:
+      linear-gradient(90deg,transparent 0 43%,rgba(255,255,255,.95) 47% 53%,transparent 57% 100%),
+      linear-gradient(0deg,transparent 0 43%,rgba(255,255,255,.95) 47% 53%,transparent 57% 100%),
+      radial-gradient(circle,rgba(255,255,255,1) 0 18%,rgba(214,229,255,.78) 38%,transparent 70%);
+    box-shadow:
+      0 0 12px rgba(255,255,255,.95),
+      0 0 28px rgba(174,198,242,.78);
+    opacity:0;
+    transform:translate3d(0,-8vh,0) scale(.62) rotate(0deg);
+    animation:lightStarFall var(--dur) ease-in-out infinite;
+    animation-delay:var(--delay);
+    will-change:transform,opacity;
   }
   .flap-stage::before,
   .flap-stage::after{
@@ -1157,14 +1189,14 @@
       transform:translate3d(calc(var(--drift) * -.18),-10vh,0) scaleY(.22);
     }
     18%{
-      opacity:calc(var(--alpha) * .82);
+      opacity:var(--alpha);
     }
     48%{
       opacity:var(--alpha);
-      transform:translate3d(calc(var(--drift) * .35),22vh,0) scaleY(.72);
+      transform:translate3d(calc(var(--drift) * .35),24vh,0) scaleY(.88);
     }
     72%{
-      opacity:calc(var(--alpha) * .54);
+      opacity:calc(var(--alpha) * .78);
     }
     100%{
       opacity:0;
@@ -1177,27 +1209,47 @@
       transform:translate3d(calc(var(--drift) * -.2),-8vh,0) scale(.64);
     }
     22%{
-      opacity:.5;
+      opacity:.86;
     }
     72%{
-      opacity:.34;
+      opacity:.6;
     }
     100%{
       opacity:0;
       transform:translate3d(var(--drift),62vh,0) scale(.28);
     }
   }
+  @keyframes lightStarFall{
+    0%{
+      opacity:0;
+      transform:translate3d(calc(var(--drift) * -.2),-8vh,0) scale(.62) rotate(0deg);
+    }
+    20%{
+      opacity:calc(var(--alpha) * .86);
+    }
+    52%{
+      opacity:var(--alpha);
+      transform:translate3d(calc(var(--drift) * .28),18vh,0) scale(1.05) rotate(22deg);
+    }
+    76%{
+      opacity:calc(var(--alpha) * .68);
+    }
+    100%{
+      opacity:0;
+      transform:translate3d(var(--drift),50vh,0) scale(.4) rotate(66deg);
+    }
+  }
   @keyframes lightDustSheet{
-    from{background-position:0 0,38px 66px,82px 24px}
-    to{background-position:0 180px,38px 254px,82px 206px}
+    from{background-position:0 0,38px 66px,82px 24px,18px 42px}
+    to{background-position:0 180px,38px 254px,82px 206px,18px 228px}
   }
   @keyframes lightPoolBreathe{
     0%,100%{
-      opacity:.58;
+      opacity:.72;
       transform:scaleX(.9) scaleY(.82);
     }
     48%{
-      opacity:.88;
+      opacity:1;
       transform:scaleX(1.04) scaleY(1);
     }
   }
@@ -1652,30 +1704,44 @@
 	        lightfall.appendChild(particle);
 	      };
 
-	      Array.from({ length: 42 }, (_, index) => {
-	        const depth = index % 6;
+	      Array.from({ length: 96 }, (_, index) => {
+	        const depth = index % 5;
 	        createParticle("lightfall-line", {
-	          "--x": `${20 + Math.random() * 60}%`,
-	          "--top": `${8 + Math.random() * 34}%`,
-	          "--w": `${0.7 + Math.random() * (depth === 0 ? 0.9 : 0.55)}px`,
-	          "--h": `${34 + Math.random() * 92}px`,
-	          "--dur": `${4.6 + Math.random() * 3.6}s`,
+	          "--x": `${22 + Math.random() * 56}%`,
+	          "--top": `${4 + Math.random() * 42}%`,
+	          "--w": `${0.9 + Math.random() * (depth === 0 ? 1.2 : 0.7)}px`,
+	          "--h": `${48 + Math.random() * 124}px`,
+	          "--dur": `${4 + Math.random() * 3.1}s`,
 	          "--delay": `${-Math.random() * 7.6}s`,
-	          "--alpha": `${0.12 + Math.random() * 0.26}`,
-	          "--spark": `${8 + Math.random() * 54}%`,
-	          "--dot": `${1.6 + Math.random() * 2.8}px`,
-	          "--drift": `${-18 + Math.random() * 36}px`
+	          "--alpha": `${0.42 + Math.random() * 0.44}`,
+	          "--spark": `${6 + Math.random() * 50}%`,
+	          "--star": `${18 + Math.random() * 62}%`,
+	          "--dot": `${2.4 + Math.random() * 4}px`,
+	          "--star-size": `${7 + Math.random() * 12}px`,
+	          "--drift": `${-13 + Math.random() * 26}px`
 	        });
 	      });
 
-	      Array.from({ length: 118 }, () => {
+	      Array.from({ length: 360 }, () => {
 	        createParticle("lightfall-dust", {
 	          "--x": `${18 + Math.random() * 64}%`,
-	          "--top": `${18 + Math.random() * 56}%`,
-	          "--size": `${0.8 + Math.random() * 2.2}px`,
-	          "--dur": `${5.2 + Math.random() * 4.8}s`,
+	          "--top": `${14 + Math.random() * 62}%`,
+	          "--size": `${0.9 + Math.random() * 3.4}px`,
+	          "--dur": `${4.6 + Math.random() * 4.1}s`,
 	          "--delay": `${-Math.random() * 9}s`,
-	          "--drift": `${-26 + Math.random() * 52}px`
+	          "--drift": `${-22 + Math.random() * 44}px`
+	        });
+	      });
+
+	      Array.from({ length: 150 }, (_, index) => {
+	        createParticle("lightfall-star", {
+	          "--x": `${24 + Math.random() * 52}%`,
+	          "--top": `${18 + Math.random() * 54}%`,
+	          "--size": `${6 + Math.random() * (index % 4 === 0 ? 13 : 8)}px`,
+	          "--dur": `${4.2 + Math.random() * 3.4}s`,
+	          "--delay": `${-Math.random() * 8}s`,
+	          "--alpha": `${0.5 + Math.random() * 0.42}`,
+	          "--drift": `${-18 + Math.random() * 36}px`
 	        });
 	      });
 	    }
