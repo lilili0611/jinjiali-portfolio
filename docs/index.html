@@ -503,7 +503,25 @@
   }
 
   /* hero */
-  .hero{position:relative;padding:64px 0 40px;text-align:center}
+  .hero{
+    position:relative;
+    min-height:calc(100svh - 58px);
+    margin-left:calc(50% - 50vw);
+    width:100vw;
+    padding:0;
+    display:grid;
+    place-items:stretch;
+    overflow:hidden;
+    text-align:center;
+  }
+  .hero-portrait{
+    display:block;
+    width:100%;
+    height:100%;
+    min-height:calc(100svh - 58px);
+    object-fit:cover;
+    object-position:center center;
+  }
   .ruler{position:absolute;left:max(8px,calc((100vw - 1240px)/2 + 6px));top:120px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink);display:flex;flex-direction:column;gap:11px;align-items:flex-start}
   .ruler .t{font-weight:700}
   .ruler .d{color:var(--muted)}
@@ -2780,6 +2798,13 @@
     }
     .gesture-video{display:none}
     .ruler{display:none}
+    .hero{
+      min-height:calc(100svh - 58px);
+    }
+    .hero-portrait{
+      min-height:calc(100svh - 58px);
+      object-position:37% center;
+    }
     .about-lab{grid-template-columns:1fr;gap:24px}
     .about-copy > p{font-size:16px;line-height:1.72;max-width:100%}
     .about-map{min-height:360px}
@@ -3041,24 +3066,7 @@
   </section>
 
   <section id="hero" class="hero">
-    <div class="ruler">
-      <span class="t">AI</span><span class="d">·</span>
-      <span class="t">RAG</span><span class="d">·</span>
-      <span class="t">AGENT</span><span class="d">·</span>
-      <span class="t">DATA</span><span class="d">·</span>
-      <span class="t">0→1</span>
-    </div>
-    <div class="orb"></div>
-    <div class="inner">
-      <div class="role">AI Product Manager · 在读 MBA</div>
-      <h1>JIN JIALI</h1>
-      <div class="cn">晋佳莉</div>
-      <span class="intent">★ 求职意向：AI 产品经理实习 · 可实习 6 个月以上</span>
-      <div class="herometa">
-        <span>15240034478</span><span>1014223067@qq.com</span><span>女 · 26岁</span><span>硕士在读</span>
-      </div>
-      <div class="scrollcue">SCROLL<br>项目作品</div>
-    </div>
+    <img class="hero-portrait" src="assets/images/hero-portrait-workspace.png" width="1672" height="941" alt="晋佳莉 AI 产品经理手绘人物画像工作台主视觉">
   </section>
 
   <section id="about" class="about">
