@@ -2640,12 +2640,48 @@
 
   /* footer */
   footer{position:relative;z-index:1;margin-top:30px;border-top:1px solid var(--line);padding:70px 0 40px;text-align:center}
-  footer .sayhi{font-family:var(--script);font-size:40px;color:var(--ink-soft);line-height:1}
-  footer h2{font-family:var(--disp);font-weight:900;font-size:clamp(36px,6.5vw,80px);line-height:.92;letter-spacing:-.01em;text-transform:uppercase;margin:6px 0 30px}
-  .sendbtn{margin:0 auto 44px;width:130px;height:130px;border-radius:50%;border:1px solid var(--ink);display:grid;place-items:center;
-    font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;position:relative;background:rgba(255,255,255,.4)}
-  .sendbtn::before{content:"[";position:absolute;left:-16px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:22px}
-  .sendbtn::after{content:"]";position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:22px}
+  footer .sayhi{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);line-height:1}
+  footer h2{font-family:var(--disp);font-weight:900;font-size:clamp(48px,10vw,116px);line-height:.86;letter-spacing:0;text-transform:uppercase;margin:12px 0 26px}
+  footer h2 span{display:block;margin-top:12px;font-family:var(--cn);font-size:clamp(18px,2.5vw,28px);font-weight:700;letter-spacing:.08em;color:var(--ink-soft)}
+  .resume-download{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    min-height:58px;
+    margin:0 auto 42px;
+    padding:0 26px;
+    border:1px solid var(--ink);
+    border-radius:999px;
+    background:rgba(255,255,255,.42);
+    color:var(--ink);
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-decoration:none;
+    text-transform:uppercase;
+    box-shadow:0 16px 36px rgba(45,42,80,.08), inset 0 0 0 1px rgba(255,255,255,.52);
+    transition:transform .22s ease, background .22s ease, box-shadow .22s ease;
+  }
+  .resume-download::before{
+    content:"PDF";
+    display:grid;
+    place-items:center;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--iris-p),var(--iris-b));
+    color:var(--ink);
+    font-size:10px;
+    box-shadow:0 0 22px rgba(174,198,242,.44);
+  }
+  .resume-download:hover{
+    background:rgba(255,255,255,.7);
+    box-shadow:0 22px 48px rgba(45,42,80,.12), inset 0 0 0 1px rgba(255,255,255,.72);
+    transform:translateY(-3px);
+  }
   .flinks{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px 40px}
   .flinks a{font-family:var(--disp);font-weight:900;font-size:clamp(22px,4.4vw,52px);letter-spacing:-.01em;text-transform:uppercase;color:var(--ink);text-decoration:none;transition:.2s}
   .flinks a:hover{opacity:.45}
@@ -3341,6 +3377,23 @@
     .exp-lead{font-size:14.5px;line-height:1.68}
     .exp-list li{font-size:12.8px;line-height:1.58}
     .exp-scope span{font-size:9.5px;padding:5px 8px}
+    footer{padding:56px 0 34px}
+    footer h2{font-size:clamp(46px,16vw,70px)}
+    footer h2 span{font-size:18px}
+    .resume-download{
+      width:100%;
+      max-width:332px;
+      min-height:54px;
+      gap:10px;
+      padding:0 14px;
+      font-size:10px;
+      letter-spacing:.07em;
+    }
+    .resume-download::before{
+      width:36px;
+      height:36px;
+    }
+    .flinks{gap:12px 22px}
     .navlinks a{padding:6px 4px}
   }
 
@@ -3717,9 +3770,9 @@
 
 <footer id="contact">
   <div class="wrap">
-    <div class="sayhi">let's build together ~</div>
-    <h2>如果项目刚好<br>和你的岗位有关</h2>
-    <div class="sendbtn">SEND<br>联系我</div>
+    <div class="sayhi">thank you for reading</div>
+    <h2>THANK YOU<span>感谢阅读</span></h2>
+    <a class="resume-download" href="assets/jin-jiali-ai-product-manager-resume.pdf" download="AI产品经理-晋佳莉-中国科学技术大学-可实习六个月以上.pdf">简历下载 · Download Resume</a>
     <div class="flinks">
       <a href="mailto:1014223067@qq.com">EMAIL</a>
       <a href="tel:15240034478">15240034478</a>
