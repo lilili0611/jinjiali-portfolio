@@ -2682,9 +2682,24 @@
     box-shadow:0 22px 48px rgba(45,42,80,.12), inset 0 0 0 1px rgba(255,255,255,.72);
     transform:translateY(-3px);
   }
-  .flinks{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px 20px}
-  .flinks a{font-family:var(--disp);font-weight:900;font-size:clamp(16px,2vw,26px);letter-spacing:0;text-transform:none;color:var(--ink);text-decoration:none;transition:.2s}
-  .flinks a:hover{opacity:.45}
+  .flinks{
+    display:grid;
+    justify-items:center;
+    gap:10px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .flinks a{
+    color:rgba(70,69,100,.68);
+    font-family:var(--mono);
+    font-size:clamp(15px,1.45vw,19px);
+    font-weight:700;
+    letter-spacing:.08em;
+    text-decoration:none;
+    text-transform:none;
+    transition:.2s;
+  }
+  .flinks a:hover{color:rgba(11,11,15,.82)}
   .copyright{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;margin-top:36px;text-transform:uppercase}
 
   @keyframes projectBookFloat{
@@ -3394,12 +3409,14 @@
       height:36px;
     }
     .flinks{
-      align-items:flex-start;
-      flex-direction:column;
-      gap:10px;
-      text-align:left;
+      justify-items:center;
+      gap:9px;
+      text-align:center;
     }
-    .flinks a{font-size:clamp(17px,5.5vw,22px)}
+    .flinks a{
+      font-size:clamp(12px,3.45vw,15px);
+      letter-spacing:.04em;
+    }
     .navlinks a{padding:6px 4px}
   }
 
