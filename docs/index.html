@@ -522,6 +522,90 @@
     object-fit:cover;
     object-position:center center;
   }
+  .hero-profile{
+    position:absolute;
+    z-index:2;
+    top:50%;
+    right:clamp(46px,8vw,148px);
+    width:min(34vw,420px);
+    max-width:420px;
+    padding:clamp(18px,2.4vw,30px) 0 clamp(18px,2.4vw,30px) clamp(18px,2.2vw,28px);
+    border-left:1px solid rgba(96,94,145,.28);
+    color:rgba(22,20,34,.86);
+    text-align:left;
+    transform:translateY(-50%);
+    text-shadow:0 1px 18px rgba(255,255,255,.62);
+  }
+  .hero-profile::before{
+    content:"";
+    position:absolute;
+    left:-1px;
+    top:0;
+    width:1px;
+    height:34%;
+    background:linear-gradient(180deg,rgba(135,128,208,.16),rgba(135,128,208,.72));
+  }
+  .hero-profile-kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.16em;
+    color:rgba(93,91,132,.72);
+    text-transform:uppercase;
+  }
+  .hero .hero-profile h1{
+    margin:10px 0 18px;
+    font-family:var(--disp);
+    font-size:clamp(38px,4.2vw,66px);
+    font-weight:900;
+    line-height:.92;
+    letter-spacing:0;
+    color:rgba(9,9,14,.92);
+    text-transform:none;
+  }
+  .hero .hero-profile h1 span,
+  .hero .hero-profile h1 em{
+    display:block;
+  }
+  .hero .hero-profile h1 em{
+    margin-top:8px;
+    font-family:var(--mono);
+    font-size:.24em;
+    font-style:normal;
+    font-weight:700;
+    line-height:1.2;
+    letter-spacing:.18em;
+    color:rgba(92,90,136,.76);
+    text-transform:uppercase;
+  }
+  .hero-profile dl{
+    display:grid;
+    gap:10px;
+    margin:0;
+  }
+  .hero-profile-row{
+    display:grid;
+    grid-template-columns:minmax(52px,.28fr) minmax(0,1fr);
+    gap:12px;
+    align-items:start;
+    padding-top:10px;
+    border-top:1px solid rgba(96,94,145,.14);
+  }
+  .hero-profile dt{
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.11em;
+    color:rgba(104,101,146,.76);
+    text-transform:uppercase;
+  }
+  .hero-profile dd{
+    margin:0;
+    color:rgba(23,22,33,.84);
+    font-size:14.5px;
+    font-weight:600;
+    line-height:1.55;
+  }
   .ruler{position:absolute;left:max(8px,calc((100vw - 1240px)/2 + 6px));top:120px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink);display:flex;flex-direction:column;gap:11px;align-items:flex-start}
   .ruler .t{font-weight:700}
   .ruler .d{color:var(--muted)}
@@ -2805,6 +2889,45 @@
       min-height:calc(100svh - 58px);
       object-position:37% center;
     }
+    .hero-profile{
+      top:auto;
+      right:14px;
+      bottom:20px;
+      width:min(58vw,260px);
+      padding:14px 0 14px 14px;
+      transform:none;
+      border-left-color:rgba(96,94,145,.2);
+    }
+    .hero-profile-kicker{
+      font-size:8px;
+      letter-spacing:.12em;
+    }
+    .hero .hero-profile h1{
+      margin:7px 0 10px;
+      font-size:24px;
+      line-height:.95;
+    }
+    .hero .hero-profile h1 em{
+      margin-top:5px;
+      font-size:.42em;
+      letter-spacing:.12em;
+    }
+    .hero-profile dl{
+      gap:5px;
+    }
+    .hero-profile-row{
+      grid-template-columns:42px minmax(0,1fr);
+      gap:7px;
+      padding-top:5px;
+    }
+    .hero-profile dt{
+      font-size:8px;
+      letter-spacing:.06em;
+    }
+    .hero-profile dd{
+      font-size:10.5px;
+      line-height:1.35;
+    }
     .about-lab{grid-template-columns:1fr;gap:24px}
     .about-copy > p{font-size:16px;line-height:1.72;max-width:100%}
     .about-map{min-height:360px}
@@ -3067,6 +3190,32 @@
 
   <section id="hero" class="hero">
     <img class="hero-portrait" src="assets/images/hero-portrait-workspace.png" width="1672" height="941" alt="晋佳莉 AI 产品经理手绘人物画像工作台主视觉">
+    <div class="hero-profile" aria-label="晋佳莉个人信息">
+      <p class="hero-profile-kicker">AI Product Manager Intern</p>
+      <h1><span>晋佳莉</span><em>Jin Jiali</em></h1>
+      <dl>
+        <div class="hero-profile-row">
+          <dt>Age</dt>
+          <dd>26 岁</dd>
+        </div>
+        <div class="hero-profile-row">
+          <dt>School</dt>
+          <dd>中国科学技术大学硕士在读</dd>
+        </div>
+        <div class="hero-profile-row">
+          <dt>Target</dt>
+          <dd>求职 AI 产品实习，可实习六个月以上</dd>
+        </div>
+        <div class="hero-profile-row">
+          <dt>WeChat</dt>
+          <dd>bozipaopao</dd>
+        </div>
+        <div class="hero-profile-row">
+          <dt>Phone</dt>
+          <dd>15240034478</dd>
+        </div>
+      </dl>
+    </div>
   </section>
 
   <section id="about" class="about">
