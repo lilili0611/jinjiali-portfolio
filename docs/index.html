@@ -2682,8 +2682,8 @@
     box-shadow:0 22px 48px rgba(45,42,80,.12), inset 0 0 0 1px rgba(255,255,255,.72);
     transform:translateY(-3px);
   }
-  .flinks{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px 40px}
-  .flinks a{font-family:var(--disp);font-weight:900;font-size:clamp(22px,4.4vw,52px);letter-spacing:-.01em;text-transform:uppercase;color:var(--ink);text-decoration:none;transition:.2s}
+  .flinks{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px 20px}
+  .flinks a{font-family:var(--disp);font-weight:900;font-size:clamp(16px,2vw,26px);letter-spacing:0;text-transform:none;color:var(--ink);text-decoration:none;transition:.2s}
   .flinks a:hover{opacity:.45}
   .copyright{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;margin-top:36px;text-transform:uppercase}
 
@@ -3393,7 +3393,13 @@
       width:36px;
       height:36px;
     }
-    .flinks{gap:12px 22px}
+    .flinks{
+      align-items:flex-start;
+      flex-direction:column;
+      gap:10px;
+      text-align:left;
+    }
+    .flinks a{font-size:clamp(17px,5.5vw,22px)}
     .navlinks a{padding:6px 4px}
   }
 
@@ -3774,9 +3780,9 @@
     <h2>THANK YOU<span>感谢阅读</span></h2>
     <a class="resume-download" href="assets/jin-jiali-ai-product-manager-resume.pdf" download="AI产品经理-晋佳莉-中国科学技术大学-可实习六个月以上.pdf">简历下载 · Download Resume</a>
     <div class="flinks">
-      <a href="mailto:1014223067@qq.com">EMAIL</a>
-      <a href="tel:15240034478">15240034478</a>
-      <a href="#">LINKEDIN</a>
+      <a href="tel:15240034478">Phone: 15240034478</a>
+      <a href="mailto:1014223067@qq.com">Email: 1014223067@qq.com</a>
+      <a href="#contact">WeChat: bozipaopao</a>
     </div>
     <div class="copyright">© 2026 晋佳莉 · AI Product Manager · All Rights Reserved</div>
   </div>
