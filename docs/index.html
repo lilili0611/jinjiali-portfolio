@@ -2436,16 +2436,200 @@
   .result p{font-size:13.5px;font-weight:700;line-height:1.6}
 
   /* experience */
-  .xp{border:1px solid var(--line);border-radius:22px;background:var(--card);padding:28px}
-  .xphd{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:6px}
-  .xphd h3{font-family:var(--disp);font-weight:900;font-size:clamp(22px,3vw,30px);letter-spacing:-.01em}
-  .xphd .date{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--muted)}
-  .xpsub{font-size:14px;font-style:italic;color:var(--ink-soft);margin-bottom:22px;max-width:62ch}
-  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  .metric .big{font-family:var(--disp);font-weight:900;font-size:clamp(30px,4vw,46px);line-height:1;letter-spacing:-.02em}
-  .metric .lbl{font-size:12.5px;color:var(--ink-soft);margin-top:9px;line-height:1.5}
-  .intern{border:1px solid var(--line);border-radius:22px;background:var(--card);padding:28px;margin-top:20px}
-  .intern .pul{margin-bottom:0;margin-top:14px}
+  .exp-timeline{
+    position:relative;
+    display:grid;
+    grid-template-columns:clamp(156px,16vw,190px) minmax(0,1fr);
+    gap:28px clamp(24px,3vw,42px);
+  }
+  .exp-timeline::before{
+    content:"";
+    position:absolute;
+    left:32px;
+    top:18px;
+    bottom:22px;
+    width:1px;
+    background:linear-gradient(180deg,rgba(104,101,146,.16),rgba(104,101,146,.72),rgba(174,198,242,.22));
+  }
+  .exp-time{
+    position:relative;
+    padding-left:68px;
+  }
+  .exp-time::before{
+    content:"";
+    position:absolute;
+    left:22px;
+    top:6px;
+    width:21px;
+    height:21px;
+    border:1px solid rgba(90,84,142,.46);
+    border-radius:50%;
+    background:
+      radial-gradient(circle at center,rgba(255,255,255,.96) 0 28%,rgba(198,180,238,.82) 29% 52%,rgba(174,198,242,.74) 53% 100%);
+    box-shadow:0 0 0 8px rgba(255,255,255,.36),0 0 26px rgba(198,180,238,.42);
+  }
+  .exp-year{
+    display:block;
+    font-family:var(--disp);
+    font-size:clamp(30px,3vw,34px);
+    font-weight:900;
+    line-height:1;
+    letter-spacing:0;
+  }
+  .exp-date{
+    display:block;
+    margin-top:8px;
+    color:rgba(72,70,101,.76);
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.05em;
+  }
+  .exp-type{
+    display:inline-flex;
+    margin-top:13px;
+    border:1px solid rgba(96,94,145,.2);
+    border-radius:999px;
+    padding:6px 10px;
+    background:rgba(255,255,255,.36);
+    color:rgba(76,73,116,.9);
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .exp-job{
+    position:relative;
+    min-height:258px;
+    padding:28px 34px 26px;
+    border:1px solid rgba(11,11,15,.12);
+    border-radius:22px;
+    background:
+      linear-gradient(90deg,rgba(255,255,255,.78),rgba(255,255,255,.52) 50%,rgba(243,242,248,.72)),
+      rgba(247,245,251,.86);
+    box-shadow:0 24px 52px rgba(45,42,80,.07), inset 0 0 0 1px rgba(255,255,255,.55);
+    overflow:hidden;
+  }
+  .exp-job::before{
+    content:"";
+    position:absolute;
+    right:-120px;
+    top:-130px;
+    width:320px;
+    height:320px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(198,180,238,.3),transparent 68%);
+    pointer-events:none;
+  }
+  .exp-job::after{
+    content:"";
+    position:absolute;
+    left:34px;
+    right:34px;
+    top:86px;
+    height:1px;
+    background:linear-gradient(90deg,rgba(11,11,15,.12),transparent);
+  }
+  .exp-job-head{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:30px;
+  }
+  .exp-job h3{
+    font-family:var(--disp);
+    font-size:clamp(26px,3.2vw,34px);
+    font-weight:900;
+    line-height:1.08;
+    letter-spacing:0;
+  }
+  .exp-role{
+    margin-top:7px;
+    color:rgba(70,69,79,.82);
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+  }
+  .exp-scope{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    gap:8px;
+    max-width:420px;
+  }
+  .exp-scope span{
+    border:1px solid rgba(96,94,145,.18);
+    border-radius:999px;
+    padding:6px 10px;
+    background:rgba(255,255,255,.3);
+    color:rgba(73,70,112,.9);
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.05em;
+  }
+  .exp-job-body{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);
+    gap:30px;
+  }
+  .exp-lead{
+    color:rgba(24,23,34,.82);
+    font-size:15.5px;
+    font-weight:500;
+    line-height:1.72;
+  }
+  .exp-lead mark,
+  .exp-list mark{
+    padding:0 4px 1px;
+    border-radius:6px;
+    background:linear-gradient(transparent 56%,rgba(198,180,238,.42) 56%);
+    color:inherit;
+  }
+  .exp-list{
+    display:grid;
+    gap:10px;
+    list-style:none;
+  }
+  .exp-list li{
+    position:relative;
+    padding-left:20px;
+    color:rgba(44,43,57,.8);
+    font-size:13.5px;
+    line-height:1.62;
+  }
+  .exp-list li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:.72em;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--iris-p),var(--iris-b));
+    box-shadow:0 0 13px rgba(174,198,242,.64);
+  }
+  .exp-list strong{
+    color:rgba(13,13,18,.92);
+    font-weight:900;
+  }
+  .exp-job-intern{
+    min-height:220px;
+  }
+  .exp-job-intern .exp-job-body{
+    grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
+  }
+  .exp-job-intern .exp-list{
+    gap:9px;
+  }
 
   /* education */
   .edu{display:flex;flex-direction:column;gap:12px}
@@ -2736,6 +2920,40 @@
   }
 
   @media(max-width:900px){
+    .exp-timeline{
+      grid-template-columns:1fr;
+      gap:14px;
+    }
+    .exp-timeline::before{
+      left:16px;
+      top:14px;
+      bottom:28px;
+    }
+    .exp-time{
+      padding-left:48px;
+    }
+    .exp-time::before{
+      left:6px;
+    }
+    .exp-job{
+      padding:24px 22px 25px;
+      border-radius:20px;
+      margin:0 0 16px 48px;
+    }
+    .exp-job-head{
+      flex-direction:column;
+      gap:12px;
+      margin-bottom:24px;
+    }
+    .exp-scope{
+      justify-content:flex-start;
+      max-width:100%;
+    }
+    .exp-job-body,
+    .exp-job-intern .exp-job-body{
+      grid-template-columns:1fr;
+      gap:16px;
+    }
     .project-library{
       display:grid;
       grid-template-columns:1fr;
@@ -3117,7 +3335,12 @@
     .pmeta{font-size:10.5px}
     .pprob{font-size:13.5px}
     .pul li{font-size:13px}
-    .metrics{grid-template-columns:repeat(2,1fr)}
+    .exp-job{margin-left:38px;padding:22px 18px 23px}
+    .exp-job h3{font-size:24px}
+    .exp-role{font-size:10.5px;line-height:1.45}
+    .exp-lead{font-size:14.5px;line-height:1.68}
+    .exp-list li{font-size:12.8px;line-height:1.58}
+    .exp-scope span{font-size:9.5px;padding:5px 8px}
     .navlinks a{padding:6px 4px}
   }
 
@@ -3422,25 +3645,63 @@
 
   <section id="exp">
     <div class="sechead"><h2>工作经历</h2><span class="idx">[ 04 / EXPERIENCE ]</span></div>
-    <div class="xp">
-      <div class="xphd"><h3>中国信通院江西分院 · 产品经理</h3><span class="date">2021.07 — 2025.08</span></div>
-      <p class="xpsub">主导数字经济领域 AI 产品全生命周期管理，覆盖需求挖掘、产品设计、落地交付与商业化闭环，支撑省市级数字化转型项目。</p>
-      <div class="metrics">
-        <div class="metric"><div class="big">300+</div><div class="lbl">家企业深度调研 / 数字化诊断报告，沉淀结构化需求池</div></div>
-        <div class="metric"><div class="big">100+</div><div class="lbl">行业场景化解决方案，交付效率提升 35%</div></div>
-        <div class="metric"><div class="big">3000+</div><div class="lbl">家企业业务数据采集治理，构建指标与标签体系</div></div>
-        <div class="metric"><div class="big">2000万+</div><div class="lbl">10+ 省市级项目，100% 按期交付，带动合同额</div></div>
+    <div class="exp-timeline" aria-label="工作经历时间轴">
+      <div class="exp-time" aria-hidden="true">
+        <span class="exp-year">2021</span>
+        <span class="exp-date">2021.07 - 2025.08</span>
+        <span class="exp-type">Full-time</span>
       </div>
-    </div>
+      <article class="exp-job">
+        <div class="exp-job-head">
+          <div>
+            <h3>中国信通院江西分院</h3>
+            <p class="exp-role">产品经理 · 数字经济 / AI 产品落地</p>
+          </div>
+          <div class="exp-scope">
+            <span>需求洞察</span>
+            <span>政务 RAG</span>
+            <span>AI 0->1</span>
+            <span>数据治理</span>
+            <span>商业化</span>
+          </div>
+        </div>
+        <div class="exp-job-body">
+          <p class="exp-lead">主导数字经济领域产品全生命周期管理，覆盖 <mark>需求挖掘 -> 产品设计 -> 落地交付 -> 商业化闭环</mark>；后期牵头政务 RAG 等 AI 产品落地，支撑省市级数字化转型项目。</p>
+          <ul class="exp-list">
+            <li><strong>用户洞察与 AI 需求挖掘：</strong>主导 300+ 家企业深度调研，输出 300+ 份数字化诊断报告，沉淀场景需求池与 AI 产品路线图，需求匹配度提升 <mark>40%</mark>。</li>
+            <li><strong>AI 产品 0->1 落地：</strong>完成需求拆解、功能规划、流程设计、PRD 输出与研发协同，沉淀 100+ 份行业解决方案，交付效率提升 <mark>35%</mark>。</li>
+            <li><strong>数据治理与 AI 能力底座：</strong>主导 3000+ 家企业业务数据采集、清洗与治理，参与农业数字经济指标和标签体系建设，政策匹配准确率提升 <mark>50%</mark>。</li>
+            <li><strong>项目管理与商业化：</strong>统筹政府、企业、高校与研发团队，主导 10+ 省市级规划项目，累计合同额超 <mark>2000 万元</mark>，二次合作率达 <mark>70%</mark>。</li>
+          </ul>
+        </div>
+      </article>
 
-    <div class="intern">
-      <div class="xphd"><h3>美的集团 · 产品经理（实习）</h3><span class="date">2020.09 — 2021.05</span></div>
-      <div style="font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--muted);text-transform:uppercase">[ Internship ]</div>
-      <ul class="pul">
-        <li>主导产品需求重构拆解（WBS），协同研发测试完成工作量评估，制定版本迭代计划与交付节点。</li>
-        <li>通过每日站会、周例会等敏捷机制追踪进展，识别并协调跨团队问题，对不合理延期做根因分析。</li>
-        <li>主导制定多项版本管理制度；开展新品项目 58 个、协调月度需求 134 个，<b>版本交付率从 78% 提升至 95%</b>。</li>
-      </ul>
+      <div class="exp-time" aria-hidden="true">
+        <span class="exp-year">2020</span>
+        <span class="exp-date">2020.09 - 2021.05</span>
+        <span class="exp-type">Internship</span>
+      </div>
+      <article class="exp-job exp-job-intern">
+        <div class="exp-job-head">
+          <div>
+            <h3>美的集团</h3>
+            <p class="exp-role">产品经理（实习） · 版本管理 / 敏捷协作</p>
+          </div>
+          <div class="exp-scope">
+            <span>WBS</span>
+            <span>敏捷协作</span>
+            <span>版本流程</span>
+          </div>
+        </div>
+        <div class="exp-job-body">
+          <p class="exp-lead">围绕产品需求、研发评估、测试协作与版本上线建立更清晰的迭代节奏，重点提升交付计划的可控性和跨团队协同效率。</p>
+          <ul class="exp-list">
+            <li><strong>需求拆解与版本规划：</strong>主导产品需求重构拆解（WBS），协同研发、测试评估工作量，明确模块负责人和交付节点。</li>
+            <li><strong>敏捷跟进与延期干预：</strong>通过每日站会、周例会追踪开发与上线进展，对不合理延期做根因分析与干预。</li>
+            <li><strong>流程规范沉淀：</strong>制定月度需求版本管理、新品开发版本流程与 Redmine 标准；新品开发项目 58 个、月度需求任务 134 个，版本交付率由 <mark>78% 提升至 95%</mark>。</li>
+          </ul>
+        </div>
+      </article>
     </div>
   </section>
 
