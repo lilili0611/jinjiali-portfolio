@@ -3445,6 +3445,219 @@
       height:55.2%;
     }
   }
+
+  /* ===== 大字粗体 + 流动渐变标题特效（紫粉蓝，贴合站点鸢尾色系，加深以保证浅背景可读性）===== */
+  @keyframes gradTitleFlow{
+    0%{background-position:0% center}
+    100%{background-position:-200% center}
+  }
+  .grad-title{
+    background-image:linear-gradient(to right,#7A5AF0,#E36FB0,#5B8DEF,#9B6BE8,#7A5AF0);
+    background-size:200% auto;
+    background-repeat:repeat;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    animation:gradTitleFlow 6s linear infinite;
+  }
+  /* 1) 5 个分节大标题：加大加粗 + 渐变 */
+  .sechead h2{
+    font-weight:900;
+    font-size:clamp(40px,6.6vw,78px);
+    background-image:linear-gradient(to right,#7A5AF0,#E36FB0,#5B8DEF,#9B6BE8,#7A5AF0);
+    background-size:200% auto;
+    background-repeat:repeat;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    animation:gradTitleFlow 6s linear infinite;
+  }
+  /* 2) 首页大名字「晋佳莉」：加大加粗 + 渐变（英文副名 Jin Jiali 保持原样）*/
+  .hero .hero-profile h1 span{
+    font-weight:900;
+    font-size:clamp(42px,4.6vw,74px);
+    line-height:.92;
+    background-image:linear-gradient(to right,#7A5AF0,#E36FB0,#5B8DEF,#9B6BE8,#7A5AF0);
+    background-size:200% auto;
+    background-repeat:repeat;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    animation:gradTitleFlow 6s linear infinite;
+  }
+  /* 3) 结尾 THANK YOU：渐变；中文「感谢阅读」恢复原实色 */
+  footer h2{
+    font-weight:900;
+    background-image:linear-gradient(to right,#7A5AF0,#E36FB0,#5B8DEF,#9B6BE8,#7A5AF0);
+    background-size:200% auto;
+    background-repeat:repeat;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    animation:gradTitleFlow 6s linear infinite;
+  }
+  footer h2 span{
+    -webkit-text-fill-color:var(--ink-soft);
+    color:var(--ink-soft);
+  }
+  /* 4) 项目经历的 3 个项目大标题：加大加粗 + 同款渐变 */
+  .pbanner h3{
+    font-weight:900;
+    font-size:clamp(28px,3.8vw,46px);
+    background-image:linear-gradient(to right,#7A5AF0,#E36FB0,#5B8DEF,#9B6BE8,#7A5AF0);
+    background-size:200% auto;
+    background-repeat:repeat;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    animation:gradTitleFlow 6s linear infinite;
+  }
+  /* 尊重系统「减少动态效果」偏好：保留渐变配色但停止流动 */
+  @media (prefers-reduced-motion: reduce){
+    .grad-title,.sechead h2,.hero .hero-profile h1 span,footer h2,.pbanner h3{animation:none}
+  }
+
+  /* ===== 个人简介：重点加粗标注 + TrueFocus 逐词聚焦动效 ===== */
+  /* 重点标注：鸢尾紫加粗 + 柔和高亮底纹 */
+  .about-copy .bio-em{
+    font-weight:800;
+    color:#5A3FD6;
+    background-image:linear-gradient(transparent 60%, rgba(198,180,238,.55) 0);
+    border-radius:2px;
+  }
+  /* TrueFocus 关键词聚焦行 */
+  .focus-line{
+    position:relative;
+    display:flex;flex-wrap:wrap;align-items:center;gap:1em;
+    margin:22px 0 8px;
+    user-select:none;
+  }
+  .focus-line .focus-word{
+    position:relative;
+    font-family:var(--disp);
+    font-weight:900;
+    font-size:clamp(20px,2.6vw,32px);
+    line-height:1.1;
+    color:var(--ink-soft);
+    filter:blur(5px);
+    transition:filter .6s ease,color .6s ease;
+  }
+  .focus-line .focus-word.is-active{
+    filter:blur(0);
+    color:#5A3FD6;
+  }
+  .focus-line .focus-frame{
+    position:absolute;top:0;left:0;
+    pointer-events:none;opacity:0;
+    box-sizing:content-box;
+    transition:transform .6s ease,width .6s ease,height .6s ease,opacity .3s ease;
+  }
+  .focus-line .corner{
+    position:absolute;width:.85rem;height:.85rem;
+    border:3px solid #7A5AF0;
+    filter:drop-shadow(0 0 4px rgba(122,90,240,.6));
+    border-radius:3px;
+  }
+  .focus-line .corner.tl{top:-10px;left:-10px;border-right:none;border-bottom:none}
+  .focus-line .corner.tr{top:-10px;right:-10px;border-left:none;border-bottom:none}
+  .focus-line .corner.bl{bottom:-10px;left:-10px;border-right:none;border-top:none}
+  .focus-line .corner.br{bottom:-10px;right:-10px;border-left:none;border-top:none}
+  /* 减少动态：全部清晰、隐藏聚焦框 */
+  @media (prefers-reduced-motion: reduce){
+    .focus-line .focus-word{filter:none;color:var(--ink-soft)}
+    .focus-line .focus-frame{display:none}
+  }
+
+  /* ===== 核心能力：Lightfall 流光背景 + 标题渐变 + 子点 + 柔和入场 ===== */
+  /* 1) Lightfall 柔和流光层：低透明度 + screen 混合，融入浅色背景 */
+  #caps{overflow:hidden}
+  #caps > .sechead,
+  #caps > .caps{position:relative;z-index:1}
+  #caps > .sechead{z-index:2}
+  .caps-fx{
+    position:absolute;inset:0;z-index:0;
+    pointer-events:none;
+    opacity:.8;
+  }
+  .caps-fx canvas{display:block;width:100%;height:100%}
+  /* 2) 4 个能力标题：套用同款流动渐变 */
+  .cap h3{
+    background-image:linear-gradient(to right,#7A5AF0,#E36FB0,#5B8DEF,#9B6BE8,#7A5AF0);
+    background-size:200% auto;
+    background-repeat:repeat;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    animation:gradTitleFlow 6s linear infinite;
+  }
+  /* 3) 能力子点列表 */
+  .cap-points{
+    list-style:none;margin:12px 0 0;padding:0;
+    display:flex;flex-direction:column;gap:7px;
+  }
+  .cap-points li{
+    position:relative;padding-left:16px;
+    font-size:12.5px;line-height:1.55;color:var(--ink-soft);
+  }
+  .cap-points li::before{
+    content:"";position:absolute;left:1px;top:.58em;
+    width:6px;height:6px;border-radius:50%;
+    background:linear-gradient(135deg,#7A5AF0,#E36FB0);
+    box-shadow:0 0 6px rgba(122,90,240,.5);
+  }
+  .cap-points b{font-weight:700;color:#5A3FD6}
+  /* 4) 卡片柔和错峰入场（仅透明度，不触碰 3D 倾斜）*/
+  .caps.reveal-ready .cap{opacity:0}
+  .caps.reveal-ready .cap.cap-in{
+    opacity:1;
+    transition:opacity .8s ease,transform .24s ease,border-color .24s ease,box-shadow .24s ease,background .24s ease;
+  }
+  .caps.reveal-ready .cap:nth-child(2).cap-in{transition-delay:.12s}
+  .caps.reveal-ready .cap:nth-child(3).cap-in{transition-delay:.24s}
+  .caps.reveal-ready .cap:nth-child(4).cap-in{transition-delay:.36s}
+  @media (prefers-reduced-motion: reduce){
+    .cap h3{animation:none}
+  }
+
+  /* ===== 核心能力：滚动驱动的垂直堆叠 3D（单列满宽 + 卡内左右排版）===== */
+  #caps .caps{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+    grid-template-columns:none;
+    perspective:1300px;
+    perspective-origin:50% 44%;
+  }
+  #caps .caps::before{display:none}            /* 竖排里中线横向光晕位置不合适，去掉 */
+  #caps .cap{
+    width:100%;
+    min-height:auto;
+    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+    grid-template-rows:auto auto;
+    gap:14px 44px;
+    align-items:start;
+    padding:30px 40px;
+    transform:rotateX(var(--scroll-rx,0deg)) scale(var(--scroll-sc,1));
+    transform-origin:50% 50%;
+    transition:box-shadow .24s ease,border-color .24s ease,background .24s ease;
+  }
+  #caps .cap .cap-head{grid-column:1 / -1;grid-row:1}
+  #caps .cap .cap-visual{grid-column:1;grid-row:2;align-self:center;min-height:210px;margin:0}
+  #caps .cap .cap-copy{grid-column:2;grid-row:2;align-self:center}
+  @media (max-width:820px){
+    #caps .cap{grid-template-columns:1fr;padding:24px 22px;gap:16px}
+    #caps .cap .cap-visual{grid-column:1;grid-row:2}
+    #caps .cap .cap-copy{grid-column:1;grid-row:3}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #caps .cap{transform:none}
+  }
 </style>
 </head>
 <body>
@@ -3517,7 +3730,15 @@
     <div class="sechead"><h2>个人简介<br><span style="font-size:.45em">About</span></h2><span class="idx">[ 01 / ABOUT ]</span></div>
     <div class="about-lab">
       <div class="about-copy">
-        <p>4 年 B 端 / 数字经济产品经验打底，其中近 2 年聚焦 AI 产品 0→1 落地，覆盖 RAG 智能问答、多 Agent 写作、AIGC 生成、智能客服等方向，完成从行业数字化向 AI 原生产品的转型。擅长在模糊业务场景中识别 AI 赋能点，把大模型能力转化为可度量、可兜底、算得清成本的业务价值；熟悉 RAG、Agent 编排与评测体系，能以「一人 + AI」的原生工作方式独立完成从需求到上线交付的全链路。</p>
+        <p>4 年 B 端 / 数字经济产品经验打底，其中<strong class="bio-em">近 2 年聚焦 AI 产品 0→1 落地</strong>，覆盖 <strong class="bio-em">RAG 智能问答、多 Agent 写作、AIGC 生成、智能客服</strong>等方向，完成从行业数字化向 AI 原生产品的转型。擅长在模糊业务场景中识别 AI 赋能点，把大模型能力转化为可度量、可兜底、算得清成本的业务价值；熟悉 RAG、Agent 编排与评测体系，能以<strong class="bio-em">「一人 + AI」的原生工作方式独立完成从需求到上线交付的全链路</strong>。</p>
+        <div class="focus-line" id="aboutFocus" role="img" aria-label="核心关键词：AI 0→1、RAG、多 Agent、一人+AI、全链路交付">
+          <span class="focus-word">AI 0→1</span>
+          <span class="focus-word">RAG</span>
+          <span class="focus-word">多 Agent</span>
+          <span class="focus-word">一人+AI</span>
+          <span class="focus-word">全链路交付</span>
+          <div class="focus-frame" aria-hidden="true"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div>
+        </div>
         <div class="about-signals" aria-label="能力关键词">
           <span class="about-signal">Research</span>
           <span class="about-signal">PRD</span>
@@ -3543,6 +3764,7 @@
   </section>
 
   <section id="caps">
+    <div class="caps-fx" aria-hidden="true"></div>
     <div class="sechead"><h2>核心能力</h2><span class="idx">[ 02 / CAPABILITIES ]</span></div>
     <div class="caps">
       <article class="cap">
@@ -3555,6 +3777,11 @@
         <div class="cap-copy">
           <h3>AI 产品 0→1 全流程</h3>
           <p>市场调研、用户访谈、需求拆解、PRD 撰写、MVP 验证、数据埋点与效果评估，可形成可复制的交付方法论。</p>
+          <ul class="cap-points">
+            <li>主导 <b>EditAI</b> 核心 PRD：规划九大写作模式，确立「阶段不可回退 + 报告/对话双驱动」核心规则</li>
+            <li>相机租赁项目从 0 跑通 <b>C 端服务 + B 端管理</b>全链路场景</li>
+            <li>沉淀「调研 → PRD → MVP → 埋点评估」可复制方法论</li>
+          </ul>
           <div class="cap-tags"><span>Research</span><span>PRD</span><span>MVP</span><span>Metrics</span></div>
         </div>
       </article>
@@ -3571,6 +3798,11 @@
         <div class="cap-copy">
           <h3>AI 原生技术理解</h3>
           <p>RAG（分块、Embedding 选型、Reranker 重排）、多 Agent 架构与护栏设计、Prompt 工程、意图路由、Tool Use，并能定义质量评分与评测指标。</p>
+          <ul class="cap-points">
+            <li>RAG 全链路：分块调优 + Embedding 选型对比（<b>bge-large-zh / text2vec</b>）+ <b>bge-reranker-large</b> 精排</li>
+            <li>多 Agent：<b>Chief → Deputy → Editor</b> 三层协作链路与护栏设计</li>
+            <li>质量评测：Polish / Logic / Consistency 三维评分（通过线 <b>≥0.70</b>）按分自动路由</li>
+          </ul>
           <div class="cap-tags"><span>Reranker</span><span>Router</span><span>Prompt</span></div>
         </div>
       </article>
@@ -3587,6 +3819,11 @@
         <div class="cap-copy">
           <h3>"一人 + AI" 独立交付</h3>
           <p>借助 AI 编程（vibe coding）工具，独立完成软件产品从规划、研发协同到上线交付。</p>
+          <ul class="cap-points">
+            <li>以 <b>vibe coding</b> 独立完成规划 → 研发协同 → 上线交付</li>
+            <li>相机租赁智能客服系统：<b>个人独立研发并部署上线</b></li>
+            <li>EditAI 已上线，跑通完整人机协作流水线，兼容任意 <b>OpenAI-compatible</b> 模型</li>
+          </ul>
           <div class="cap-tags"><span>Plan</span><span>Build</span><span>Deploy</span></div>
         </div>
       </article>
@@ -3602,6 +3839,11 @@
         <div class="cap-copy">
           <h3>数据驱动迭代</h3>
           <p>数据爬取、清洗与分析；围绕 AARRR 漏斗、留存与埋点数据搭建评估体系，驱动产品迭代与商业化判断。</p>
+          <ul class="cap-points">
+            <li>数据爬取、清洗、分析，制定全链路<b>埋点方案</b></li>
+            <li>围绕 <b>AARRR 漏斗</b>与留存搭建评估体系</li>
+            <li>以数据驱动迭代与商业化判断（自动解答率 <b>85%+</b>、人工时长 <b>-60%</b>）</li>
+          </ul>
           <div class="cap-tags"><span>AARRR</span><span>Retention</span><span>Insight</span><span>Growth</span></div>
         </div>
       </article>
@@ -4417,18 +4659,210 @@
 
         const x = (event.clientX - rect.left) / rect.width;
         const y = (event.clientY - rect.top) / rect.height;
-        const rotateY = (x - 0.5) * 9;
-        const rotateX = (0.5 - y) * 7;
 
         card.classList.add("is-tilting");
-        card.style.setProperty("--rx", `${rotateX.toFixed(2)}deg`);
-        card.style.setProperty("--ry", `${rotateY.toFixed(2)}deg`);
         card.style.setProperty("--glare-x", `${(x * 100).toFixed(1)}%`);
         card.style.setProperty("--glare-y", `${(y * 100).toFixed(1)}%`);
       });
       card.addEventListener("pointerleave", () => resetCard(card));
       card.addEventListener("pointercancel", () => resetCard(card));
     });
+  })();
+
+  /* 核心能力：滚动驱动的垂直堆叠 3D —— 卡片在下方时后仰、滚到中心立直、滚出顶部前倾 */
+  (() => {
+    const section = document.getElementById('caps');
+    if(!section) return;
+    const cards = Array.from(section.querySelectorAll('.cap'));
+    if(!cards.length) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const MAXR = 18;            // 最大俯仰角(度)
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const vc = vh / 2;
+      for(const card of cards){
+        const r = card.getBoundingClientRect();
+        const cc = r.top + r.height / 2;
+        let p = (cc - vc) / vh;                       // 卡片中心相对视口中心：下方>0，上方<0
+        p = Math.max(-1, Math.min(1, p));
+        const rx = p * MAXR;                          // 下方→正角→顶边后仰；中心→0 立直；上方→前倾
+        const sc = 1 - Math.min(0.08, Math.abs(p) * 0.08);
+        card.style.setProperty('--scroll-rx', rx.toFixed(2) + 'deg');
+        card.style.setProperty('--scroll-sc', sc.toFixed(3));
+      }
+    };
+    const onScroll = () => { if(!ticking){ ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
+</script>
+
+<script>
+  /* TrueFocus 逐词聚焦：自动轮播，给当前关键词去模糊并移动边框框选 */
+  (function(){
+    var c = document.getElementById('aboutFocus');
+    if(!c) return;
+    var words = Array.prototype.slice.call(c.querySelectorAll('.focus-word'));
+    var frame = c.querySelector('.focus-frame');
+    if(!words.length || !frame) return;
+    var idx = 0;
+    var DUR = 0.6, PAUSE = 1.0; // 秒：聚焦动画时长 + 停留
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function place(i){
+      words.forEach(function(w,j){ w.classList.toggle('is-active', j===i); });
+      var cr = c.getBoundingClientRect();
+      var wr = words[i].getBoundingClientRect();
+      frame.style.transform = 'translate(' + (wr.left-cr.left) + 'px,' + (wr.top-cr.top) + 'px)';
+      frame.style.width = wr.width + 'px';
+      frame.style.height = wr.height + 'px';
+      frame.style.opacity = '1';
+    }
+
+    place(0);
+    window.addEventListener('load', function(){ place(idx); });   // 字体加载后校正位置
+    window.addEventListener('resize', function(){ place(idx); });
+
+    if(!reduce){
+      setInterval(function(){
+        idx = (idx + 1) % words.length;
+        place(idx);
+      }, (DUR + PAUSE) * 1000);
+    }
+  })();
+</script>
+
+<script type="module">
+  /* Lightfall（React Bits）移植：ogl WebGL 流光，调成低强度紫粉蓝、screen 混合融入浅色背景 */
+  (async function(){
+    var host = document.querySelector('.caps-fx');
+    var section = document.getElementById('caps');
+    if(!host || !section) return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var ogl;
+    try{ ogl = await import('https://esm.sh/ogl'); }
+    catch(e){ console.warn('Lightfall: ogl 加载失败，跳过背景特效', e); return; }
+    var Renderer = ogl.Renderer, Program = ogl.Program, Mesh = ogl.Mesh, Triangle = ogl.Triangle;
+
+    var hexToRGB = function(hex){ var c = hex.replace('#','').padEnd(6,'0');
+      return [parseInt(c.slice(0,2),16)/255, parseInt(c.slice(2,4),16)/255, parseInt(c.slice(4,6),16)/255]; };
+
+    var colors = ['#9B6BE8','#5B8DEF','#E36FB0'], MAX = 8;
+    var arr = []; for(var i=0;i<MAX;i++) arr.push(hexToRGB(colors[Math.min(i, colors.length-1)]));
+    var count = colors.length, avg = [0,0,0];
+    for(var j=0;j<count;j++){ avg[0]+=arr[j][0]; avg[1]+=arr[j][1]; avg[2]+=arr[j][2]; }
+    avg[0]/=count; avg[1]/=count; avg[2]/=count;
+
+    var vertex = `
+attribute vec2 position;
+attribute vec2 uv;
+varying vec2 vUv;
+void main(){ vUv = uv; gl_Position = vec4(position, 0.0, 1.0); }`;
+
+    var fragment = `
+precision highp float;
+uniform vec3 iResolution; uniform vec2 iMouse; uniform float iTime;
+uniform vec3 uColor0,uColor1,uColor2,uColor3,uColor4,uColor5,uColor6,uColor7;
+uniform int uColorCount;
+uniform vec3 uBgColor; uniform vec3 uMouseColor;
+uniform float uSpeed; uniform int uStreakCount; uniform float uStreakWidth; uniform float uStreakLength;
+uniform float uGlow; uniform float uDensity; uniform float uTwinkle; uniform float uZoom;
+uniform float uBgGlow; uniform float uOpacity;
+uniform float uMouseEnabled; uniform float uMouseStrength; uniform float uMouseRadius;
+varying vec2 vUv;
+vec3 palette(float h){ int count = uColorCount; if(count<1) count=1;
+  int idx = int(floor(clamp(h,0.0,0.999999)*float(count)));
+  if(idx<=0) return uColor0; if(idx==1) return uColor1; if(idx==2) return uColor2; if(idx==3) return uColor3;
+  if(idx==4) return uColor4; if(idx==5) return uColor5; if(idx==6) return uColor6; return uColor7; }
+vec3 tanhv(vec3 x){ vec3 e = exp(-2.0*x); return (1.0-e)/(1.0+e); }
+vec2 sceneC(vec2 frag, vec2 r){ vec2 P = (frag+frag-r)/r.x; float z=0.0; float d=1e3; vec4 O=vec4(0.0);
+  for(int k=0;k<39;k++){ if(d<=1e-4) break; O = z*normalize(vec4(P,uZoom,0.0)) - vec4(0.0,4.0,1.0,0.0)/4.5;
+    d = 1.0 - sqrt(length(O*O)); z += d; } return vec2(O.x, atan(O.z,O.y)); }
+void mainImage(out vec4 o, vec2 C){ vec2 r = iResolution.xy; vec2 uv0 = (C+C-r)/r.x;
+  float T = 0.1*iTime*uSpeed + 9.0;
+  float angRings = max(1.0, floor(6.28318530718*max(uDensity,0.05)+0.5));
+  vec2 Y = vec2(5e-3, 6.28318530718/angRings);
+  vec2 c0 = sceneC(C,r); vec2 cdx = sceneC(C+vec2(1.0,0.0),r); vec2 cdy = sceneC(C+vec2(0.0,1.0),r);
+  vec2 dCx = cdx-c0; vec2 dCy = cdy-c0;
+  dCx.y -= 6.28318530718*floor(dCx.y/6.28318530718+0.5); dCy.y -= 6.28318530718*floor(dCy.y/6.28318530718+0.5);
+  vec2 fw = abs(dCx)+abs(dCy); C = c0;
+  vec2 P = vec2(2.0,1.0)*uv0 - (r/r.x)*vec2(0.0,1.0);
+  vec4 O = vec4(uBgColor*90.0*uBgGlow/(1e3*dot(P,P)+6.0), 0.0);
+  float mGlow = 0.0;
+  if(uMouseEnabled>0.5){ vec2 mN = (iMouse+iMouse-r)/r.x; float md = length(uv0-mN);
+    mGlow = exp(-md*md/max(uMouseRadius*uMouseRadius,1e-4))*uMouseStrength; O.rgb += uMouseColor*mGlow*0.25; }
+  float zr = 5e-4*uStreakWidth; vec2 rr = vec2(max(length(fw),1e-5)); float tail = 19.0/max(uStreakLength,0.05);
+  for(int m=0;m<16;m++){ if(m>=uStreakCount) break; float jf = float(m)+1.0;
+    float ic = fract(sin(dot(vec2(jf, floor(C.x/Y.x+0.5)), vec2(7.0,11.0))*73.0));
+    vec2 Pp = C - (T+T*ic)*vec2(0.0,1.0); Pp -= floor(Pp/Y+0.5)*Y;
+    float h = fract(8663.0*ic); vec3 col = palette(h);
+    float weight = mix(1.5, 1.0+sin(T+7.0*h+4.0), uTwinkle); weight *= (1.0+mGlow*2.0);
+    vec2 inner = vec2(length(max(Pp, vec2(-1.0,0.0))), length(Pp)-zr) - zr;
+    vec2 sm = vec2(1.0) - smoothstep(-rr, rr, inner);
+    O.rgb += dot(sm, vec2(exp(tail*Pp.y), 3.0))*col*weight; C.x += Y.x/8.0; }
+  vec3 colr = sqrt(tanhv(max(O.rgb*uGlow - vec3(0.04,0.08,0.02), 0.0)));
+  float a = clamp(max(max(colr.r,colr.g),colr.b), 0.0, 1.0);
+  o = vec4(colr, a*uOpacity); }
+void main(){ vec4 color; mainImage(color, vUv*iResolution.xy); gl_FragColor = color; }`;
+
+    var renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio||1, 2), alpha:true, antialias:true });
+    var gl = renderer.gl, canvas = gl.canvas;
+    canvas.style.width='100%'; canvas.style.height='100%'; canvas.style.display='block';
+    host.appendChild(canvas);
+
+    var uniforms = {
+      iResolution:{value:[gl.drawingBufferWidth, gl.drawingBufferHeight, 1]},
+      iMouse:{value:[0,0]}, iTime:{value:0},
+      uColor0:{value:arr[0]},uColor1:{value:arr[1]},uColor2:{value:arr[2]},uColor3:{value:arr[3]},
+      uColor4:{value:arr[4]},uColor5:{value:arr[5]},uColor6:{value:arr[6]},uColor7:{value:arr[7]},
+      uColorCount:{value:count},
+      uBgColor:{value:hexToRGB('#1A1240')}, uMouseColor:{value:avg},
+      uSpeed:{value:0.35}, uStreakCount:{value:2}, uStreakWidth:{value:1}, uStreakLength:{value:1},
+      uGlow:{value:0.85}, uDensity:{value:0.5}, uTwinkle:{value:1}, uZoom:{value:3},
+      uBgGlow:{value:0.2}, uOpacity:{value:0.85},
+      uMouseEnabled:{value:1}, uMouseStrength:{value:0.6}, uMouseRadius:{value:0.9}
+    };
+    var program = new Program(gl, { vertex:vertex, fragment:fragment, uniforms:uniforms });
+    var mesh = new Mesh(gl, { geometry:new Triangle(gl), program:program });
+
+    function resize(){ var rc = host.getBoundingClientRect(); renderer.setSize(rc.width, rc.height);
+      uniforms.iResolution.value = [gl.drawingBufferWidth, gl.drawingBufferHeight, 1]; }
+    resize();
+    new ResizeObserver(resize).observe(host);
+
+    var target = [0,0];
+    section.addEventListener('pointermove', function(e){
+      var rect = canvas.getBoundingClientRect(), s = renderer.dpr||1;
+      target[0] = (e.clientX-rect.left)*s; target[1] = (rect.height-(e.clientY-rect.top))*s;
+    });
+    var damp = 0.15, last = 0;
+    function loop(t){ requestAnimationFrame(loop);
+      uniforms.iTime.value = t*0.001;
+      if(!last) last = t; var dt = (t-last)/1000; last = t;
+      var f = Math.min(1, 1-Math.exp(-dt/Math.max(1e-4,damp)));
+      var cur = uniforms.iMouse.value; cur[0] += (target[0]-cur[0])*f; cur[1] += (target[1]-cur[1])*f;
+      try{ renderer.render({ scene:mesh }); }catch(e){}
+    }
+    requestAnimationFrame(loop);
+  })();
+
+  /* 核心能力卡片错峰入场 */
+  (function(){
+    var grid = document.querySelector('#caps .caps');
+    if(!grid) return;
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.cap'));
+    if(!cards.length || !('IntersectionObserver' in window)) return;
+    grid.classList.add('reveal-ready');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('cap-in'); io.unobserve(en.target); } });
+    }, { threshold:0.18 });
+    cards.forEach(function(c){ io.observe(c); });
   })();
 </script>
 
