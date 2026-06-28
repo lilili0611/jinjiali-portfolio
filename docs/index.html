@@ -3573,19 +3573,12 @@
     .focus-line .focus-frame{display:none}
   }
 
-  /* ===== 核心能力：Lightfall 流光背景 + 标题渐变 + 子点 + 柔和入场 ===== */
-  /* 1) Lightfall 柔和流光层：低透明度 + screen 混合，融入浅色背景 */
+  /* ===== 核心能力：标题渐变 + 子点 + 柔和入场 ===== */
   #caps{overflow:hidden}
   #caps > .sechead,
   #caps > .caps{position:relative;z-index:1}
   #caps > .sechead{z-index:2}
-  .caps-fx{
-    position:absolute;inset:0;z-index:0;
-    pointer-events:none;
-    opacity:.8;
-  }
-  .caps-fx canvas{display:block;width:100%;height:100%}
-  /* 2) 4 个能力标题：套用同款流动渐变 */
+  /* 1) 4 个能力标题：套用同款流动渐变 */
   .cap h3{
     background-image:linear-gradient(to right,#7A5AF0,#E36FB0,#5B8DEF,#9B6BE8,#7A5AF0);
     background-size:200% auto;
@@ -3596,7 +3589,7 @@
     -webkit-text-fill-color:transparent;
     animation:gradTitleFlow 6s linear infinite;
   }
-  /* 3) 能力子点列表 */
+  /* 2) 能力子点列表 */
   .cap-points{
     list-style:none;margin:12px 0 0;padding:0;
     display:flex;flex-direction:column;gap:7px;
@@ -3612,7 +3605,7 @@
     box-shadow:0 0 6px rgba(122,90,240,.5);
   }
   .cap-points b{font-weight:700;color:#5A3FD6}
-  /* 4) 卡片柔和错峰入场（仅透明度，不触碰 3D 倾斜）*/
+  /* 3) 卡片柔和错峰入场（仅透明度，不触碰 3D 倾斜）*/
   .caps.reveal-ready .cap{opacity:0}
   .caps.reveal-ready .cap.cap-in{
     opacity:1;
@@ -3764,7 +3757,6 @@
   </section>
 
   <section id="caps">
-    <div class="caps-fx" aria-hidden="true"></div>
     <div class="sechead"><h2>核心能力</h2><span class="idx">[ 02 / CAPABILITIES ]</span></div>
     <div class="caps">
       <article class="cap">
@@ -4736,121 +4728,7 @@
   })();
 </script>
 
-<script type="module">
-  /* Lightfall（React Bits）移植：ogl WebGL 流光，调成低强度紫粉蓝、screen 混合融入浅色背景 */
-  (async function(){
-    var host = document.querySelector('.caps-fx');
-    var section = document.getElementById('caps');
-    if(!host || !section) return;
-    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var ogl;
-    try{ ogl = await import('https://esm.sh/ogl'); }
-    catch(e){ console.warn('Lightfall: ogl 加载失败，跳过背景特效', e); return; }
-    var Renderer = ogl.Renderer, Program = ogl.Program, Mesh = ogl.Mesh, Triangle = ogl.Triangle;
-
-    var hexToRGB = function(hex){ var c = hex.replace('#','').padEnd(6,'0');
-      return [parseInt(c.slice(0,2),16)/255, parseInt(c.slice(2,4),16)/255, parseInt(c.slice(4,6),16)/255]; };
-
-    var colors = ['#9B6BE8','#5B8DEF','#E36FB0'], MAX = 8;
-    var arr = []; for(var i=0;i<MAX;i++) arr.push(hexToRGB(colors[Math.min(i, colors.length-1)]));
-    var count = colors.length, avg = [0,0,0];
-    for(var j=0;j<count;j++){ avg[0]+=arr[j][0]; avg[1]+=arr[j][1]; avg[2]+=arr[j][2]; }
-    avg[0]/=count; avg[1]/=count; avg[2]/=count;
-
-    var vertex = `
-attribute vec2 position;
-attribute vec2 uv;
-varying vec2 vUv;
-void main(){ vUv = uv; gl_Position = vec4(position, 0.0, 1.0); }`;
-
-    var fragment = `
-precision highp float;
-uniform vec3 iResolution; uniform vec2 iMouse; uniform float iTime;
-uniform vec3 uColor0,uColor1,uColor2,uColor3,uColor4,uColor5,uColor6,uColor7;
-uniform int uColorCount;
-uniform vec3 uBgColor; uniform vec3 uMouseColor;
-uniform float uSpeed; uniform int uStreakCount; uniform float uStreakWidth; uniform float uStreakLength;
-uniform float uGlow; uniform float uDensity; uniform float uTwinkle; uniform float uZoom;
-uniform float uBgGlow; uniform float uOpacity;
-uniform float uMouseEnabled; uniform float uMouseStrength; uniform float uMouseRadius;
-varying vec2 vUv;
-vec3 palette(float h){ int count = uColorCount; if(count<1) count=1;
-  int idx = int(floor(clamp(h,0.0,0.999999)*float(count)));
-  if(idx<=0) return uColor0; if(idx==1) return uColor1; if(idx==2) return uColor2; if(idx==3) return uColor3;
-  if(idx==4) return uColor4; if(idx==5) return uColor5; if(idx==6) return uColor6; return uColor7; }
-vec3 tanhv(vec3 x){ vec3 e = exp(-2.0*x); return (1.0-e)/(1.0+e); }
-vec2 sceneC(vec2 frag, vec2 r){ vec2 P = (frag+frag-r)/r.x; float z=0.0; float d=1e3; vec4 O=vec4(0.0);
-  for(int k=0;k<39;k++){ if(d<=1e-4) break; O = z*normalize(vec4(P,uZoom,0.0)) - vec4(0.0,4.0,1.0,0.0)/4.5;
-    d = 1.0 - sqrt(length(O*O)); z += d; } return vec2(O.x, atan(O.z,O.y)); }
-void mainImage(out vec4 o, vec2 C){ vec2 r = iResolution.xy; vec2 uv0 = (C+C-r)/r.x;
-  float T = 0.1*iTime*uSpeed + 9.0;
-  float angRings = max(1.0, floor(6.28318530718*max(uDensity,0.05)+0.5));
-  vec2 Y = vec2(5e-3, 6.28318530718/angRings);
-  vec2 c0 = sceneC(C,r); vec2 cdx = sceneC(C+vec2(1.0,0.0),r); vec2 cdy = sceneC(C+vec2(0.0,1.0),r);
-  vec2 dCx = cdx-c0; vec2 dCy = cdy-c0;
-  dCx.y -= 6.28318530718*floor(dCx.y/6.28318530718+0.5); dCy.y -= 6.28318530718*floor(dCy.y/6.28318530718+0.5);
-  vec2 fw = abs(dCx)+abs(dCy); C = c0;
-  vec2 P = vec2(2.0,1.0)*uv0 - (r/r.x)*vec2(0.0,1.0);
-  vec4 O = vec4(uBgColor*90.0*uBgGlow/(1e3*dot(P,P)+6.0), 0.0);
-  float mGlow = 0.0;
-  if(uMouseEnabled>0.5){ vec2 mN = (iMouse+iMouse-r)/r.x; float md = length(uv0-mN);
-    mGlow = exp(-md*md/max(uMouseRadius*uMouseRadius,1e-4))*uMouseStrength; O.rgb += uMouseColor*mGlow*0.25; }
-  float zr = 5e-4*uStreakWidth; vec2 rr = vec2(max(length(fw),1e-5)); float tail = 19.0/max(uStreakLength,0.05);
-  for(int m=0;m<16;m++){ if(m>=uStreakCount) break; float jf = float(m)+1.0;
-    float ic = fract(sin(dot(vec2(jf, floor(C.x/Y.x+0.5)), vec2(7.0,11.0))*73.0));
-    vec2 Pp = C - (T+T*ic)*vec2(0.0,1.0); Pp -= floor(Pp/Y+0.5)*Y;
-    float h = fract(8663.0*ic); vec3 col = palette(h);
-    float weight = mix(1.5, 1.0+sin(T+7.0*h+4.0), uTwinkle); weight *= (1.0+mGlow*2.0);
-    vec2 inner = vec2(length(max(Pp, vec2(-1.0,0.0))), length(Pp)-zr) - zr;
-    vec2 sm = vec2(1.0) - smoothstep(-rr, rr, inner);
-    O.rgb += dot(sm, vec2(exp(tail*Pp.y), 3.0))*col*weight; C.x += Y.x/8.0; }
-  vec3 colr = sqrt(tanhv(max(O.rgb*uGlow - vec3(0.04,0.08,0.02), 0.0)));
-  float a = clamp(max(max(colr.r,colr.g),colr.b), 0.0, 1.0);
-  o = vec4(colr, a*uOpacity); }
-void main(){ vec4 color; mainImage(color, vUv*iResolution.xy); gl_FragColor = color; }`;
-
-    var renderer = new Renderer({ dpr: Math.min(window.devicePixelRatio||1, 2), alpha:true, antialias:true });
-    var gl = renderer.gl, canvas = gl.canvas;
-    canvas.style.width='100%'; canvas.style.height='100%'; canvas.style.display='block';
-    host.appendChild(canvas);
-
-    var uniforms = {
-      iResolution:{value:[gl.drawingBufferWidth, gl.drawingBufferHeight, 1]},
-      iMouse:{value:[0,0]}, iTime:{value:0},
-      uColor0:{value:arr[0]},uColor1:{value:arr[1]},uColor2:{value:arr[2]},uColor3:{value:arr[3]},
-      uColor4:{value:arr[4]},uColor5:{value:arr[5]},uColor6:{value:arr[6]},uColor7:{value:arr[7]},
-      uColorCount:{value:count},
-      uBgColor:{value:hexToRGB('#1A1240')}, uMouseColor:{value:avg},
-      uSpeed:{value:0.35}, uStreakCount:{value:2}, uStreakWidth:{value:1}, uStreakLength:{value:1},
-      uGlow:{value:0.85}, uDensity:{value:0.5}, uTwinkle:{value:1}, uZoom:{value:3},
-      uBgGlow:{value:0.2}, uOpacity:{value:0.85},
-      uMouseEnabled:{value:1}, uMouseStrength:{value:0.6}, uMouseRadius:{value:0.9}
-    };
-    var program = new Program(gl, { vertex:vertex, fragment:fragment, uniforms:uniforms });
-    var mesh = new Mesh(gl, { geometry:new Triangle(gl), program:program });
-
-    function resize(){ var rc = host.getBoundingClientRect(); renderer.setSize(rc.width, rc.height);
-      uniforms.iResolution.value = [gl.drawingBufferWidth, gl.drawingBufferHeight, 1]; }
-    resize();
-    new ResizeObserver(resize).observe(host);
-
-    var target = [0,0];
-    section.addEventListener('pointermove', function(e){
-      var rect = canvas.getBoundingClientRect(), s = renderer.dpr||1;
-      target[0] = (e.clientX-rect.left)*s; target[1] = (rect.height-(e.clientY-rect.top))*s;
-    });
-    var damp = 0.15, last = 0;
-    function loop(t){ requestAnimationFrame(loop);
-      uniforms.iTime.value = t*0.001;
-      if(!last) last = t; var dt = (t-last)/1000; last = t;
-      var f = Math.min(1, 1-Math.exp(-dt/Math.max(1e-4,damp)));
-      var cur = uniforms.iMouse.value; cur[0] += (target[0]-cur[0])*f; cur[1] += (target[1]-cur[1])*f;
-      try{ renderer.render({ scene:mesh }); }catch(e){}
-    }
-    requestAnimationFrame(loop);
-  })();
-
+<script>
   /* 核心能力卡片错峰入场 */
   (function(){
     var grid = document.querySelector('#caps .caps');
