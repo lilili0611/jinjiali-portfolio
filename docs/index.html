@@ -1833,7 +1833,7 @@
     background:none;
     perspective:none;
     transform-origin:50% 54%;
-    animation:projectSceneFloat 7.4s ease-in-out infinite;
+    animation:projectSceneFloat 6.4s ease-in-out infinite;
     max-height:120vw;
     transition:opacity .38s ease,transform .38s ease,max-height .42s ease,margin .42s ease;
     will-change:transform;
@@ -1849,9 +1849,9 @@
       radial-gradient(ellipse at 49% 90%,rgba(112,125,190,.16),transparent 18%),
       radial-gradient(ellipse at 80% 91%,rgba(116,92,176,.16),transparent 17%);
     mix-blend-mode:multiply;
-    opacity:.34;
-    filter:blur(5px);
-    animation:projectShadowBreath 7.2s ease-in-out infinite;
+    opacity:.42;
+    filter:blur(6px);
+    animation:projectShadowBreath 6.4s ease-in-out infinite;
   }
   #work .project-library::after{
     content:"";
@@ -1866,8 +1866,62 @@
       radial-gradient(circle at 72% 38%,rgba(255,255,255,.86) 0 1px,transparent 2px),
       radial-gradient(circle at 89% 64%,rgba(155,146,215,.58) 0 1.5px,transparent 2.8px);
     filter:drop-shadow(0 0 8px rgba(150,139,210,.42));
-    opacity:.36;
-    animation:projectTinyStars 6.8s ease-in-out infinite;
+    opacity:.5;
+    animation:projectTinyStars 5.8s ease-in-out infinite;
+  }
+  .project-click-guide{
+    position:absolute;
+    left:50%;
+    top:16.6%;
+    z-index:3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-height:38px;
+    max-width:min(78vw,520px);
+    padding:0 17px;
+    border:1px solid rgba(116,92,176,.24);
+    border-radius:999px;
+    background:linear-gradient(120deg,rgba(255,255,255,.78),rgba(246,241,255,.58),rgba(232,240,255,.62));
+    box-shadow:0 12px 28px rgba(113,96,174,.13),inset 0 0 0 1px rgba(255,255,255,.56);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    color:rgba(72,62,113,.68);
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    pointer-events:none;
+    transform:translateX(-50%);
+    animation:projectGuidePulse 5.8s ease-in-out infinite;
+  }
+  .project-click-guide::before{
+    content:"";
+    width:8px;
+    height:8px;
+    flex:0 0 auto;
+    border-radius:50%;
+    background:linear-gradient(135deg,#7A5AF0,#E36FB0);
+    box-shadow:0 0 14px rgba(122,90,240,.62);
+    animation:projectGuideDot 2.8s ease-in-out infinite;
+  }
+  .project-click-guide::after{
+    content:"↘";
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:22px;
+    height:22px;
+    border:1px solid rgba(116,92,176,.22);
+    border-radius:50%;
+    background:rgba(255,255,255,.54);
+    color:rgba(72,62,113,.7);
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:15px;
+    line-height:1;
   }
   .project-books-art{
     position:absolute;
@@ -1893,8 +1947,10 @@
     text-decoration:none;
     outline-offset:5px;
     transform:none;
-    transition:filter .26s ease;
+    transition:filter .26s ease,transform .28s ease;
     cursor:pointer;
+    animation:projectBookHotspotFloat var(--book-float-speed,6.8s) ease-in-out infinite;
+    animation-delay:var(--book-aura-delay,0s);
   }
   #work .project-book::before,
   #work .project-book::after{
@@ -1904,42 +1960,48 @@
     transition:opacity .28s ease,filter .28s ease;
   }
   #work .project-book::before{
-    inset:6% 5% 12%;
-    border-radius:30% 28% 32% 28% / 36% 30% 34% 30%;
+    inset:58% 8% 2%;
+    border-radius:50%;
     background:
-      radial-gradient(ellipse at 50% 44%,rgba(255,255,255,.34),transparent 43%),
-      radial-gradient(ellipse at 50% 62%,rgba(168,155,222,.24),transparent 68%);
-    mix-blend-mode:screen;
-    filter:blur(8px);
-    opacity:.14;
+      radial-gradient(ellipse at 50% 50%,rgba(91,77,152,.24),rgba(147,131,203,.12) 48%,transparent 74%),
+      radial-gradient(ellipse at 42% 42%,rgba(239,180,214,.16),transparent 58%);
+    mix-blend-mode:multiply;
+    filter:blur(9px);
+    opacity:.42;
     animation:projectBookAura var(--book-aura-speed,7s) ease-in-out infinite;
     animation-delay:var(--book-aura-delay,0s);
   }
   #work .project-book::after{
     inset:-8% -8% -4%;
     background:
+      radial-gradient(ellipse at 50% 48%,rgba(255,255,255,.34),transparent 42%),
+      radial-gradient(ellipse at 50% 60%,rgba(198,180,238,.18),transparent 64%),
       radial-gradient(circle at 17% 22%,rgba(255,255,255,.95) 0 1px,transparent 2.4px),
-      radial-gradient(circle at 77% 18%,rgba(156,146,220,.64) 0 1.4px,transparent 2.7px),
+      radial-gradient(circle at 77% 18%,rgba(156,146,220,.78) 0 1.4px,transparent 2.7px),
       radial-gradient(circle at 86% 55%,rgba(255,255,255,.9) 0 1px,transparent 2.2px),
-      radial-gradient(circle at 34% 82%,rgba(156,146,220,.58) 0 1.2px,transparent 2.5px);
-    filter:drop-shadow(0 0 7px rgba(156,146,220,.46));
-    opacity:.32;
+      radial-gradient(circle at 34% 82%,rgba(156,146,220,.7) 0 1.2px,transparent 2.5px),
+      radial-gradient(circle at 53% 10%,rgba(255,255,255,.82) 0 1.1px,transparent 2.3px),
+      radial-gradient(circle at 61% 72%,rgba(126,112,204,.5) 0 1px,transparent 2.2px);
+    mix-blend-mode:screen;
+    filter:drop-shadow(0 0 11px rgba(156,146,220,.6));
+    opacity:.62;
     animation:projectBookSparkle var(--book-star-speed,6.8s) ease-in-out infinite;
     animation-delay:var(--book-aura-delay,0s);
   }
   #work .project-book:hover,
   #work .project-book:focus-visible{
-    filter:drop-shadow(0 0 16px rgba(148,137,209,.16));
-    transform:none;
+    filter:drop-shadow(0 0 22px rgba(148,137,209,.28));
+    transform:translate3d(0,-10px,0) scale(1.012);
+    animation-play-state:paused;
   }
   #work .project-book:hover::before,
   #work .project-book:focus-visible::before{
-    opacity:.64;
-    filter:blur(6px);
+    opacity:.76;
+    filter:blur(8px);
   }
   #work .project-book:hover::after,
   #work .project-book:focus-visible::after{
-    opacity:.9;
+    opacity:1;
   }
   #work .project-book:focus-visible{
     outline:2px solid rgba(124,102,181,.76);
@@ -1952,6 +2014,7 @@
     height:56.5%;
     --book-aura-speed:6.6s;
     --book-star-speed:7.1s;
+    --book-float-speed:6.4s;
     --book-aura-delay:-.7s;
   }
   #work .book-camera{
@@ -1961,6 +2024,7 @@
     height:63.2%;
     --book-aura-speed:7.6s;
     --book-star-speed:6.7s;
+    --book-float-speed:7.2s;
     --book-aura-delay:-2.2s;
   }
   #work .book-policy{
@@ -1970,7 +2034,20 @@
     height:55.2%;
     --book-aura-speed:7.2s;
     --book-star-speed:7.8s;
+    --book-float-speed:6.9s;
     --book-aura-delay:-1.4s;
+  }
+  @media (prefers-reduced-motion: reduce){
+    #work .project-library,
+    #work .project-library::before,
+    #work .project-library::after,
+    #work .project-book,
+    #work .project-book::before,
+    #work .project-book::after,
+    .project-click-guide,
+    .project-click-guide::before{
+      animation:none;
+    }
   }
   #work.is-reader-active .project-library{
     height:0;
@@ -2897,41 +2974,62 @@
   }
   @keyframes projectSceneFloat{
     0%,100%{transform:translateY(0) scale(1)}
-    45%{transform:translateY(-5px) scale(1.002)}
-    72%{transform:translateY(2px) scale(1.001)}
+    42%{transform:translateY(-11px) scale(1.004)}
+    72%{transform:translateY(4px) scale(1.002)}
   }
   @keyframes projectShadowBreath{
     0%,100%{
-      opacity:.28;
-      transform:translateY(4px) scaleX(.96);
+      opacity:.34;
+      transform:translateY(4px) scaleX(.94);
     }
     50%{
-      opacity:.42;
-      transform:translateY(9px) scaleX(1.035);
+      opacity:.62;
+      transform:translateY(13px) scaleX(1.1);
     }
   }
   @keyframes projectTinyStars{
     0%,100%{
-      opacity:.25;
-      transform:translate3d(0,1px,0) scale(.98);
+      opacity:.36;
+      transform:translate3d(0,1px,0) scale(.97);
     }
     42%{
-      opacity:.5;
-      transform:translate3d(2px,-3px,0) scale(1.03);
+      opacity:.82;
+      transform:translate3d(3px,-5px,0) scale(1.07);
     }
     70%{
-      opacity:.34;
-      transform:translate3d(-2px,-1px,0) scale(1);
+      opacity:.5;
+      transform:translate3d(-2px,-2px,0) scale(1.01);
     }
   }
   @keyframes projectBookAura{
-    0%,100%{transform:translateY(2px) scale(.97)}
-    50%{transform:translateY(-4px) scale(1.025)}
+    0%,100%{transform:translateY(4px) scale(.94)}
+    50%{transform:translateY(13px) scale(1.12)}
   }
   @keyframes projectBookSparkle{
-    0%,100%{transform:translate3d(0,1px,0) scale(.98)}
-    45%{transform:translate3d(2px,-4px,0) scale(1.04)}
-    72%{transform:translate3d(-1px,-1px,0) scale(1)}
+    0%,100%{transform:translate3d(0,2px,0) scale(.97)}
+    45%{transform:translate3d(3px,-7px,0) scale(1.08)}
+    72%{transform:translate3d(-2px,-2px,0) scale(1.01)}
+  }
+  @keyframes projectBookHotspotFloat{
+    0%,100%{transform:translate3d(0,3px,0)}
+    48%{transform:translate3d(0,-8px,0)}
+    72%{transform:translate3d(0,1px,0)}
+  }
+  @keyframes projectGuidePulse{
+    0%,100%{
+      opacity:.82;
+      transform:translateX(-50%) translateY(0);
+      box-shadow:0 12px 28px rgba(113,96,174,.13),inset 0 0 0 1px rgba(255,255,255,.56);
+    }
+    50%{
+      opacity:1;
+      transform:translateX(-50%) translateY(-4px);
+      box-shadow:0 18px 34px rgba(113,96,174,.18),0 0 22px rgba(198,180,238,.2),inset 0 0 0 1px rgba(255,255,255,.68);
+    }
+  }
+  @keyframes projectGuideDot{
+    0%,100%{transform:scale(.82);opacity:.62}
+    50%{transform:scale(1.22);opacity:1}
   }
   @keyframes projectCoverLeave{
     0%{
@@ -3240,6 +3338,24 @@
       overflow:hidden;
       padding-inline:8px;
       padding-bottom:34px;
+    }
+    .project-click-guide{
+      top:15.8%;
+      min-height:30px;
+      max-width:82vw;
+      gap:7px;
+      padding:0 10px;
+      font-size:9px;
+      letter-spacing:.04em;
+    }
+    .project-click-guide::before{
+      width:6px;
+      height:6px;
+    }
+    .project-click-guide::after{
+      width:18px;
+      height:18px;
+      font-size:12px;
     }
     .project-book{
       width:min(266px,72vw);
@@ -3847,6 +3963,7 @@
 
     <div class="project-library" aria-label="项目书本入口">
       <img class="project-books-art" src="./assets/images/project-books-handdrawn-exact.png" alt="" aria-hidden="true" />
+      <div class="project-click-guide" aria-hidden="true">点击任意书籍进入项目展示页</div>
       <a class="project-book book-editai" href="#project-editai" data-project-target="project-editai" aria-label="进入 EditAI 智能写作助手项目介绍"></a>
       <a class="project-book book-camera" href="#project-camera" data-project-target="project-camera" aria-label="进入 AI 相机租赁客服助手项目介绍"></a>
       <a class="project-book book-policy" href="#project-policy" data-project-target="project-policy" aria-label="进入 江西数字经济政策智能问答助手项目介绍"></a>
