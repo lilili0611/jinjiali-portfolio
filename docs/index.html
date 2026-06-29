@@ -3767,6 +3767,257 @@
   @media (prefers-reduced-motion: reduce){
     #caps .cap{transform:none}
   }
+
+  /* ===== 核心能力：2x2 玻璃文件卡布局（保留完整文字，去掉左侧大动画）===== */
+  #caps{
+    position:relative;
+    overflow:hidden;
+  }
+  #caps::before{
+    content:"";
+    position:absolute;
+    left:8%;
+    right:8%;
+    top:20%;
+    bottom:6%;
+    z-index:0;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg,transparent 0 48%,rgba(148,137,209,.14) 48.5% 49%,transparent 49.5%),
+      linear-gradient(0deg,transparent 0 47%,rgba(148,137,209,.12) 47.5% 48%,transparent 48.5%),
+      radial-gradient(circle at 24% 24%,rgba(255,255,255,.72) 0 2px,transparent 3px),
+      radial-gradient(circle at 75% 26%,rgba(174,198,242,.48) 0 2px,transparent 3px),
+      radial-gradient(circle at 27% 76%,rgba(239,180,214,.42) 0 2px,transparent 3px),
+      radial-gradient(circle at 74% 74%,rgba(255,255,255,.78) 0 2px,transparent 3px);
+    opacity:.74;
+  }
+  #caps .caps{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+    perspective:1250px;
+    perspective-origin:50% 48%;
+    transform-style:preserve-3d;
+  }
+  #caps .caps::before,
+  #caps .caps::after{
+    display:none;
+  }
+  #caps .cap,
+  #caps .cap:nth-child(1),
+  #caps .cap:nth-child(2),
+  #caps .cap:nth-child(3),
+  #caps .cap:nth-child(4){
+    --rx:.9deg;
+    --ry:-1.35deg;
+    --lift:0px;
+    --push:0px;
+    grid-column:auto;
+    width:auto;
+    min-height:350px;
+    display:grid;
+    grid-template-columns:1fr;
+    grid-template-rows:auto 1fr;
+    align-items:start;
+    gap:14px;
+    overflow:hidden;
+    padding:24px 24px 22px;
+    border:1px solid rgba(255,255,255,.74);
+    border-radius:22px;
+    background:
+      linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.36) 46%,rgba(235,240,255,.24)),
+      radial-gradient(circle at 8% 8%,rgba(255,255,255,.9),transparent 26%),
+      radial-gradient(circle at 94% 14%,rgba(198,180,238,.26),transparent 32%),
+      radial-gradient(circle at 84% 88%,rgba(174,198,242,.22),transparent 38%);
+    box-shadow:
+      0 18px 42px rgba(56,52,102,.1),
+      0 0 24px rgba(174,198,242,.14),
+      inset 0 0 0 1px rgba(255,255,255,.62),
+      inset 14px 14px 26px rgba(255,255,255,.38),
+      inset -18px -18px 32px rgba(174,198,242,.1);
+    backdrop-filter:blur(18px) saturate(1.18);
+    -webkit-backdrop-filter:blur(18px) saturate(1.18);
+    transform:
+      perspective(1200px)
+      rotateX(var(--rx))
+      rotateY(var(--ry))
+      translate3d(0,var(--lift),var(--push));
+    transform-style:preserve-3d;
+    transition:transform .24s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease,translate .22s ease;
+  }
+  #caps .cap:nth-child(2){
+    --rx:.75deg;
+    --ry:1.25deg;
+  }
+  #caps .cap:nth-child(3){
+    --rx:-.65deg;
+    --ry:-1.1deg;
+  }
+  #caps .cap:nth-child(4){
+    --rx:-.7deg;
+    --ry:1.05deg;
+  }
+  #caps .cap:hover,
+  #caps .cap.is-tilting{
+    --lift:-3px;
+    --push:16px;
+    translate:0 -4px;
+    border-color:rgba(255,255,255,.92);
+    box-shadow:
+      0 24px 52px rgba(56,52,102,.13),
+      0 0 34px rgba(198,180,238,.2),
+      inset 0 0 0 1px rgba(255,255,255,.72),
+      inset 16px 16px 30px rgba(255,255,255,.46),
+      inset -18px -18px 34px rgba(174,198,242,.12);
+  }
+  #caps .cap::before{
+    content:"";
+    position:absolute;
+    left:18px;
+    top:15px;
+    width:86px;
+    height:22px;
+    border:1px solid rgba(255,255,255,.48);
+    border-radius:3px;
+    background:
+      linear-gradient(110deg,rgba(255,255,255,.48),rgba(198,180,238,.22),rgba(174,198,242,.18));
+    box-shadow:0 8px 18px rgba(86,76,142,.06),inset 0 0 0 1px rgba(255,255,255,.36);
+    opacity:.7;
+    transform:translateZ(16px) rotate(-2.4deg);
+  }
+  #caps .cap::after{
+    content:"";
+    position:absolute;
+    right:18px;
+    top:20px;
+    width:58px;
+    height:42px;
+    border:1px solid rgba(116,100,180,.16);
+    border-radius:12px;
+    opacity:.58;
+    background:
+      linear-gradient(90deg,transparent 0 46%,rgba(116,100,180,.26) 47% 50%,transparent 51%),
+      linear-gradient(0deg,transparent 0 46%,rgba(116,100,180,.18) 47% 50%,transparent 51%),
+      radial-gradient(circle at 22% 26%,rgba(122,90,240,.42) 0 2px,transparent 3px),
+      radial-gradient(circle at 74% 30%,rgba(91,141,239,.34) 0 2px,transparent 3px),
+      radial-gradient(circle at 50% 74%,rgba(227,111,176,.32) 0 2px,transparent 3px),
+      rgba(255,255,255,.24);
+    box-shadow:0 8px 18px rgba(86,76,142,.06);
+    transform:translateZ(18px);
+  }
+  #caps .cap > *{
+    transform:translateZ(22px);
+  }
+  #caps .cap .cap-head{
+    min-height:34px;
+    padding:2px 86px 0 0;
+    justify-content:flex-start;
+    align-items:center;
+    gap:10px;
+    transform:translateZ(30px);
+  }
+  #caps .cap .n{
+    flex:0 0 auto;
+    color:rgba(79,75,118,.55);
+  }
+  #caps .cap-kicker{
+    flex:0 0 auto;
+    max-width:none;
+    color:rgba(48,43,68,.62);
+    font-size:10.5px;
+    letter-spacing:.14em;
+    text-align:left;
+    white-space:nowrap;
+    overflow-wrap:normal;
+  }
+  #caps .cap .cap-visual{
+    display:none;
+  }
+  #caps .cap .cap-copy{
+    grid-column:1;
+    grid-row:2;
+    justify-self:stretch;
+    align-self:start;
+    margin-top:2px;
+    transform:translateZ(26px);
+  }
+  #caps .cap h3{
+    margin:2px 0 10px;
+    font-size:clamp(27px,2.8vw,38px);
+    line-height:1.05;
+  }
+  #caps .cap p{
+    max-width:none;
+    font-size:14px;
+    line-height:1.68;
+    color:rgba(47,43,70,.74);
+  }
+  #caps .cap-points{
+    gap:7px;
+    margin-top:14px;
+  }
+  #caps .cap-points li{
+    font-size:12.6px;
+    line-height:1.55;
+    color:rgba(47,43,70,.75);
+  }
+  #caps .cap-points li::before{
+    top:.62em;
+  }
+  #caps .cap-tags{
+    margin-top:16px;
+    gap:8px;
+  }
+  #caps .cap-tags span{
+    padding:6px 10px;
+    border-color:rgba(255,255,255,.66);
+    background:rgba(255,255,255,.42);
+    color:rgba(48,43,68,.64);
+    box-shadow:0 8px 16px rgba(86,76,142,.06),inset 0 0 0 1px rgba(255,255,255,.32);
+  }
+  @media (max-width:980px){
+    #caps .caps{
+      grid-template-columns:1fr;
+    }
+    #caps .cap{
+      min-height:auto;
+    }
+  }
+  @media (max-width:760px){
+    #caps::before{
+      display:none;
+    }
+    #caps .caps{
+      gap:14px;
+    }
+    #caps .cap{
+      padding:21px 18px 20px;
+      border-radius:18px;
+    }
+    #caps .cap h3{
+      font-size:clamp(24px,7vw,31px);
+    }
+    #caps .cap p{
+      font-size:13.2px;
+    }
+    #caps .cap-points li{
+      font-size:12px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    #caps .cap,
+    #caps .cap::before,
+    #caps .cap::after,
+    #caps .cap > *,
+    #caps .cap .cap-head,
+    #caps .cap .cap-copy{
+      transform:none;
+    }
+    #caps .cap:hover,
+    #caps .cap.is-tilting{
+      translate:0 0;
+    }
+  }
 </style>
 </head>
 <body>
