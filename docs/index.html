@@ -3768,7 +3768,7 @@
     #caps .cap{transform:none}
   }
 
-  /* ===== 核心能力：2x2 玻璃文件卡布局（保留完整文字，去掉左侧大动画）===== */
+  /* ===== 核心能力：2x2 玻璃系统卡布局（保留完整文字与 3D 质感）===== */
   #caps{
     position:relative;
     overflow:hidden;
@@ -3791,17 +3791,81 @@
       radial-gradient(circle at 74% 74%,rgba(255,255,255,.78) 0 2px,transparent 3px);
     opacity:.74;
   }
+  #caps .sechead{
+    align-items:flex-start;
+  }
+  #caps .sechead h2{
+    position:relative;
+    line-height:.9;
+  }
+  #caps .sechead h2::after{
+    content:"CAPABILITIES";
+    display:block;
+    margin-top:16px;
+    font-family:var(--mono);
+    font-size:clamp(14px,1.25vw,20px);
+    line-height:1;
+    letter-spacing:.34em;
+    color:#7A5AF0;
+    -webkit-text-fill-color:#7A5AF0;
+    text-shadow:0 0 16px rgba(122,90,240,.18);
+  }
+  #caps .sechead::after{
+    content:"✧";
+    position:absolute;
+    left:32%;
+    top:18px;
+    font-size:34px;
+    line-height:1;
+    color:rgba(122,90,240,.36);
+    text-shadow:0 0 18px rgba(122,90,240,.26);
+    transform:rotate(12deg);
+  }
   #caps .caps{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:18px;
+    gap:30px 34px;
     perspective:1250px;
     perspective-origin:50% 48%;
     transform-style:preserve-3d;
   }
-  #caps .caps::before,
   #caps .caps::after{
-    display:none;
+    display:block;
+  }
+  #caps .caps::before{
+    content:"";
+    position:absolute;
+    left:12%;
+    right:12%;
+    top:16%;
+    bottom:16%;
+    z-index:0;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg,transparent 0 calc(50% - .5px),rgba(122,90,240,.18) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px)),
+      linear-gradient(0deg,transparent 0 calc(50% - .5px),rgba(122,90,240,.14) calc(50% - .5px) calc(50% + .5px),transparent calc(50% + .5px)),
+      radial-gradient(circle at 50% 0,rgba(255,255,255,.92) 0 4px,rgba(122,90,240,.5) 4px 5px,transparent 6px),
+      radial-gradient(circle at 50% 50%,rgba(255,255,255,.94) 0 4px,rgba(122,90,240,.44) 4px 5px,transparent 6px),
+      radial-gradient(circle at 50% 100%,rgba(255,255,255,.92) 0 4px,rgba(122,90,240,.48) 4px 5px,transparent 6px);
+    opacity:.9;
+    transform:translateZ(-24px);
+  }
+  #caps .caps::after{
+    content:"";
+    position:absolute;
+    inset:-10px 4% -16px;
+    z-index:0;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 4% 20%,rgba(122,90,240,.3) 0 1px,transparent 2px),
+      radial-gradient(circle at 7% 22%,rgba(122,90,240,.18) 0 1px,transparent 2px),
+      radial-gradient(circle at 49% 48%,rgba(122,90,240,.35) 0 2px,transparent 3px),
+      radial-gradient(circle at 51% 48%,rgba(122,90,240,.2) 0 2px,transparent 3px),
+      radial-gradient(circle at 95% 82%,rgba(122,90,240,.28) 0 1px,transparent 2px),
+      radial-gradient(circle at 89% 12%,rgba(255,255,255,.78) 0 2px,transparent 3px),
+      radial-gradient(circle at 28% 101%,rgba(174,198,242,.46) 0 2px,transparent 3px);
+    filter:drop-shadow(0 0 10px rgba(122,90,240,.2));
+    opacity:.76;
   }
   #caps .cap,
   #caps .cap:nth-child(1),
@@ -3820,10 +3884,10 @@
     grid-template-rows:auto 1fr;
     align-items:start;
     gap:14px;
-    overflow:hidden;
-    padding:24px 24px 22px;
+    overflow:visible;
+    padding:24px 34px 24px;
     border:1px solid rgba(255,255,255,.74);
-    border-radius:22px;
+    border-radius:28px;
     background:
       linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.36) 46%,rgba(235,240,255,.24)),
       radial-gradient(circle at 8% 8%,rgba(255,255,255,.9),transparent 26%),
@@ -3844,6 +3908,9 @@
       translate3d(0,var(--lift),var(--push));
     transform-style:preserve-3d;
     transition:transform .24s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease,translate .22s ease;
+  }
+  #caps .cap{
+    z-index:1;
   }
   #caps .cap:nth-child(2){
     --rx:.75deg;
@@ -3873,60 +3940,137 @@
   #caps .cap::before{
     content:"";
     position:absolute;
-    left:18px;
-    top:15px;
-    width:86px;
-    height:22px;
+    left:-24px;
+    top:52%;
+    width:72px;
+    height:34px;
     border:1px solid rgba(255,255,255,.48);
-    border-radius:3px;
+    border-radius:4px;
     background:
-      linear-gradient(110deg,rgba(255,255,255,.48),rgba(198,180,238,.22),rgba(174,198,242,.18));
+      linear-gradient(110deg,rgba(255,255,255,.5),rgba(198,180,238,.3),rgba(174,198,242,.18)),
+      repeating-linear-gradient(90deg,rgba(255,255,255,.18) 0 2px,transparent 2px 5px);
     box-shadow:0 8px 18px rgba(86,76,142,.06),inset 0 0 0 1px rgba(255,255,255,.36);
-    opacity:.7;
-    transform:translateZ(16px) rotate(-2.4deg);
+    opacity:.78;
+    transform:translateZ(22px) rotate(-7deg);
+  }
+  #caps .cap:nth-child(even)::before{
+    left:auto;
+    right:-24px;
+    top:42%;
+    transform:translateZ(22px) rotate(-8deg);
+  }
+  #caps .cap:nth-child(3)::before{
+    top:58%;
+    transform:translateZ(22px) rotate(-9deg);
+  }
+  #caps .cap:nth-child(4)::before{
+    top:62%;
+    transform:translateZ(22px) rotate(6deg);
   }
   #caps .cap::after{
     content:"";
     position:absolute;
-    right:18px;
-    top:20px;
-    width:58px;
-    height:42px;
-    border:1px solid rgba(116,100,180,.16);
-    border-radius:12px;
-    opacity:.58;
+    right:-1px;
+    bottom:-1px;
+    top:auto;
+    width:56px;
+    height:56px;
+    border:0;
+    border-radius:0 0 26px 0;
+    clip-path:polygon(100% 0,100% 100%,0 100%);
+    opacity:.86;
     background:
-      linear-gradient(90deg,transparent 0 46%,rgba(116,100,180,.26) 47% 50%,transparent 51%),
-      linear-gradient(0deg,transparent 0 46%,rgba(116,100,180,.18) 47% 50%,transparent 51%),
-      radial-gradient(circle at 22% 26%,rgba(122,90,240,.42) 0 2px,transparent 3px),
-      radial-gradient(circle at 74% 30%,rgba(91,141,239,.34) 0 2px,transparent 3px),
-      radial-gradient(circle at 50% 74%,rgba(227,111,176,.32) 0 2px,transparent 3px),
-      rgba(255,255,255,.24);
-    box-shadow:0 8px 18px rgba(86,76,142,.06);
-    transform:translateZ(18px);
+      linear-gradient(135deg,rgba(255,255,255,.08) 0 49%,rgba(255,255,255,.84) 50%,rgba(222,228,255,.68) 72%,rgba(174,198,242,.24) 100%);
+    box-shadow:-12px -12px 24px rgba(86,76,142,.08),inset 1px 1px 0 rgba(255,255,255,.86);
+    transform:translateZ(24px);
   }
   #caps .cap > *{
     transform:translateZ(22px);
   }
   #caps .cap .cap-head{
-    min-height:34px;
-    padding:2px 86px 0 0;
-    justify-content:flex-start;
+    position:relative;
+    min-height:64px;
+    padding:0 0 0 0;
+    justify-content:space-between;
     align-items:center;
     gap:10px;
     transform:translateZ(30px);
   }
+  #caps .cap .cap-head::after{
+    content:"";
+    position:absolute;
+    right:4px;
+    top:36px;
+    width:118px;
+    height:18px;
+    pointer-events:none;
+    opacity:.78;
+    background:
+      linear-gradient(90deg,rgba(122,90,240,.34),rgba(122,90,240,.24)) 0 50% / 100% 1px no-repeat,
+      radial-gradient(circle at 0 50%,rgba(255,255,255,.98) 0 5px,rgba(122,90,240,.7) 5px 6px,transparent 7px),
+      radial-gradient(circle at 36% 50%,rgba(255,255,255,.98) 0 5px,rgba(122,90,240,.62) 5px 6px,transparent 7px),
+      radial-gradient(circle at 72% 50%,rgba(255,255,255,.98) 0 5px,rgba(122,90,240,.56) 5px 6px,transparent 7px),
+      radial-gradient(circle at 100% 50%,rgba(255,255,255,.98) 0 5px,rgba(122,90,240,.5) 5px 6px,transparent 7px);
+    background-size:100% 100%;
+  }
+  #caps .cap:nth-child(2) .cap-head::after{
+    width:76px;
+    height:54px;
+    top:28px;
+    background:
+      linear-gradient(30deg,transparent 0 46%,rgba(122,90,240,.42) 47% 49%,transparent 50%),
+      linear-gradient(150deg,transparent 0 46%,rgba(122,90,240,.28) 47% 49%,transparent 50%),
+      radial-gradient(circle at 50% 52%,rgba(122,90,240,.36) 0 7px,transparent 8px),
+      radial-gradient(circle at 50% 8%,rgba(255,255,255,.98) 0 4px,rgba(122,90,240,.62) 4px 5px,transparent 6px),
+      radial-gradient(circle at 14% 32%,rgba(255,255,255,.98) 0 4px,rgba(122,90,240,.5) 4px 5px,transparent 6px),
+      radial-gradient(circle at 86% 32%,rgba(255,255,255,.98) 0 4px,rgba(122,90,240,.5) 4px 5px,transparent 6px),
+      radial-gradient(circle at 14% 78%,rgba(255,255,255,.98) 0 4px,rgba(122,90,240,.48) 4px 5px,transparent 6px),
+      radial-gradient(circle at 86% 78%,rgba(255,255,255,.98) 0 4px,rgba(122,90,240,.48) 4px 5px,transparent 6px);
+  }
+  #caps .cap:nth-child(3) .cap-head::after{
+    width:122px;
+    height:20px;
+    top:36px;
+    background:
+      radial-gradient(circle at 0 50%,rgba(255,255,255,.98) 0 5px,rgba(122,90,240,.7) 5px 6px,transparent 7px),
+      radial-gradient(circle at 42% 50%,rgba(255,255,255,.98) 0 5px,rgba(122,90,240,.58) 5px 6px,transparent 7px),
+      linear-gradient(90deg,rgba(122,90,240,.36) 0 76%,transparent 76%) 0 50% / 100% 1px no-repeat,
+      linear-gradient(45deg,transparent 72%,rgba(122,90,240,.42) 73% 77%,transparent 78%);
+  }
+  #caps .cap:nth-child(4) .cap-head::after{
+    width:76px;
+    height:58px;
+    top:30px;
+    background:
+      linear-gradient(0deg,rgba(122,90,240,.45),rgba(122,90,240,.45)) 0 100% / 100% 1px no-repeat,
+      linear-gradient(0deg,rgba(122,90,240,.45),rgba(122,90,240,.45)) 0 100% / 1px 44px no-repeat,
+      linear-gradient(0deg,rgba(122,90,240,.36),rgba(122,90,240,.36)) 16px 100% / 12px 24px no-repeat,
+      linear-gradient(0deg,rgba(122,90,240,.3),rgba(122,90,240,.3)) 36px 100% / 12px 34px no-repeat,
+      linear-gradient(0deg,rgba(122,90,240,.44),rgba(122,90,240,.44)) 56px 100% / 12px 48px no-repeat;
+  }
   #caps .cap .n{
     flex:0 0 auto;
-    color:rgba(79,75,118,.55);
+    display:grid;
+    place-items:center;
+    min-width:58px;
+    height:42px;
+    margin-left:-12px;
+    border:1px solid rgba(255,255,255,.68);
+    border-radius:0 0 14px 0;
+    background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(198,180,238,.34));
+    color:#7A5AF0;
+    box-shadow:0 12px 24px rgba(86,76,142,.1),inset 0 0 0 1px rgba(255,255,255,.44);
   }
   #caps .cap-kicker{
     flex:0 0 auto;
     max-width:none;
-    color:rgba(48,43,68,.62);
+    margin-left:auto;
+    position:relative;
+    z-index:2;
+    color:rgba(48,43,68,.68);
     font-size:10.5px;
-    letter-spacing:.14em;
-    text-align:left;
+    letter-spacing:.18em;
+    text-align:right;
     white-space:nowrap;
     overflow-wrap:normal;
   }
@@ -3942,7 +4086,7 @@
     transform:translateZ(26px);
   }
   #caps .cap h3{
-    margin:2px 0 10px;
+    margin:0 0 12px;
     font-size:clamp(27px,2.8vw,38px);
     line-height:1.05;
   }
@@ -3954,7 +4098,9 @@
   }
   #caps .cap-points{
     gap:7px;
-    margin-top:14px;
+    margin-top:16px;
+    padding-top:14px;
+    border-top:1px dashed rgba(122,90,240,.22);
   }
   #caps .cap-points li{
     font-size:12.6px;
@@ -3965,7 +4111,7 @@
     top:.62em;
   }
   #caps .cap-tags{
-    margin-top:16px;
+    margin-top:18px;
     gap:8px;
   }
   #caps .cap-tags span{
@@ -3978,6 +4124,11 @@
   @media (max-width:980px){
     #caps .caps{
       grid-template-columns:1fr;
+      gap:18px;
+    }
+    #caps .caps::before,
+    #caps .caps::after{
+      display:none;
     }
     #caps .cap{
       min-height:auto;
@@ -3993,9 +4144,32 @@
     #caps .cap{
       padding:21px 18px 20px;
       border-radius:18px;
+      overflow:hidden;
+    }
+    #caps .cap::before{
+      display:none;
+    }
+    #caps .cap::after{
+      width:42px;
+      height:42px;
     }
     #caps .cap h3{
       font-size:clamp(24px,7vw,31px);
+    }
+    #caps .cap .cap-head{
+      min-height:44px;
+    }
+    #caps .cap .n{
+      min-width:48px;
+      height:36px;
+      margin-left:-8px;
+    }
+    #caps .cap-kicker{
+      font-size:9.5px;
+      letter-spacing:.12em;
+    }
+    #caps .cap .cap-head::after{
+      display:none;
     }
     #caps .cap p{
       font-size:13.2px;
