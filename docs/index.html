@@ -2766,6 +2766,11 @@
   .exp-job-intern .exp-list{
     gap:9px;
   }
+  .exp-job-body.exp-job-body-full,
+  .exp-job-intern .exp-job-body.exp-job-body-full{
+    grid-template-columns:1fr;
+    gap:14px;
+  }
 
   /* education */
   .edu{display:flex;flex-direction:column;gap:12px}
@@ -4282,12 +4287,12 @@
     <div class="flap-stage">
       <div class="flap-orbit" aria-hidden="true"></div>
       <div class="flap-rig" aria-hidden="true">
-        <img class="flap-butterfly-base" src="assets/images/butterfly-cutout-soft.png" alt="" draggable="false">
+        <img class="flap-butterfly-base" src="assets/images/butterfly-cutout-soft.webp" alt="" draggable="false">
         <div class="flap-wing-shell flap-wing-shell-left">
-          <img class="flap-wing-image flap-wing-image-left" src="assets/images/butterfly-cutout-soft.png" alt="" draggable="false">
+          <img class="flap-wing-image flap-wing-image-left" src="assets/images/butterfly-cutout-soft.webp" alt="" draggable="false">
         </div>
         <div class="flap-wing-shell flap-wing-shell-right">
-          <img class="flap-wing-image flap-wing-image-right" src="assets/images/butterfly-cutout-soft.png" alt="" draggable="false">
+          <img class="flap-wing-image flap-wing-image-right" src="assets/images/butterfly-cutout-soft.webp" alt="" draggable="false">
         </div>
       </div>
       <video class="gesture-video" muted playsinline aria-hidden="true"></video>
@@ -4303,18 +4308,18 @@
   </section>
 
   <section id="hero" class="hero">
-    <img class="hero-portrait" src="assets/images/hero-portrait-workspace.png" width="1672" height="941" alt="晋佳莉 AI 产品经理手绘人物画像工作台主视觉">
+    <img class="hero-portrait" src="assets/images/hero-portrait-workspace.webp" width="1672" height="941" alt="晋佳莉 AI 产品经理手绘人物画像工作台主视觉">
     <div class="hero-profile" aria-label="晋佳莉个人信息">
-      <p class="hero-profile-kicker">AI Product Manager Intern</p>
+      <p class="hero-profile-kicker">AI Product Manager</p>
       <h1><span>晋佳莉</span><em>Jin Jiali</em></h1>
       <dl>
         <div class="hero-profile-row">
           <dt>School</dt>
-          <dd>中国科学技术大学硕士在读</dd>
+          <dd>中国科学技术大学工商管理硕士在读</dd>
         </div>
         <div class="hero-profile-row">
           <dt>Target</dt>
-          <dd>求职 AI 产品实习，可实习六个月以上</dd>
+          <dd>AI 产品经理（Agent / RAG / AI 应用）</dd>
         </div>
         <div class="hero-profile-row">
           <dt>WeChat</dt>
@@ -4332,20 +4337,20 @@
     <div class="sechead"><h2>个人简介<br><span style="font-size:.45em">About</span></h2><span class="idx">[ 01 / ABOUT ]</span></div>
     <div class="about-lab">
       <div class="about-copy">
-        <p>4 年 B 端 / 数字经济产品经验打底，其中<strong class="bio-em">近 2 年聚焦 AI 产品 0→1 落地</strong>，覆盖 <strong class="bio-em">RAG 智能问答、多 Agent 写作、AIGC 生成、智能客服</strong>等方向，完成从行业数字化向 AI 原生产品的转型。擅长在模糊业务场景中识别 AI 赋能点，把大模型能力转化为可度量、可兜底、算得清成本的业务价值；熟悉 RAG、Agent 编排与评测体系，能以<strong class="bio-em">「一人 + AI」的原生工作方式独立完成从需求到上线交付的全链路</strong>。</p>
-        <div class="focus-line" id="aboutFocus" role="img" aria-label="核心关键词：AI 0→1、RAG、多 Agent、一人+AI、全链路交付">
-          <span class="focus-word">AI 0→1</span>
-          <span class="focus-word">RAG</span>
-          <span class="focus-word">多 Agent</span>
+        <p>4 年 B 端 / 数字经济产品经验打底，以<strong class="bio-em">「一人 + AI」方式累计交付 7 款 AI 产品</strong>，覆盖 <strong class="bio-em">RAG 智能问答、多模态内容生成、Agent 任务执行</strong>三类核心场景。熟悉 Context Engineering、Agent Harness、MCP / Tool Use、Agent Orchestration、Agentic RAG、Memory、Guardrails 与 Observability，能够在产品设计阶段完成角色拓扑、任务链路、权限边界、Handoff、Human-in-the-loop 与异常降级设计；并以 Evaluation-Driven Development 搭建多层 Eval 体系，推动 Badcase 持续回流与回归验证。</p>
+        <div class="focus-line" id="aboutFocus" role="img" aria-label="核心关键词：AgentOS、Agentic RAG、Eval、一人+AI、全链路交付">
+          <span class="focus-word">AgentOS</span>
+          <span class="focus-word">Agentic RAG</span>
+          <span class="focus-word">Eval</span>
           <span class="focus-word">一人+AI</span>
           <span class="focus-word">全链路交付</span>
           <div class="focus-frame" aria-hidden="true"><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div>
         </div>
         <div class="about-signals" aria-label="能力关键词">
-          <span class="about-signal">Research</span>
-          <span class="about-signal">PRD</span>
-          <span class="about-signal">MVP</span>
-          <span class="about-signal">Agent</span>
+          <span class="about-signal">Product</span>
+          <span class="about-signal">AgentOS</span>
+          <span class="about-signal">RAG</span>
+          <span class="about-signal">Eval</span>
           <span class="about-signal">Data</span>
         </div>
       </div>
@@ -4353,13 +4358,13 @@
         <span class="about-core"></span>
         <div class="particle-planet">
           <span class="planet-orbit"></span>
-          <img class="planet-image" src="assets/images/about-glass-orbit-planet.png" alt="" draggable="false">
-          <span class="orbit-label label-rag">RAG 智能问答</span>
-          <span class="orbit-label label-agent">Agent 协作</span>
-          <span class="orbit-label label-prd">PRD 拆解</span>
-          <span class="orbit-label label-mvp">MVP 验证</span>
-          <span class="orbit-label label-data">埋点评估</span>
-          <span class="orbit-label label-business">商业闭环</span>
+          <img class="planet-image" src="assets/images/about-glass-orbit-planet.webp" alt="" draggable="false">
+          <span class="orbit-label label-rag">Agentic RAG</span>
+          <span class="orbit-label label-agent">Agent 编排</span>
+          <span class="orbit-label label-prd">Eval 工程</span>
+          <span class="orbit-label label-mvp">Guardrails</span>
+          <span class="orbit-label label-data">Observability</span>
+          <span class="orbit-label label-business">Badcase 闭环</span>
         </div>
       </div>
     </div>
@@ -4376,14 +4381,14 @@
           </div>
         </div>
         <div class="cap-copy">
-          <h3>AI 产品 0→1 全流程</h3>
-          <p>市场调研、用户访谈、需求拆解、PRD 撰写、MVP 验证、数据埋点与效果评估，可形成可复制的交付方法论。</p>
+          <h3>一人 + AI 端到端交付</h3>
+          <p>以 Agentic Coding / Vibe Coding 方式，独立完成从产品规划、交互原型、功能开发到测试验收、上线迭代的全链路工作。</p>
           <ul class="cap-points">
-            <li>主导 <b>EditAI</b> 核心 PRD：规划九大写作模式，确立「阶段不可回退 + 报告/对话双驱动」核心规则</li>
-            <li>相机租赁项目从 0 跑通 <b>C 端服务 + B 端管理</b>全链路场景</li>
-            <li>沉淀「调研 → PRD → MVP → 埋点评估」可复制方法论</li>
+            <li>累计交付 <b>7 款 AI 产品</b>，覆盖 RAG、多模态生成与 Agent 任务执行</li>
+            <li>独立跑通规划 → 原型 → 开发 → 测试 → 上线迭代</li>
+            <li>将产品规则、评测与质量门禁同步沉淀为可复用资产</li>
           </ul>
-          <div class="cap-tags"><span>Research</span><span>PRD</span><span>MVP</span><span>Metrics</span></div>
+          <div class="cap-tags"><span>Plan</span><span>Build</span><span>Test</span><span>Ship</span></div>
         </div>
       </article>
       <article class="cap">
@@ -4397,14 +4402,14 @@
           </div>
         </div>
         <div class="cap-copy">
-          <h3>AI 原生技术理解</h3>
-          <p>RAG（分块、Embedding 选型、Reranker 重排）、多 Agent 架构与护栏设计、Prompt 工程、意图路由、Tool Use，并能定义质量评分与评测指标。</p>
+          <h3>AI 原生架构设计</h3>
+          <p>熟悉 Context Engineering、Agent Harness、MCP / Tool Use、Agent Orchestration、Agentic RAG、Memory、Guardrails 与 Observability。</p>
           <ul class="cap-points">
-            <li>RAG 全链路：分块调优 + Embedding 选型对比（<b>bge-large-zh / text2vec</b>）+ <b>bge-reranker-large</b> 精排</li>
-            <li>多 Agent：<b>Chief → Deputy → Editor</b> 三层协作链路与护栏设计</li>
-            <li>质量评测：Polish / Logic / Consistency 三维评分（通过线 <b>≥0.70</b>）按分自动路由</li>
+            <li>设计 Agent 角色拓扑、任务链路与 <b>Handoff 契约</b></li>
+            <li>定义工具权限、Human-in-the-loop 边界与异常降级策略</li>
+            <li>以 plan 驱动任务执行，并设计全成功 / 部分产出 / 全失败三态语义</li>
           </ul>
-          <div class="cap-tags"><span>Reranker</span><span>Router</span><span>Prompt</span></div>
+          <div class="cap-tags"><span>Context</span><span>MCP</span><span>Memory</span><span>Handoff</span></div>
         </div>
       </article>
       <article class="cap">
@@ -4418,14 +4423,14 @@
           <span class="ship-dot"></span>
         </div>
         <div class="cap-copy">
-          <h3>"一人 + AI" 独立交付</h3>
-          <p>借助 AI 编程（vibe coding）工具，独立完成软件产品从规划、研发协同到上线交付。</p>
+          <h3>Eval 工程与质量门禁</h3>
+          <p>以 Evaluation-Driven Development 从 0 到 1 搭建覆盖模型输出、检索、工具调用、任务轨迹与最终结果的多层 Eval 体系。</p>
           <ul class="cap-points">
-            <li>以 <b>vibe coding</b> 独立完成规划 → 研发协同 → 上线交付</li>
-            <li>相机租赁智能客服系统：<b>个人独立研发并部署上线</b></li>
-            <li>EditAI 已上线，跑通完整人机协作流水线，兼容任意 <b>OpenAI-compatible</b> 模型</li>
+            <li>维护 Golden Dataset、回归集、对抗集与边界 Case</li>
+            <li>结合规则评分、Code-based Grader、LLM-as-a-Judge 与人工校准</li>
+            <li>通过版本化判据、fail-closed 与人审卡点控制生产风险</li>
           </ul>
-          <div class="cap-tags"><span>Plan</span><span>Build</span><span>Deploy</span></div>
+          <div class="cap-tags"><span>Golden Set</span><span>Grader</span><span>Judge</span><span>Guardrail</span></div>
         </div>
       </article>
       <article class="cap">
@@ -4438,14 +4443,14 @@
           </div>
         </div>
         <div class="cap-copy">
-          <h3>数据驱动迭代</h3>
-          <p>数据爬取、清洗与分析；围绕 AARRR 漏斗、留存与埋点数据搭建评估体系，驱动产品迭代与商业化判断。</p>
+          <h3>Badcase 闭环与可观测性</h3>
+          <p>把线上监控、失败识别、聚类归因、评测集回流、回归验证与灰度发布连成持续质量闭环。</p>
           <ul class="cap-points">
-            <li>数据爬取、清洗、分析，制定全链路<b>埋点方案</b></li>
-            <li>围绕 <b>AARRR 漏斗</b>与留存搭建评估体系</li>
-            <li>以数据驱动迭代与商业化判断（自动解答率 <b>85%+</b>、人工时长 <b>-60%</b>）</li>
+            <li>按 Prompt / Context / Retrieval / Tool / Memory / Workflow 归因</li>
+            <li>真实失败自动转为回归 Case，同类问题上线前必跑回归</li>
+            <li>关注任务成功率、Groundedness、Recall@K、幻觉率、P95 与 Cost per Task</li>
           </ul>
-          <div class="cap-tags"><span>AARRR</span><span>Retention</span><span>Insight</span><span>Growth</span></div>
+          <div class="cap-tags"><span>Badcase</span><span>Trace</span><span>Recall@K</span><span>Cost</span></div>
         </div>
       </article>
     </div>
@@ -4455,7 +4460,7 @@
     <div class="sechead"><h2>项目经历</h2><span class="idx">[ 03 / SELECTED WORK ]</span></div>
 
     <div class="project-library" aria-label="项目书本入口">
-      <img class="project-books-art" src="./assets/images/project-books-handdrawn-exact.png" alt="" aria-hidden="true" />
+      <img class="project-books-art" src="./assets/images/project-books-handdrawn-exact.webp" alt="" aria-hidden="true" />
       <div class="project-click-guide" aria-hidden="true">点击书籍进入项目展示页</div>
       <a class="project-book book-editai" href="#project-editai" data-project-target="project-editai" aria-label="进入 EditAI 智能写作助手项目介绍"></a>
       <a class="project-book book-camera" href="#project-camera" data-project-target="project-camera" aria-label="进入 AI 相机租赁客服助手项目介绍"></a>
@@ -4469,7 +4474,7 @@
       </div>
       <div class="reader-book" data-stage="intro">
         <div class="reader-pages">
-          <img class="reader-page-art" src="./assets/images/project-book-inner-pages-blank.jpg" width="1672" height="941" alt="" aria-hidden="true" loading="lazy" />
+          <img class="reader-page-art" src="./assets/images/project-book-inner-pages-blank.webp" width="1672" height="941" alt="" aria-hidden="true" loading="lazy" />
           <div class="reader-intro-pages">
             <section class="reader-page reader-page-left" aria-label="项目概览">
               <div class="reader-copy">
@@ -4511,35 +4516,35 @@
       </div>
     </div>
 
-    <article class="proj p1" id="project-editai" data-video-src="./assets/videos/edit-ai-writing-assistant.m4v">
+    <article class="proj p1" id="project-editai" data-video-src="./assets/videos/edit-ai-writing-assistant-watermarked.mp4">
       <div class="pbanner"><div class="iris"></div>
         <div class="row"><span class="tags">RAG · 多 AGENT · 人机协作 · 质量评分</span><span class="arrow">→</span></div>
         <h3>EditAI 智能写作助手</h3>
       </div>
       <div class="pbody">
-        <div class="pmeta"><span class="role">产品负责人 · 4 人小组</span><span class="date">2025.10 — 至今 · 在校项目</span></div>
-        <div class="pprob">面向深度写作者"精修难、风格易丢失"的痛点，打造本地优先、人机协作的全链路多智能体写作工作台。</div>
+        <div class="pmeta"><span class="role">AI 产品负责人 · 独立设计落地</span><span class="date">2025.11 — 2026.03 · AI 原生写作工具</span></div>
+        <div class="pprob">面向深度写作者“单一 AI 对话改稿缺乏结构化诊断、易丢失作者调性”的痛点，打造本地优先、人机协作的多智能体写作工作台。</div>
         <ul class="pul">
-          <li>规划主编/写作/编辑/核查等九大模式，确立阶段不可回退、报告驱动 + 对话驱动双模式核心规则，主导核心 PRD 产出。</li>
-          <li>设计 Chief→Deputy→Editor 三层协作链路与能力边界，定义 Polish/Logic/Consistency 三维质量评分（通过线 ≥0.70），实现按分自动路由。</li>
-          <li>设计写作风格指纹机制与 analyze/edit 双模式，防止 AI 改稿覆盖作者原有风格；制定全链路埋点方案。</li>
+          <li>设计 Chief 主编 → Deputy 副主编 → Editor 编辑三层协作链路，明确 Editor 只读、低温度、禁用外部工具调用等权限边界。</li>
+          <li>定义 Polish / Logic / Consistency 三维评分与 ≥0.70 通过线，按评分自动路由到通过、重改、回退或人工升级。</li>
+          <li>规划九大工作模式与风格指纹机制，以 analyze / edit 双模式保护作者调性，并制定版本冲突保护与全链路埋点方案。</li>
         </ul>
         <div class="result"><span class="rl">Results</span><p>已部署上线，跑通完整人机协作流水线，兼容任意 OpenAI-compatible 模型；内测用户改稿效率提升 60%。</p></div>
       </div>
     </article>
 
-    <article class="proj p2" id="project-camera" data-video-src="./assets/videos/camera-ai-rental-assistant.m4v">
+    <article class="proj p2" id="project-camera" data-video-src="./assets/videos/camera-ai-rental-assistant-watermarked.mp4">
       <div class="pbanner"><div class="iris"></div>
         <div class="row"><span class="tags">RAG 客服 · 意图路由 · TOOL USE</span><span class="arrow">→</span></div>
         <h3>AI 相机租赁客服助手</h3>
       </div>
       <div class="pbody">
-        <div class="pmeta"><span class="role">产品负责人 · 独立研发</span><span class="date">2025.04 — 至今 · 个人创业项目</span></div>
+        <div class="pmeta"><span class="role">AI 产品负责人 · 独立设计落地</span><span class="date">2026.04 — 2026.07 · 智能客服系统</span></div>
         <div class="pprob">针对相机租赁人工客服响应慢、订单管理成本高的痛点，独立研发覆盖 C 端服务与 B 端管理的智能客服系统。</div>
         <ul class="pul">
-          <li>梳理设备/档期查询、下单改单、邮寄跟踪全链路场景，区分 C 端客户与 B 端管理两类视角，设计差异化对话路径与权限策略。</li>
-          <li>构建设备与租赁规则知识库 + RAG 精准问答；意图路由区分"设备咨询/租赁问答/订单操作"三类链路。</li>
-          <li>设计 AI 助手对订单数据的读写能力，用结构化指令与 Tool Use 实现排期查询、邮寄状态更新与订单确认自动化。</li>
+          <li>构建设备知识库与租赁规则知识库，设计知识库间的检索隔离与协同策略。</li>
+          <li>以意图路由区分“设备咨询 / 租赁问答 / 订单操作”：知识问答走 RAG，订单操作走 Agent 工具调用。</li>
+          <li>通过结构化指令与 Tool Use 打通订单系统读写，并为 B / C 两端分别设计对话路径与权限边界。</li>
         </ul>
         <div class="result"><span class="rl">Results</span><p>客户咨询响应从人工平均 30 分钟压缩至秒级，常见问题自动解答率 85%+，每周人工介入订单管理时长减少约 60%。</p></div>
       </div>
@@ -4551,12 +4556,12 @@
         <h3>江西数字经济政策智能问答助手</h3>
       </div>
       <div class="pbody">
-        <div class="pmeta"><span class="role">AI 产品负责人</span><span class="date">2023.12 — 2025.05 · 信通院 RAG 项目</span></div>
-        <div class="pprob">针对政策文件分散、查询效率低的痛点，主导打造覆盖企业、政府两类用户的 RAG 智能政策问答系统。</div>
+        <div class="pmeta"><span class="role">AI 产品负责人</span><span class="date">2021.07 — 2025.08 · 中国信通院项目</span></div>
+        <div class="pprob">面向政企政策查询与申报辅助场景，主导打造覆盖企业、政府两类用户的 Agentic RAG 政策知识库。</div>
         <ul class="pul">
-          <li>主导知识库数据治理与分块调优，以中文召回率为核心完成 Embedding 选型对比（bge-large-zh vs. text2vec），引入 bge-reranker-large 精排。</li>
-          <li>为企业用户（政策申报、补贴匹配）与政府用户（政策解读、合规建议）设计差异化问答链路与 System Prompt，Router 模块实现意图识别与分发。</li>
-          <li>负责 PRD 与功能优先级梳理，协调研发/数据/运营推动系统 0→1 落地，制定验收标准与知识库更新机制。</li>
+          <li>设计知识采集 → 文档解析 → 切分向量化 → 检索召回 → 大模型生成的完整 Agentic RAG 链路。</li>
+          <li>完成 500+ 篇政策文件结构化清洗与分块策略设计，对比 BAAI/bge-large-zh 与 text2vec，并引入 Reranker 精排。</li>
+          <li>按用户身份设计 Router：企业走政策匹配与申报指导，政府走政策解读与合规建议；定义低置信度转人工兜底。</li>
         </ul>
         <div class="result"><span class="rl">Results</span><p>收录政策文件 500+ 篇，Embedding 召回准确率 82%，重排后答案相关性提升约 18%；累计服务查询 10,000+ 次，政策申报辅助效率提升约 40%。</p></div>
       </div>
@@ -4564,62 +4569,103 @@
   </section>
 
   <section id="exp">
-    <div class="sechead"><h2>工作经历</h2><span class="idx">[ 04 / EXPERIENCE ]</span></div>
-    <div class="exp-timeline" aria-label="工作经历时间轴">
+    <div class="sechead"><h2>工作 / 实习经历</h2><span class="idx">[ 04 / EXPERIENCE ]</span></div>
+    <div class="exp-timeline" aria-label="工作与实习经历时间轴">
       <div class="exp-time" aria-hidden="true">
-        <span class="exp-year">2021</span>
-        <span class="exp-date">2021.07 - 2025.08</span>
-        <span class="exp-type">Full-time</span>
+        <span class="exp-year">2026</span>
+        <span class="exp-date">2026.5- 至今（实习）</span>
+        <span class="exp-type">Internship</span>
       </div>
-      <article class="exp-job">
+      <article class="exp-job exp-job-intern">
         <div class="exp-job-head">
           <div>
-            <h3>中国信通院江西分院</h3>
-            <p class="exp-role">产品经理 · 数字经济 / AI 产品落地</p>
-          </div>
-          <div class="exp-scope">
-            <span>需求洞察</span>
-            <span>政务 RAG</span>
-            <span>AI 0->1</span>
-            <span>数据治理</span>
-            <span>商业化</span>
+            <h3>北京乐信圣文科技有限责任公司</h3>
+            <p class="exp-role">AI 产品经理</p>
+            <p class="exp-role">游戏出海 AgentOS ——AI 广告创意素材自动生产系统（toB &amp; toC）</p>
           </div>
         </div>
-        <div class="exp-job-body">
-          <p class="exp-lead">主导数字经济领域产品全生命周期管理，覆盖 <mark>需求挖掘 -> 产品设计 -> 落地交付 -> 商业化闭环</mark>；后期牵头政务 RAG 等 AI 产品落地，支撑省市级数字化转型项目。</p>
+        <div class="exp-job-body exp-job-body-full">
+          <p class="exp-lead"><strong>项目背景：</strong>休闲游戏与轻应用海外发行商，买量 + 广告变现（IAA）驱动。负责把“人工做素材”改造成“Agent 批量产素材”，产出直接进买量投放。链路：素材灵感采集 → 三元组决策选材 → LLM 导演编排 → 分镜生成 / 配音 / 字幕 / 合成 → 自动质检 → 合规闸门 → 入库投放。</p>
+          <p class="exp-lead"><strong>我的职责：</strong></p>
           <ul class="exp-list">
-            <li><strong>用户洞察与 AI 需求挖掘：</strong>主导 300+ 家企业深度调研，输出 300+ 份数字化诊断报告，沉淀场景需求池与 AI 产品路线图，需求匹配度提升 <mark>40%</mark>。</li>
-            <li><strong>AI 产品 0->1 落地：</strong>完成需求拆解、功能规划、流程设计、PRD 输出与研发协同，沉淀 100+ 份行业解决方案，交付效率提升 <mark>35%</mark>。</li>
-            <li><strong>数据治理与 AI 能力底座：</strong>主导 3000+ 家企业业务数据采集、清洗与治理，参与农业数字经济指标和标签体系建设，政策匹配准确率提升 <mark>50%</mark>。</li>
-            <li><strong>项目管理与商业化：</strong>统筹政府、企业、高校与研发团队，主导 10+ 省市级规划项目，累计合同额超 <mark>2000 万元</mark>，二次合作率达 <mark>70%</mark>。</li>
+            <li><strong>Agent 架构与编排：</strong>主导生产引擎侧（Orchestration / 原子能力 / 质检 / Observability）的产品规划，与决策大脑侧（采集 / 反馈飞轮）划分 Agent 角色拓扑、Handoff 契约与工具权限边界；设计 plan 驱动的任务链路与三态退出语义（全成功 / 部分产出 / 全失败），使“要 5 支只出 2 支”不会被判定为成功。</li>
+            <li><strong>Guardrails 与 Human-in-the-loop：</strong>建立版本化合规判据库（判据指纹可回溯）与三道内容闸门（玩法同族 / 视觉归族 / 残留检测），统一 fail-closed 原则“判不了即拒”；高复刻度产物强制标记并设人审卡点，其余走自动准入门禁（未验证组合不得排产）。</li>
+            <li><strong>Eval 体系（EDD）从 0 到 1：</strong>搭建覆盖模型输出、选材检索、工具调用、任务轨迹到最终成片的多层评测：Code-based Grader（产线 lint 七项 + 维度生效探针）、LLM-as-a-Judge 两票一致、规则评分与人工校准（抽帧逐字比对）；沉淀 Golden 组合矩阵、回归集、对抗集（规则绕过样本）与误杀集（假阳性样本）。通过判据分层缓存（昂贵事实与廉价判决分离）使换目标 / 改阈值场景零新增模型调用，重复评测 Cost per Task 降至近零。</li>
+            <li><strong>Badcase 回流与数据对账：</strong>对采集端 → 决策端 → 生产端做全链路真值基线，定位学习闭环断点与统计口径失真（而非凭日志字面判断）；真实失败案例自动转为回归 Case，同类问题上线前必跑回归。</li>
+            <li><strong>Observability 与协同机制：</strong>把一次性脚本收敛为“有责任人、有台账、有回归测试”的产品能力：一次任务在执行群只占一条原地刷新的聚合卡，失败单独告警并携带错误原文；跨算法 / 工程 / 投放 / 法务对齐口径，命名契约与合规类决策收口团队评审。</li>
+          </ul>
+          <p class="exp-lead"><strong>工作成果：</strong></p>
+          <ul class="exp-list">
+            <li><strong>成果一 · Cbrain 全自动素材流水线：</strong>沿「采集—判断—生产—反馈」四段闭环建设：实现三条采集链路累计入库素材约 2.1 万条，沉淀 782 个素材类型、53,065 个结构化元素。生产端完成长视频稳定性攻坚：剧情类由稳定触发 70 分钟超时中断、出片率 0%，提升至稳定 38–42 分钟出片。</li>
+            <li><strong>成果二 · Raphael 多产品多语言产线体系：</strong>cbrain 验证自动化可行性后，业务重心由「能生产」转向「规模化覆盖」，拉斐尔将素材生产沉淀为可复用的产线资产——每类创意玩法固化为一条标准化产线，以「product*lang*idea」为输入即可批量出片，并在合规、命名、准入三个维度约束产出。目前体系已实现覆盖 7 个自研产品、实现上游 idea 自动搜集判断产出 idea，已产出 18 条标准化产线。配套还搭建了文案种子库、美术资产库等供产线调用。</li>
+          </ul>
+        </div>
+      </article>
+
+      <div class="exp-time" aria-hidden="true">
+        <span class="exp-year">2026</span>
+        <span class="exp-date">2026.01 - 2026.04（实习）</span>
+        <span class="exp-type">Internship</span>
+      </div>
+      <article class="exp-job exp-job-intern">
+        <div class="exp-job-head">
+          <div>
+            <h3>上海克莱音科技有限公司</h3>
+            <p class="exp-role">AI 产品经理</p>
+            <p class="exp-role">Machi —— 东南亚演出票务平台（toC）</p>
+          </div>
+        </div>
+        <div class="exp-job-body exp-job-body-full">
+          <p class="exp-lead"><strong>项目背景：</strong>东南亚线下演出市场增长迅速，但票务长期被第三方平台主导，其 15%–25% 的高额抽佣与资金代收、结算滞后的模式，持续挤压主办方利润并拖慢回款。Machi 以此为切入点确立差异化定位：观众付款后由主办方自有 Stripe 直接结算，平台不充当收款主体、不占资金池，仅收取约 5% 平台费，以「把渠道抽成还给主办方」作为核心获客主张。</p>
+          <p class="exp-lead"><strong>我的职责：</strong></p>
+          <ul class="exp-list">
+            <li><strong>市场调研与商业模式定义：</strong>调研东南亚票务市场与第三方平台抽佣结构，确立差异化定位：观众付款 → 主办方自有 Stripe 直接结算，平台不作为收款主体、不占资金池，平台费约 5%，以「把渠道抽成还给主办方」为核心获客主张。输出完整产品需求文档，逐条明确费用归属、跨境币种、退款边界等业务规则。成果：平台费 5% 对标第三方 15–25% 抽佣，形成可量化的主办方迁移理由；覆盖 6 城 8 类演出品类，沉淀 13 项经决策确认的业务规则。</li>
+            <li><strong>三端产品设计与交易链路：</strong>与 UI 协同完成三端信息架构与页面设计，打通「发现 → 选票 → 结算 → 电子票 → 核销」主链路；接入卡、微信支付、支付宝、Apple / Google Pay 多支付方式，完成 SGD 含 GST 结算与多币种展示合规适配；退款改期设计为「主办方可配置 → 受平台上下限约束」，在主办方自主权与平台风险敞口之间取平衡。成果：交付三端共 46 个页面，支持 5 种支付方式与 5 种币种；库存锁定、超卖防护、票据签发等交易关键路径全部具备服务端强校验。</li>
+            <li><strong>AI 能力产品化：</strong>主导三项 LLM 能力的产品定义，重点在护栏而非能力演示：① 活动页草稿 —— 一段演出描述 → 生成标题、摘要、详情、日程、FAQ、建议票档与 SEO 标题，逐字段可接受 / 重生成 / 手改，将人工校准嵌入主流程；价格、时间、场馆等事实字段设零幻觉护栏。② 活动问答助手 —— 以单场活动数据为知识边界做检索域隔离，杜绝跨场次串答；置信度低于阈值 → 自动转人工，退款改期等具资金与合规后果的问题 → 强制人工，据此划定 Human-in-the-loop 边界。③ 自然语言搜索 —— 口语查询 → 结构化筛选条件 → 逐条可视化、可单独移除，使用户能修正机器的理解而非接受黑盒结果，纠偏动作同步沉淀为失败样本。成果：活动发布耗时数天 → 分钟级；助手支持三语并以自助解决率为效果指标，该指标直接对应主办方客服成本，构成其配置助手的动因。</li>
+            <li><strong>上线质量治理与迭代：</strong>建立上线前质量基线并推动缺陷根因治理。定位线上「半中半英」真根因：本地化兜底逻辑以子串替换填补未命中文案 → 缺失翻译被静默掩盖 → 等同关闭报警；据此删除兜底使缺失显式暴露，补齐词典并修复文案与词典的键值漂移，将命中率检测与回归测试固化进发布流程。成果：全站文案词典命中率由 33% 提升至全覆盖，新增 300+ 条译文；跨 32 条路由 × 8 种视口的可访问性与布局审计实现零失败。</li>
           </ul>
         </div>
       </article>
 
       <div class="exp-time" aria-hidden="true">
         <span class="exp-year">2020</span>
-        <span class="exp-date">2020.09 - 2021.05</span>
+        <span class="exp-date">2020.09 - 2021.05（实习）</span>
         <span class="exp-type">Internship</span>
       </div>
       <article class="exp-job exp-job-intern">
         <div class="exp-job-head">
           <div>
             <h3>美的集团</h3>
-            <p class="exp-role">产品经理（实习） · 版本管理 / 敏捷协作</p>
-          </div>
-          <div class="exp-scope">
-            <span>WBS</span>
-            <span>敏捷协作</span>
-            <span>版本流程</span>
+            <p class="exp-role">产品经理</p>
+            <p class="exp-role">IOT——万物互联</p>
           </div>
         </div>
-        <div class="exp-job-body">
-          <p class="exp-lead">围绕产品需求、研发评估、测试协作与版本上线建立更清晰的迭代节奏，重点提升交付计划的可控性和跨团队协同效率。</p>
+        <div class="exp-job-body exp-job-body-full">
+          <p class="exp-lead">主导物联网产品线（设备接入、场景联动）需求规划与落地，协同软硬件研发与测试等跨职能团队，推动端云协同的敏捷开发机制落地，对产品交付质量负责。</p>
+        </div>
+      </article>
+
+      <div class="exp-time" aria-hidden="true">
+        <span class="exp-year">2021</span>
+        <span class="exp-date">2021.07 - 2025.08（工作）</span>
+        <span class="exp-type">Full-time</span>
+      </div>
+      <article class="exp-job">
+        <div class="exp-job-head">
+          <div>
+            <h3>中国信通院江西分院</h3>
+            <p class="exp-role">产品经理</p>
+            <p class="exp-role">政企 AI 产品线（政务 RAG 知识库）</p>
+          </div>
+        </div>
+        <div class="exp-job-body exp-job-body-full">
+          <p class="exp-lead">依托智库研究优势，主导政企场景 AI 产品全生命周期管理，牵头两条产品线从 0 到 1 并规模化，支撑 10+ 省市级数字化转型与产业赋能项目。</p>
           <ul class="exp-list">
-            <li><strong>需求拆解与版本规划：</strong>主导产品需求重构拆解（WBS），协同研发、测试评估工作量，明确模块负责人和交付节点。</li>
-            <li><strong>敏捷跟进与延期干预：</strong>通过每日站会、周例会追踪开发与上线进展，对不合理延期做根因分析与干预。</li>
-            <li><strong>流程规范沉淀：</strong>制定月度需求版本管理、新品开发版本流程与 Redmine 标准；新品开发项目 58 个、月度需求任务 134 个，版本交付率由 <mark>78% 提升至 95%</mark>。</li>
+            <li><strong>政务 RAG 知识库（0 → 1）：</strong>设计知识采集 → 文档解析 → 切分向量化 → 检索召回 → 大模型生成的完整 Agentic RAG 链路；以检索召回率、答案可溯源性、回答采纳率与幻觉率为核心质量口径，建立 Badcase 采集、聚类归因、优化验证的迭代闭环，把线上失败问答沉淀为固定评测集，版本上线前必须跑回归。</li>
+            <li><strong>AI 数据底座与知识工程：</strong>主导 3000+ 家企业业务数据采集、清洗与治理，构建领域知识库、业务标签体系、农业数字经济指标体系与知识图谱本体模型，为 RAG 检索增强与模型微调提供高质量语料底座，也是后续做上下文工程的地基。</li>
+            <li><strong>需求挖掘与方法论沉淀：</strong>面向政务、智能制造、数字经济领域主导 300+ 家政企深度调研并输出诊断报告，将复杂业务流程拆解为 AI 可执行的原子任务，直接支撑产品定位与功能优先级；沉淀 100+ 份场景化 AI 解决方案与可复用交付方法论，交付效率提升 35%。</li>
           </ul>
+          <p class="exp-lead"><strong>项目成果：</strong>完成 500+ 篇政策文件做结构化清洗与分块策略设计，以中文语义检索召回率为核心指标完成 Embedding 选型对比（BAAI/bge-large-zh vs. text2vec 系列），引入 Reranker 对 Top-K 候选精排，答案相关性提升约 18%，Embedding 召回准确率 82%；设计 Router 按用户身份分发链路（企业走政策匹配与申报指导、政府走政策解读与合规建议），匹配对应 System Prompt 风格与检索策略，并定义各链路输入输出规范与低置信度转人工兜底；建立检索召回率、答案相关性、用户满意度的分层评估体系，累计服务查询 10,000+ 次，政策申报辅助效率提升约 40%。</p>
         </div>
       </article>
     </div>
@@ -4628,8 +4674,8 @@
   <section id="edu">
     <div class="sechead"><h2>教育经历</h2><span class="idx">[ 05 / EDUCATION ]</span></div>
     <div class="edu">
-      <div class="edurow"><div><div class="eo">中国科学技术大学</div><div class="em">工商管理（硕士）· MBA</div></div><span class="date">2025.09 — 2028.06</span></div>
-      <div class="edurow"><div><div class="eo">长江大学</div><div class="em">国际经济与贸易（本科）</div></div><span class="date">2017.09 — 2021.06</span></div>
+      <div class="edurow"><div><div class="eo">中国科学技术大学</div><div class="em">工商管理（全日制国际班-选拔制）· 硕士 · GPA 3.75/4（专业前 3%）</div></div><span class="date">2025.09 — 2027.07</span></div>
+      <div class="edurow"><div><div class="eo">长江大学</div><div class="em">国际经济与贸易 · 本科 · GPA 3.5/4（专业前 5%）· CET-6 515</div></div><span class="date">2017.09 — 2021.06</span></div>
     </div>
   </section>
 
@@ -4639,7 +4685,7 @@
   <div class="wrap">
     <div class="sayhi">thank you for reading</div>
     <h2>THANK YOU<span>感谢阅读</span></h2>
-    <a class="resume-download" href="assets/jin-jiali-ai-product-manager-resume.pdf" download="AI产品经理-晋佳莉-中国科学技术大学-可实习六个月以上.pdf">简历下载 · Download Resume</a>
+    <a class="resume-download" href="assets/jin-jiali-ai-product-manager-resume.pdf" download="晋佳莉-AI产品经理-中国科学技术大学.pdf">简历下载 · Download Resume</a>
     <div class="flinks">
       <a href="tel:15240034478">Phone: 15240034478</a>
       <a href="mailto:1014223067@qq.com">Email: 1014223067@qq.com</a>
